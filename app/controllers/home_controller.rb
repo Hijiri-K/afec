@@ -9,4 +9,8 @@ class HomeController < ApplicationController
     @updates = Update.all.order(created_at: :desc)
   end
 
+  def test
+  end
+
+
 end

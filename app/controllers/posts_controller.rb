@@ -19,6 +19,11 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(
       content: params[:content],
+      currency_have: params[:currency_have],
+      currency_have_amount: params[:input_currency],
+      currency_want: params[:currency_want],
+      currency_want_amount: params[:currency_want_amount],
+      location: params[:location],
       user_id: @current_user.id
     )
 

@@ -1,11 +1,11 @@
 
 <div class="main posts-index">
-  <div class="new-post">
+  <!-- <div class="new-post">
       <%=form_tag("/posts/create") do%>
     <textarea name="content" rows="2" cols="65"></textarea>
     <input type="submit" name="" value="投稿">
     <%end%>
-  </div>
+  </div> -->
 
 
   <div class="container">
@@ -20,6 +20,11 @@
       </div>
       <%end%>
         <%=link_to(simple_format(post.content), "/posts/#{post.id}")%>
+        i have <%=post.currency_have%>
+        <%=post.currency_have_amount%><br>
+        i want <%=post.currency_want%>
+        <%=post.currency_want_amount%><br>
+        location <%=post.location%><br>
 
         <%if Like.find_by(user_id: @current_user.id, post_id: post.id)%>
           <%=link_to("/likes/#{post.id}/destroy_index", {method:"post"}) do%>

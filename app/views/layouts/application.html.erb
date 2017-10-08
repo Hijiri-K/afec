@@ -2,7 +2,7 @@
 
 <html>
   <head>
-    <title>HkTweetApp</title>
+    <title>afec</title>
 
     <!-- レスポンシブ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +24,7 @@
   <body>
     <header>
       <div class="header-logo">
-        <%=link_to("kamatter","/")%>
+        <%=link_to("afec","/")%>
       </div>
 
               <!-- てすと -->
@@ -130,6 +130,12 @@
     </div>
 
 
+
+    <%if flash[:notice]%>
+      <div class="flash">
+        <%=flash[:notice]%>
+      </div>
+    <%end%>
 
     <%if flash[:notice]%>
       <div class="flash">

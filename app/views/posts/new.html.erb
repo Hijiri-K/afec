@@ -9,10 +9,56 @@
               <%=message%>
             </div>
           <%end%>
-          <textarea name="content" rows="8" cols="80"></textarea>
-          <input type="submit" name="" value="投稿">
+
+          <p>i have</p>
+          <select name="currency_have" class="form-control" id="Currency">
+                <!--option value="">▼通貨</option-->
+                <option value="">持ってる通貨</option>
+                <option value="usd">usd(米/ドル)</option>
+                <option value="eur">eur(ユーロ)</option>
+                <option value="jpy">jpy(日本/円)</option>
+          </select>
+
+          <input name="input_currency" class="form-control location" size="5" placeholder="amount" type="number" id="currency">
+          <p>i want</p>
+          <select name="currency_want" class="form-control" id="Currency_base">
+                <!--option value="">▼通貨</option-->
+                <option value="">ほしい通貨</option>
+                <option value="usd">usd(米/ドル)</option>
+                <option value="eur">eur(ユーロ)</option>
+                <option value="jpy">jpy(日本/円)</option>
+          </select>
+          <input id="returnYen" class = "location" type="float" name="currency_want_amount"  placeholder="amount">
+
+          <p id = "test">位置情報</p>
+          <input name = "location" class = "test"  value="未取得">
+
+          <input id = "message" name="content" placeholder="message">
+
+          <input class = "location" type="submit" name="" value="投稿">
+
         </div>
       </div>
     <%end%>
+    <!-- <button class = "location">位置情報を取得する</button> -->
   </div>
 </div>
+
+
+
+  <script>
+    $("div#source_form").click(function(){
+      $.ajax({
+        url: "sources/set_content",
+        type: "GET",
+        data: {content : $("div#editor").text()},
+        datatype: "html",
+        success: function(data){
+          //成功時の処理
+        },
+        error: function(data){
+          //失敗時の処理
+        }
+      });
+    });
+  </script>
