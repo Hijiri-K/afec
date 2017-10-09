@@ -24,7 +24,9 @@
         <%=post.currency_have_amount%><br>
         i want <%=post.currency_want%>
         <%=post.currency_want_amount%><br>
-        location <%=post.location%><br>
+        location<br>
+        緯度<%=post.lat%><br>
+        経度<%=post.lng%><br>
 
         <%if Like.find_by(user_id: @current_user.id, post_id: post.id)%>
           <%=link_to("/likes/#{post.id}/destroy_index", {method:"post"}) do%>

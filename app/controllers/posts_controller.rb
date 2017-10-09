@@ -23,7 +23,8 @@ class PostsController < ApplicationController
       currency_have_amount: params[:input_currency],
       currency_want: params[:currency_want],
       currency_want_amount: params[:currency_want_amount],
-      location: params[:location],
+      lat: params[:lat],
+      lng: params[:lng],
       user_id: @current_user.id
     )
 

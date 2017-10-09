@@ -1,3 +1,4 @@
+
 <div class="main post-new">
   <div class="container">
     <h1 class = "form-heading">投稿する</h1>
@@ -13,7 +14,7 @@
           <p>i have</p>
           <select name="currency_have" class="form-control" id="Currency">
                 <!--option value="">▼通貨</option-->
-                <option value="">持ってる通貨</option>
+                <option value="1">持ってる通貨</option>
                 <option value="usd">usd(米/ドル)</option>
                 <option value="eur">eur(ユーロ)</option>
                 <option value="jpy">jpy(日本/円)</option>
@@ -23,7 +24,7 @@
           <p>i want</p>
           <select name="currency_want" class="form-control" id="Currency_base">
                 <!--option value="">▼通貨</option-->
-                <option value="">ほしい通貨</option>
+                <option value="1">ほしい通貨</option>
                 <option value="usd">usd(米/ドル)</option>
                 <option value="eur">eur(ユーロ)</option>
                 <option value="jpy">jpy(日本/円)</option>
@@ -31,7 +32,8 @@
           <input id="returnYen" class = "location" type="float" name="currency_want_amount"  placeholder="amount">
 
           <p id = "test">位置情報</p>
-          <input name = "location" class = "test"  value="未取得">
+          <p>緯度</p><input name = "lat" class = "lat"  value="未取得">
+          <p>経度</p><input name = "lng" class = "lng"  value="未取得">
 
           <input id = "message" name="content" placeholder="message">
 
@@ -40,13 +42,12 @@
         </div>
       </div>
     <%end%>
-    <!-- <button class = "location">位置情報を取得する</button> -->
   </div>
 </div>
 
 
 
-  <script>
+  <!-- <script>
     $("div#source_form").click(function(){
       $.ajax({
         url: "sources/set_content",
@@ -61,4 +62,4 @@
         }
       });
     });
-  </script>
+  </script> -->

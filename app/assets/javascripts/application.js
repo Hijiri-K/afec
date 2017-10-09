@@ -33,7 +33,7 @@ $(document).ready(function(){
 
 
 // 現在地取得===================================================================
-  $('.location').click(
+  $('.form-control').click(
     // Geolocation APIに対応している
     // if (navigator.geolocation) {
     //   alert("この端末では位置情報が取得できます");
@@ -51,7 +51,8 @@ $(document).ready(function(){
             lat = position.coords.latitude;
             lng = position.coords.longitude;
             // alert("緯度:"+lat+",経度"+lng);
-          $('.test').val(lat);
+          $('.lat').val(lat);
+          $('.lng').val(lng);
         },
         // 取得失敗した場合
         function(error) {
@@ -87,12 +88,12 @@ $(document).ready(function(){
     //   });
     // });
     //
-    });
+  });
 
 // 通貨換算==================================================================================================
 
     $(function() {
-        $('#Currency').change( function(e) {
+        $('.form-control').change( function(e) {
 
             // 表示の初期化
             $('#code').empty();
@@ -103,14 +104,16 @@ $(document).ready(function(){
             $('#example1').empty();
             $('#exampleYen1').empty();
 
+
             e.preventDefault();     // hrefが無効になり、画面遷移が行わない
 
-            selectedCode = $('#Currency').val();                        // 選択した通貨(value)
-            selectedCode_base = $('#Currency_base').val()             //===========================================================================================================-自分でアレンジ
-            selectedCodeText = $('#Currency option:selected').text();   // 選択した通貨(key)
+            selectedCode = $('#Currency').val();  // 選択した通貨(value)
+            selectedCode_base = $('#Currency_base').val()      //===========================================================================================================-自分でアレンジ
+            selectedCodeText = $('#Currency option:selected').text();// 選択した通貨(key)
             selectedCode_baseText = $('#Currency_base option:selected').text();  //================================
             // var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&to=jpy&code=' + selectedCode; //元のこーど
-            var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&code=' + selectedCode;  //====================================自分でアレンジ
+            var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&code=' + selectedCode;  //====================================自分でアレン
+
             $.ajax({
                 url: url,
                 type: 'GET',
@@ -124,7 +127,7 @@ $(document).ready(function(){
                     } else if (selectedCode_base === 'usd') {
                       rate = json.USD;
                     }else{
-                      rate = 2;
+                      rate = 1;
                     }     // 選択した通貨の対日本円レート(JPYは固定)``
 
                     example1 = 300;                 // サンプル
@@ -137,15 +140,18 @@ $(document).ready(function(){
                     $("#rate").append(rate);
                     $("#example1").append(example1);
                     $("#exampleYen1").append(exampleYen1);
+
+                    calc();
                 }
             });
-        }).change();
+      })
 
 
         // Convertボタン 押下後処理
-        // $('#calcButton').click( function(e) {
-          $('#message').click( function(e) {
-            e.preventDefault();     // hrefが無効になり、画面遷移が行わない
+            function calc() {
+          // $('#message').click( function(e) {
+          //
+          //   e.preventDefault();     // hrefが無効になり、画面遷移が行わない
 
             var inputCurrency = $('#currency').val();   // input通貨
 
@@ -153,11 +159,16 @@ $(document).ready(function(){
             if (inputCurrency !== '') {
                 var ansJpy = rate * inputCurrency;      // 計算
                 ansJpy = Math.floor(ansJpy);            // 小数点切り捨て
-                ansJpy = insertComma(ansJpy);           // 3桁カンマ追加
+                // ansJpy = insertComma(ansJpy);           // 3桁カンマ追加
                 // $('#returnYen').text(ansJpy + selectedCode_baseText);   // 結果の表示
                 $('#returnYen').val(ansJpy + selectedCode_baseText);
             }
-        })
+        // })
+
+
+      }
+
+
 
         // リセットボタン押下処理
         $('#resetButton').click(function(){
