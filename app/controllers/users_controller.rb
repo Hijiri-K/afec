@@ -75,7 +75,7 @@ class UsersController < ApplicationController
       redirect_to("/posts/index")
     else
       @error_message = "メールアドレスかパスワードがまちがってますよ～～～"
-      render("users/login_form")
+      render("home/top")
     end
   end
 

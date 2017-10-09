@@ -1,11 +1,30 @@
 
 <div class="main posts-index">
-  <!-- <div class="new-post">
-      <%=form_tag("/posts/create") do%>
+  <div class="new-post">
+    <div class="post-user-name">
+      <img src="<%="/user_images/#{@current_user.image_name}"%>" alt="">
+
+      <%=link_to("#{@current_user.name}","/users/#{@current_user.id}/show")%>
+    </div>
+<%if Post.find_by(user_id: @current_user.id)%>
+    <%myposts = Post.where(user_id: @current_user.id)%>
+    <%mypost = myposts.last%>
+    <%=mypost.content%>
+    i have <%=mypost.currency_have%>
+    <%=mypost.currency_have_amount%>
+    i want <%=mypost.currency_want%>
+    <%=mypost.currency_want_amount%>
+
+    location
+    緯度<%=mypost.lat%>
+    経度<%=mypost.lng%>
+  <%end%>
+
+      <!-- <%=form_tag("/posts/create") do%>
     <textarea name="content" rows="2" cols="65"></textarea>
-    <input type="submit" name="" value="投稿">
-    <%end%>
-  </div> -->
+    <input type="submit" name="" value="投稿"> -->
+    <!-- <%end%> -->
+  </div>
 
 
   <div class="container">

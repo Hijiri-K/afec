@@ -128,7 +128,7 @@ $(document).ready(function(){
                       rate = json.USD;
                     }else{
                       rate = 1;
-                    }     // 選択した通貨の対日本円レート(JPYは固定)``
+                    }
 
                     example1 = 300;                 // サンプル
                     exampleYen1 = example1 * rate;  // サンプル計算
@@ -146,8 +146,6 @@ $(document).ready(function(){
             });
       })
 
-
-        // Convertボタン 押下後処理
             function calc() {
           // $('#message').click( function(e) {
           //

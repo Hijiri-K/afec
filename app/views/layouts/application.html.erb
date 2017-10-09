@@ -98,6 +98,11 @@
       <div id="login-form">
 
           <h2>ログイン</h2>
+          <div class="form-error">
+            <%if @error_message%>
+            <%=@error_message%>
+            <%end%>
+          </div>
             <%=form_tag("/login") do%>
               <input name = "email" class="form-control" type="text" placeholder="メールアドレス">
               <input name = "password" class="form-control" type="password" placeholder="パスワード">
