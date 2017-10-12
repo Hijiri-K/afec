@@ -72,9 +72,9 @@
         %>
 
           <%end%>
-          <%if distance%>
+
             <%=distance.to_i%>m
-          <%end%>
+
 
 
         <%if Like.find_by(user_id: @current_user.id, post_id: post.id)%>
