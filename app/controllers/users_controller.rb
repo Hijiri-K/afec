@@ -57,7 +57,7 @@ class UsersController < ApplicationController
     @user.destroy
     flash[:notice] = "ユーザーを削除しました～～～～"
     session[:user_id] = nil
-    redirect_to("/login")
+    redirect_to("/")
   end
 
   def login_form
