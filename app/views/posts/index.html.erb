@@ -5,20 +5,22 @@
       <img src="<%="/user_images/#{@current_user.image_name}"%>" alt="">
 
       <%=link_to("#{@current_user.name}","/users/#{@current_user.id}/show")%>
-    </div>
-<%if Post.find_by(user_id: @current_user.id)%>
-    <%myposts = Post.where(user_id: @current_user.id)%>
-    <%mypost = myposts.last%>
-    <%=mypost.content%>
-    i have <%=mypost.currency_have%>
-    <%=mypost.currency_have_amount%>
-    i want <%=mypost.currency_want%>
-    <%=mypost.currency_want_amount%>
 
-    location
-    緯度<%=mypost.lat%>
-    経度<%=mypost.lng%>
-  <%end%>
+    </div>
+
+    <div class="post-info">
+      <%if Post.find_by(user_id: @current_user.id)%>
+            <%=@mypost.content%>
+              i have <%=@mypost.currency_have%>
+              <%=@mypost.currency_have_amount%>
+              i want <%=@mypost.currency_want%>
+              <%=@mypost.currency_want_amount%>
+              <!-- location
+              緯度<%=@mypost.lat%>
+              経度<%=@mypost.lng%> -->
+
+      <%end%>
+    </div>
 
       <!-- <%=form_tag("/posts/create") do%>
     <textarea name="content" rows="2" cols="65"></textarea>
@@ -27,7 +29,7 @@
   </div>
 
 
-  <div class="container">
+  <div class="container-i">
     <%@posts.each do |post|%>
     <%user = User.find_by(id: post.user_id)%>
     <div class="posts-index-item">
@@ -36,6 +38,7 @@
         <img src="<%="/user_images/#{user.image_name}"%>" alt="">
 
         <%=link_to("#{user.name}","/users/#{user.id}/show")%>
+
       </div>
       <%end%>
         <%=link_to(simple_format(post.content), "/posts/#{post.id}")%>
@@ -46,6 +49,33 @@
         location<br>
         緯度<%=post.lat%><br>
         経度<%=post.lng%><br>
+
+
+        <%if Post.find_by(user_id: @current_user.id)%>
+        <%
+
+
+        lat1 = post.lat
+        lng1 = post.lng
+        lat2 = @mypost.lat
+        lng2 = @mypost.lng
+
+        y1 = lat1 * Math::PI / 180
+        x1 = lng1 * Math::PI / 180
+        y2 = lat2 * Math::PI / 180
+        x2 = lng2 * Math::PI / 180
+        earth_r = 6378140
+
+        deg = Math::sin(y1) * Math::sin(y2) + Math::cos(y1) * Math::cos(y2) * Math::cos(x2 - x1)
+        distance = earth_r * (Math::atan(-deg / Math::sqrt(-deg * deg + 1)) + Math::PI / 2)
+        # /1000
+        %>
+
+          <%end%>
+          <%if distance%>
+            <%=distance.to_i%>m
+          <%end%>
+
 
         <%if Like.find_by(user_id: @current_user.id, post_id: post.id)%>
           <%=link_to("/likes/#{post.id}/destroy_index", {method:"post"}) do%>

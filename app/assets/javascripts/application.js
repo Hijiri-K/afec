@@ -71,6 +71,7 @@ $(document).ready(function(){
               break;
           }
         }
+        // ,{enableHighAccuracy:true;}
       );
 
     // $("div#source_form").click(function(){
@@ -112,6 +113,12 @@ $(document).ready(function(){
             selectedCodeText = $('#Currency option:selected').text();// 選択した通貨(key)
             selectedCode_baseText = $('#Currency_base option:selected').text();  //================================
             // var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&to=jpy&code=' + selectedCode; //元のこーど
+
+
+
+
+//レートテスト
+//================================================================================================================================================================================================
             var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&code=' + selectedCode;  //====================================自分でアレン
 
             $.ajax({
@@ -129,6 +136,30 @@ $(document).ready(function(){
                     }else{
                       rate = 1;
                     }
+//========================================================================================================================================================================================================
+// // set endpoint and your access key
+// endpoint = 'convert';
+// access_key = '356b689f4db8b2616a786c31a7023829';
+// inputCurrency = $('#currency').val();
+// // define from currency, to currency, and amount
+// from = selectedCode;
+// to = selectedCode_base;
+// amount = inputCurrency;
+//
+// // execute the conversion using the "convert" endpoint:
+// $.ajax({
+//     url: 'http://apilayer.net/api/' + endpoint + '?access_key=' + access_key +'&from=' + from + '&to=' + to + '&amount=' + amount,
+//     dataType: 'jsonp',
+//     success: function(json) {
+//
+//         // access the conversion result in json.result
+//         json.result = ansJpy
+//
+//         $('#returnYen').val(ansJpy + selectedCode_baseText);
+//     }
+
+
+//============================================================================================================================================================================================================
 
                     example1 = 300;                 // サンプル
                     exampleYen1 = example1 * rate;  // サンプル計算
@@ -142,8 +173,8 @@ $(document).ready(function(){
                     $("#exampleYen1").append(exampleYen1);
 
                     calc();
-                }
-            });
+ }
+            })
       })
 
             function calc() {

@@ -2,7 +2,10 @@ class PostsController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @posts = Post.all.order(created_at: :desc)
+    # @posts = Post.all.order(created_at: :desc)
+
+    @mypost = Post.find_by(user_id: @current_user.id)
+      @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
   end
 
   def show
@@ -17,6 +20,18 @@ class PostsController < ApplicationController
   end
 
   def create
+if Post.find_by(user_id: @current_user.id)
+    @post = Post.find_by(user_id: @current_user.id)
+    @post.content = params[:content]
+    @post.currency_have = params[:currency_have]
+    @post.currency_have_amount = params[:input_currency]
+    @post.currency_want = params[:currency_want]
+    @post.currency_want_amount = params[:currency_want_amount]
+    @post.lat = params[:lat]
+    @post.lng = params[:lng]
+    @post.user_id = @current_user.id
+else
+
     @post = Post.new(
       content: params[:content],
       currency_have: params[:currency_have],
@@ -27,9 +42,10 @@ class PostsController < ApplicationController
       lng: params[:lng],
       user_id: @current_user.id
     )
+  end
 
     if @post.save
-      # flash[:notice] = "投稿に成功しました～～～"
+      flash[:notice] = "更新に成功しました～～～"
       redirect_to("/posts/index")
     else
       render("posts/new")
