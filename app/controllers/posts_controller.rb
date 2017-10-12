@@ -2,10 +2,14 @@ class PostsController < ApplicationController
   before_action :authenticate_user
 
   def index
-    # @posts = Post.all.order(created_at: :desc)
+    @posts = Post.all.order(created_at: :desc)
 
     @mypost = Post.find_by(user_id: @current_user.id)
+    if Post.find_by(user_id: @current_user.id)
       @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
+    else
+      @posts = Post.all.order(created_at: :desc)
+    end
   end
 
   def show
