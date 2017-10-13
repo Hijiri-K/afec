@@ -60,13 +60,22 @@
             end%>
 
             <%if  @mypost.currency_want_amount <= post.currency_have_amount
-              save ="#{@mypost.currency_have}" + " " + "#{(@mypost.currency_have_amount * 0.05).to_i}"
+              savem = (@mypost.currency_have_amount * 0.05).round(1)
+              save ="#{@mypost.currency_have}" + " " + "#{(@mypost.currency_have_amount * 0.05).round(1)}"
               elsif @mypost.currency_want_amount > post.currency_have_amount
-              save ="#{post.currency_want}" + " " + "#{(post.currency_want_amount * 0.05).to_i}"
-            end
-          %>
+              savem = (post.currency_want_amount * 0.05).round(1)
+              save ="#{post.currency_want}" + " " + "#{(post.currency_want_amount * 0.05).round(1)}"
+            end%>
+
 
 <!--＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+          <%if @mypost.currency_have === "jpy"
+            coffee = (savem / 50).to_i
+          elsif @mypost.currency_have === "usd"
+            coffee = (savem / 0.5).to_i
+          elsif @mypost.currency_have === "eur"
+            coffee = (savem / 0.7).to_i
+          end%>
 
 
           <%if distance < 200 %>　<!--200メートル以内の投稿のみを表示-->
@@ -74,10 +83,11 @@
                   <div class="post-user-name">
                     <%user = User.find_by(id: post.user_id)%>
                     <img src="<%="/user_images/#{user.image_name}"%>" alt="">
-                    <%=link_to("#{user.name}","/users/#{user.id}/show")%>
+                  <%=link_to("#{user.name}","/users/#{user.id}/show")%>
                   </div>
 
                   <div class="info">
+
                       <p class = "post-message"><%=link_to(simple_format(post.content), "/posts/#{post.id}")%></p>
                       <!-- <p>i have <%=post.currency_have%>
                       <%=post.currency_have_amount%></p>
@@ -86,11 +96,11 @@
                       <div class= "post-subtitle"><p>we can trade </p></div>
                       <div class = "post-money"><p><%=get%> <span class = "fa fa-chevron-right"></span> <%=give%></p></div>
                       <div class = "post-subtitle"><p>save committion</p></div>
-                      <div class = "post-money"><p><%=save%></p></div>
+                      <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div>
                       <!-- location<br>
                       緯度<%=post.lat%><br>
                       経度<%=post.lng%><br> -->
-                      <p class = "post-money"><%=distance.to_i%>m</p>
+                      <div class = "post-money"> <p><%=distance.to_i%>m</p></div>
                   </div>
                   <a class = "exchange-btn" href="#">EXHANGE</a>
               </div>
