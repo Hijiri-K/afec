@@ -95,17 +95,6 @@
                   <a class = "exchange-btn" href="#">EXHANGE</a>
               </div>
           <%end%>
-      <%elsif%>
-        <div class="posts-index-item">
-          <div class="post-user-name">
-            <%user = User.find_by(id: post.user_id)%>
-            <img src="<%="/user_images/#{user.image_name}"%>" alt="">
-            <%=link_to("#{user.name}","/users/#{user.id}/show")%>
-          </div>
-          <div class="info">
-              <%=link_to(simple_format(post.content), "/posts/#{post.id}")%>
-          </div>
-        </div>
       <%end%>
   　<%end%>
   </div>
