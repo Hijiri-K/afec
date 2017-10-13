@@ -23,7 +23,7 @@ ul, li {
 a {
   text-decoration: none;
   color: #2d3133;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -68,15 +68,6 @@ body {
   position:relative;
 }
 
-.container-i {
-  max-width:600px;
-  margin: 60px auto;
-  padding-top: 150px;
-  padding-left: 15px;
-  padding-right: 15px;
-  clear: both;
-  position:relative;
-}
 
 
 /* top ================================ */
@@ -246,12 +237,6 @@ body {
 
 
 /* アップデート =================================== */
-.posts-index-item {
-  padding: 20px 30px;
-  background-color: white;
-  overflow: hidden;
-  box-shadow: 0 2px 6px #c1ced7;
-}
 
 .post-left img {
   width: 50px;

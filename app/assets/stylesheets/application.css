@@ -81,19 +81,6 @@
  }
 
 
-.menu-icon {
-  display: none;
-  float:right;
-  font-size: 30px;
-  line-height:64px;
-  padding-right:20px;
-  color:white;
-
-}
-
-.h {
-  display: none;
-}
 
 /*モーダルテスト*/
 .login-modal-wrapper, .signup-modal-wrapper {
@@ -183,58 +170,4 @@
     font-size: 30px;
   }
 
-  .header-menus {
-    display: none;
-    color: white;
-  }
-
-  .header-menus-h {
-    color: white;
-  }
-
-  .header-menus-h li {
-    font-size: 25px;
-    line-height:60px;
-    color: white;
-    border: 0.3px solid white;
-    text-align: center;
-  }
-
-  .header-menus-h a {
-    font-size: 20px;
-    color: white;
-  }
-  .menu-icon {
-    display: block;
-  }
-
-  .h {
-    display:block;
-  }
-}
-
-
-
-/*チェックは見えなくする*/
-.hidden_box input {
-    display: none;
-}
-
-/*中身を非表示にしておく*/
-.hidden_box .hidden_show {
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: 0.8s;
-    position:absolute;
-    top:64px;
-    right:0px;
-    background-color:#7b5544;
-}
-
-/*クリックで中身表示*/
-.hidden_box input:checked + .hidden_show {
-    height: auto;
-    opacity: 1;
 }

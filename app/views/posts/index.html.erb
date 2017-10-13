@@ -3,14 +3,16 @@
   <div class="new-post">
     <div class="post-user-name">
       <img src="<%="/user_images/#{@current_user.image_name}"%>" alt="">
-
       <%=link_to("#{@current_user.name}","/users/#{@current_user.id}/show")%>
+      <%if Post.find_by(user_id: @current_user.id)%>
+          &emsp;&emsp;&emsp;<%=@mypost.content%>
+      <%end%>
 
     </div>
 
     <div class="post-info">
       <%if Post.find_by(user_id: @current_user.id)%>
-            <%=@mypost.content%>
+
               i have <%=@mypost.currency_have%>
               <%=@mypost.currency_have_amount%>
               i want <%=@mypost.currency_want%>
@@ -18,110 +20,93 @@
               <!-- location
               緯度<%=@mypost.lat%>
               経度<%=@mypost.lng%> -->
-
       <%end%>
     </div>
-
-      <!-- <%=form_tag("/posts/create") do%>
-    <textarea name="content" rows="2" cols="65"></textarea>
-    <input type="submit" name="" value="投稿"> -->
-    <!-- <%end%> -->
   </div>
 
-
   <div class="container-i">
-    <%@posts.each do |post|%>
+    <%for post in @posts do%>
+      <%if Post.find_by(user_id: @current_user.id)%><!--自分が投稿している場合。（以下の処理は自分の投稿情報（@mypost）を使うので自分の投稿がない場合に実行するとエラーになる）-->
+<!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+          <!-- 距離の計算 -->
+          <%
+          lat1 = post.lat
+          lng1 = post.lng
+          lat2 = @mypost.lat
+          lng2 = @mypost.lng
 
-    <%if Post.find_by(user_id: @current_user.id)%>
-    <%
+          y1 = lat1 * Math::PI / 180
+          x1 = lng1 * Math::PI / 180
+          y2 = lat2 * Math::PI / 180
+          x2 = lng2 * Math::PI / 180
+          earth_r = 6378140
 
+          deg = Math::sin(y1) * Math::sin(y2) + Math::cos(y1) * Math::cos(y2) * Math::cos(x2 - x1)
+          distance = earth_r * (Math::atan(-deg / Math::sqrt(-deg * deg + 1)) + Math::PI / 2)
+          # /1000
+          %>
 
-    lat1 = post.lat
-    lng1 = post.lng
-    lat2 = @mypost.lat
-    lng2 = @mypost.lng
+          <!--交換可能な金額、手数料の浮いた分を計算するーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー  -->
+          <%if @mypost.currency_want_amount <= post.currency_have_amount
+             give = "#{@mypost.currency_want_amount}" +" "+ "#{@mypost.currency_want}"
+            elsif @mypost.currency_want_amount > post.currency_have_amount
+             give = "#{post.currency_have}" + " " + "#{post.currency_have_amount}"
+           end%>
 
-    y1 = lat1 * Math::PI / 180
-    x1 = lng1 * Math::PI / 180
-    y2 = lat2 * Math::PI / 180
-    x2 = lng2 * Math::PI / 180
-    earth_r = 6378140
+           <%if @mypost.currency_want_amount <= post.currency_have_amount
+              get = "#{@mypost.currency_have}" + " " + "#{@mypost.currency_have_amount}"
+              elsif @mypost.currency_want_amount > post.currency_have_amount
+              get = "#{post.currency_want}" + " " + "#{post.currency_want_amount}"
+            end%>
 
-    deg = Math::sin(y1) * Math::sin(y2) + Math::cos(y1) * Math::cos(y2) * Math::cos(x2 - x1)
-    distance = earth_r * (Math::atan(-deg / Math::sqrt(-deg * deg + 1)) + Math::PI / 2)
-    # /1000
-    %>
+            <%if  @mypost.currency_want_amount <= post.currency_have_amount
+              save ="#{@mypost.currency_have}" + " " + "#{(@mypost.currency_have_amount * 0.05).to_i}"
+              elsif @mypost.currency_want_amount > post.currency_have_amount
+              save ="#{post.currency_want}" + " " + "#{(post.currency_want_amount * 0.05).to_i}"
+            end
+          %>
 
-      <%end%>
-
-
-    <%if distance < 200%>
-    <%user = User.find_by(id: post.user_id)%>
-    <div class="posts-index-item">
-      <%if post.user_id%>
-      <div class="post-user-name">
-        <img src="<%="/user_images/#{user.image_name}"%>" alt="">
-
-        <%=link_to("#{user.name}","/users/#{user.id}/show")%>
-
-      </div>
-      <%end%>
-
-      <%if @mypost.currency_want_amount <= post.currency_have_amount
-         give = "#{@mypost.currency_want_amount}" +" "+ "#{@mypost.currency_want}"
-       elsif @mypost.currency_want_amount > post.currency_have_amount
-         give = "#{post.currency_have}" + " " + "#{post.currency_have_amount}"
-       end%>
-
-       <%if @mypost.currency_want_amount <= post.currency_have_amount
-          get = "#{@mypost.currency_have}" + " " + "#{@mypost.currency_have_amount}"
-        elsif @mypost.currency_want_amount > post.currency_have_amount
-          get = "#{post.currency_want}" + " " + "#{post.currency_want_amount}"
-        end%>
+<!--＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
 
 
-        <%if  @mypost.currency_want_amount <= post.currency_have_amount
-          save ="#{@mypost.currency_have}" + " " + "#{(@mypost.currency_have_amount * 0.05).to_i}"
-        elsif @mypost.currency_want_amount > post.currency_have_amount
-          save ="#{post.currency_want}" + " " + "#{(post.currency_want_amount * 0.05).to_i}"
-        end
-        %>
+          <%if distance < 200 %>　<!--200メートル以内の投稿のみを表示-->
+              <div class="posts-index-item">
+                  <div class="post-user-name">
+                    <%user = User.find_by(id: post.user_id)%>
+                    <img src="<%="/user_images/#{user.image_name}"%>" alt="">
+                    <%=link_to("#{user.name}","/users/#{user.id}/show")%>
+                  </div>
 
-
-        <%=link_to(simple_format(post.content), "/posts/#{post.id}")%>
-        <div class="info">
-            <!-- <p>i have <%=post.currency_have%>
-            <%=post.currency_have_amount%></p>
-            <p>i want <%=post.currency_want%>
-            <%=post.currency_want_amount%></p> -->
-            <p>we can trade <%=get%> => <%=give%></p>
-            <p>we can save committion <%=save%> </p>
-            <!-- location<br>
-            緯度<%=post.lat%><br>
-            経度<%=post.lng%><br> -->
-            <p><%=distance.to_i%>m</p>
+                  <div class="info">
+                      <p class = "post-message"><%=link_to(simple_format(post.content), "/posts/#{post.id}")%></p>
+                      <!-- <p>i have <%=post.currency_have%>
+                      <%=post.currency_have_amount%></p>
+                      <p>i want <%=post.currency_want%>
+                      <%=post.currency_want_amount%></p> -->
+                      <div class= "post-subtitle"><p>we can trade </p></div>
+                      <div class = "post-money"><p><%=get%> <span class = "fa fa-chevron-right"></span> <%=give%></p></div>
+                      <div class = "post-subtitle"><p>save committion</p></div>
+                      <div class = "post-money"><p><%=save%></p></div>
+                      <!-- location<br>
+                      緯度<%=post.lat%><br>
+                      経度<%=post.lng%><br> -->
+                      <p class = "post-money"><%=distance.to_i%>m</p>
+                  </div>
+                  <a class = "exchange-btn" href="#">EXHANGE</a>
+              </div>
+          <%end%>
+      <%elsif%>
+        <div class="posts-index-item">
+          <div class="post-user-name">
+            <%user = User.find_by(id: post.user_id)%>
+            <img src="<%="/user_images/#{user.image_name}"%>" alt="">
+            <%=link_to("#{user.name}","/users/#{user.id}/show")%>
+          </div>
+          <div class="info">
+              <%=link_to(simple_format(post.content), "/posts/#{post.id}")%>
+          </div>
         </div>
-
-<a class = "exchange-btn" href="#">EXHANGE</a>
-
-
-        <!-- <%if Like.find_by(user_id: @current_user.id, post_id: post.id)%>
-          <%=link_to("/likes/#{post.id}/destroy_index", {method:"post"}) do%>
-            <span class = "fa fa-heart like"></span>
-          <%end%>
-        <%else%>
-          <%=link_to("/likes/#{post.id}/create_index", {method:"post"}) do%>
-            <span class = "fa fa-heart unlike"></span>
-          <%end%>
-        <%end%>
-        <%likes_count = Like.where(post_id: post.id).count%>
-        <%=likes_count%> -->
-
-
-
-    </div>
-    <%end%>
-    <%end%>
-
+      <%end%>
+  　<%end%>
   </div>
 </div>
