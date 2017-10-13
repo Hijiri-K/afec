@@ -31,6 +31,31 @@
 
   <div class="container-i">
     <%@posts.each do |post|%>
+
+    <%if Post.find_by(user_id: @current_user.id)%>
+    <%
+
+
+    lat1 = post.lat
+    lng1 = post.lng
+    lat2 = @mypost.lat
+    lng2 = @mypost.lng
+
+    y1 = lat1 * Math::PI / 180
+    x1 = lng1 * Math::PI / 180
+    y2 = lat2 * Math::PI / 180
+    x2 = lng2 * Math::PI / 180
+    earth_r = 6378140
+
+    deg = Math::sin(y1) * Math::sin(y2) + Math::cos(y1) * Math::cos(y2) * Math::cos(x2 - x1)
+    distance = earth_r * (Math::atan(-deg / Math::sqrt(-deg * deg + 1)) + Math::PI / 2)
+    # /1000
+    %>
+
+      <%end%>
+
+
+    <%if distance < 200%>
     <%user = User.find_by(id: post.user_id)%>
     <div class="posts-index-item">
       <%if post.user_id%>
@@ -41,43 +66,46 @@
 
       </div>
       <%end%>
-        <%=link_to(simple_format(post.content), "/posts/#{post.id}")%>
-        i have <%=post.currency_have%>
-        <%=post.currency_have_amount%><br>
-        i want <%=post.currency_want%>
-        <%=post.currency_want_amount%><br>
-        location<br>
-        緯度<%=post.lat%><br>
-        経度<%=post.lng%><br>
+
+      <%if @mypost.currency_want_amount <= post.currency_have_amount
+         give = "#{@mypost.currency_want_amount}" +" "+ "#{@mypost.currency_want}"
+       elsif @mypost.currency_want_amount > post.currency_have_amount
+         give = "#{post.currency_have}" + " " + "#{post.currency_have_amount}"
+       end%>
+
+       <%if @mypost.currency_want_amount <= post.currency_have_amount
+          get = "#{@mypost.currency_have}" + " " + "#{@mypost.currency_have_amount}"
+        elsif @mypost.currency_want_amount > post.currency_have_amount
+          get = "#{post.currency_want}" + " " + "#{post.currency_want_amount}"
+        end%>
 
 
-        <%if Post.find_by(user_id: @current_user.id)%>
-        <%
-
-
-        lat1 = post.lat
-        lng1 = post.lng
-        lat2 = @mypost.lat
-        lng2 = @mypost.lng
-
-        y1 = lat1 * Math::PI / 180
-        x1 = lng1 * Math::PI / 180
-        y2 = lat2 * Math::PI / 180
-        x2 = lng2 * Math::PI / 180
-        earth_r = 6378140
-
-        deg = Math::sin(y1) * Math::sin(y2) + Math::cos(y1) * Math::cos(y2) * Math::cos(x2 - x1)
-        distance = earth_r * (Math::atan(-deg / Math::sqrt(-deg * deg + 1)) + Math::PI / 2)
-        # /1000
+        <%if  @mypost.currency_want_amount <= post.currency_have_amount
+          save ="#{@mypost.currency_have}" + " " + "#{(@mypost.currency_have_amount * 0.05).to_i}"
+        elsif @mypost.currency_want_amount > post.currency_have_amount
+          save ="#{post.currency_want}" + " " + "#{(post.currency_want_amount * 0.05).to_i}"
+        end
         %>
 
-          <%end%>
 
-            <%=distance.to_i%>m
+        <%=link_to(simple_format(post.content), "/posts/#{post.id}")%>
+        <div class="info">
+            <!-- <p>i have <%=post.currency_have%>
+            <%=post.currency_have_amount%></p>
+            <p>i want <%=post.currency_want%>
+            <%=post.currency_want_amount%></p> -->
+            <p>we can trade <%=get%> => <%=give%></p>
+            <p>we can save committion <%=save%> </p>
+            <!-- location<br>
+            緯度<%=post.lat%><br>
+            経度<%=post.lng%><br> -->
+            <p><%=distance.to_i%>m</p>
+        </div>
+
+<a class = "exchange-btn" href="#">EXHANGE</a>
 
 
-
-        <%if Like.find_by(user_id: @current_user.id, post_id: post.id)%>
+        <!-- <%if Like.find_by(user_id: @current_user.id, post_id: post.id)%>
           <%=link_to("/likes/#{post.id}/destroy_index", {method:"post"}) do%>
             <span class = "fa fa-heart like"></span>
           <%end%>
@@ -87,11 +115,12 @@
           <%end%>
         <%end%>
         <%likes_count = Like.where(post_id: post.id).count%>
-        <%=likes_count%>
+        <%=likes_count%> -->
 
 
 
     </div>
+    <%end%>
     <%end%>
 
   </div>

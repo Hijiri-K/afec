@@ -30,7 +30,20 @@ $(document).ready(function(){
     $('#signup-modal').fadeOut();
   });
 
+//============================
 
+  // $(function(){
+  //     var $items_wrapper = $('.container-i');
+  //     var $items = $('.save');
+  //     $items.sort(function(a, b){
+  //         return parseInt($(a).text()) < parseInt($(b).text());
+  //     });
+  //     // $items_wrapper.html("");
+  //     $items.each(function(){
+  //         $items_wrapper.append($(this));
+  //     })
+  // });
+//================================================
 
 // 現在地取得===================================================================
   $('.form-control').click(

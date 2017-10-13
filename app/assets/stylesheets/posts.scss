@@ -47,6 +47,14 @@
 
 }
 
+.container-i a{
+  font-size: 18px;
+}
+
+.info {
+  font-size: 20px;
+  // color:#8899a6;
+}
 
 
 .post-user-name a:hover {
@@ -58,6 +66,13 @@
   margin-right: 20px;
 }
 
+.exchange-btn {
+  background-color: #7b5544;
+  padding:5px 10px;
+  border-radius: 3px;
+  float: right;
+  color: white;
+}
 
 /* posts/show ================================ */
 .posts-show form {

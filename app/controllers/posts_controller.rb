@@ -3,10 +3,12 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all.order(created_at: :desc)
-
+    if   @mypost = Post.find_by(user_id: @current_user.id)
+        @mypost = Post.find_by(user_id: @current_user.id)
+    end
     @mypost = Post.find_by(user_id: @current_user.id)
     if Post.find_by(user_id: @current_user.id)
-      @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
+        @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
     else
       @posts = Post.all.order(created_at: :desc)
     end
