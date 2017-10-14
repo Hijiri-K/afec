@@ -56,7 +56,7 @@ else
       flash[:notice] = "更新に成功しました～～～"
       redirect_to("/posts/index")
     else
-      render("posts/new")
+      render("posts/index")
     end
   end
 
