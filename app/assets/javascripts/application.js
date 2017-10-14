@@ -202,6 +202,7 @@ $.ajax({
 
         // access the conversion result in json.result
         ansJpy = json.result
+        ansJpy = Math.floor(ansJpy);
 
         $('#returnYen').val(ansJpy + selectedCode_baseText);
     }
