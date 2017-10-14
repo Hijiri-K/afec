@@ -151,62 +151,65 @@ $(document).ready(function(){
 
 //レートテスト
 //================================================================================================================================================================================================
-            var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&code=' + selectedCode;  //====================================自分でアレン
+            // var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&code=' + selectedCode;  //====================================自分でアレン
+            //
+            // $.ajax({
+            //     url: url,
+            //     type: 'GET',
+            //     dataType: 'jsonp',
+            //     success: function(json) {
+            //         update = json.update;           // アップデート日時
+            //         if (selectedCode_base === 'jpy'){
+            //         rate = json.JPY;
+            //         }else if (selectedCode_base === 'eur') {
+            //           rate = json.EUR;
+            //         } else if (selectedCode_base === 'usd') {
+            //           rate = json.USD;
+            //         }else{
+            //           rate = 1;
+            //         }
 
-            $.ajax({
-                url: url,
-                type: 'GET',
-                dataType: 'jsonp',
-                success: function(json) {
-                    update = json.update;           // アップデート日時
-                    if (selectedCode_base === 'jpy'){
-                    rate = json.JPY;
-                    }else if (selectedCode_base === 'eur') {
-                      rate = json.EUR;
-                    } else if (selectedCode_base === 'usd') {
-                      rate = json.USD;
-                    }else{
-                      rate = 1;
-                    }
+            // example1 = 300;                 // サンプル
+            // exampleYen1 = example1 * rate;  // サンプル計算
+
+            // $("#code").append(selectedCodeText.toUpperCase());
+            // $("#code_base").append(selectedCode_baseText.toUpperCase());
+            // // $("#code2").append(selectedCodeText.toUpperCase());
+            // $("#update").append(update);
+            // $("#rate").append(rate);
+            // $("#example1").append(example1);
+            // $("#exampleYen1").append(exampleYen1);
+            //
+            // calc();
+// }
+
 //==有料のAPI======================================================================================================================================================================================================
-// // set endpoint and your access key
-// endpoint = 'convert';
-// access_key = '356b689f4db8b2616a786c31a7023829';
-// inputCurrency = $('#currency').val();
-// // define from currency, to currency, and amount
-// from = selectedCode;
-// to = selectedCode_base;
-// amount = inputCurrency;
-//
-// // execute the conversion using the "convert" endpoint:
-// $.ajax({
-//     url: 'https://apilayer.net/api/' + endpoint + '?access_key=' + access_key +'&from=' + from + '&to=' + to + '&amount=' + amount,
-//     // "http://apilayer.net/api/convert?access_key=356b689f4db8b2616a786c31a7023829&from=jpy&to=usd&amount=5000"
-//     dataType: 'jsonp',
-//     success: function(json) {
-//
-//         // access the conversion result in json.result
-//         json.result = ansJpy
-//
-//         $('#returnYen').val(ansJpy + selectedCode_baseText);
-//     }
-//
+// set endpoint and your access key
+endpoint = 'convert';
+access_key = '356b689f4db8b2616a786c31a7023829';
+inputCurrency = $('#currency').val();
+// define from currency, to currency, and amount
+from = selectedCode;
+to = selectedCode_base;
+amount = inputCurrency;
+
+// execute the conversion using the "convert" endpoint:
+$.ajax({
+    url: 'https://apilayer.net/api/' + endpoint + '?access_key=' + access_key +'&from=' + from + '&to=' + to + '&amount=' + amount,
+    // "http://apilayer.net/api/convert?access_key=356b689f4db8b2616a786c31a7023829&from=jpy&to=usd&amount=5000"
+    dataType: 'jsonp',
+    success: function(json) {
+
+        // access the conversion result in json.result
+        ansJpy = json.result
+
+        $('#returnYen').val(ansJpy + selectedCode_baseText);
+    }
+
 
 //============================================================================================================================================================================================================
 
-                    example1 = 300;                 // サンプル
-                    exampleYen1 = example1 * rate;  // サンプル計算
 
-                    $("#code").append(selectedCodeText.toUpperCase());
-                    $("#code_base").append(selectedCode_baseText.toUpperCase());
-                    $("#code2").append(selectedCodeText.toUpperCase());
-                    $("#update").append(update);
-                    $("#rate").append(rate);
-                    $("#example1").append(example1);
-                    $("#exampleYen1").append(exampleYen1);
-
-                    calc();
- }
             })
       })
 
