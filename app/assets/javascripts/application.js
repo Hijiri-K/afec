@@ -16,18 +16,21 @@
 
 $(document).ready(function(){
   $('.login-show').click(function(){
-
     $('#login-modal').fadeIn();
   });
 
   $('.signup-show').click(function(){
-
     $('#signup-modal').fadeIn();
+  });
+
+  $('.exchange-show').click(function(){
+    $('#exchange-modal').fadeIn();
   });
 
   $('.close-modal').click(function(){
     $('#login-modal').fadeOut();
     $('#signup-modal').fadeOut();
+    $('#exchange-modal').fadeOut();
   });
 
 //============================
@@ -66,6 +69,7 @@ $(document).ready(function(){
             // alert("緯度:"+lat+",経度"+lng);
           $('.lat').val(lat);
           $('.lng').val(lng);
+          $('.gps').addClass("fa fa-location-arrow").text(" Ready");
         },
         // 取得失敗した場合
         function(error) {

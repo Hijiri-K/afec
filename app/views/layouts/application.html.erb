@@ -31,65 +31,120 @@
         <%if session[:user_id]%>
           <!-- <li><%=link_to(@current_user.name,"/users/#{@current_user.id}/show")%></li> -->
           <!-- <li><%=link_to("投稿一覧","/posts/index")%></li> -->
-          <li><%=link_to("両替する","/posts/new")%></li>
+          <!-- <li><%=link_to("Exhange","/posts/new")%></li> -->
+          <li><a class = "exchange-show">Exhange</a></li>
           <!-- <li><%=link_to("ユーザー一覧","/users/index")%></li> -->
           <!-- <li><%=link_to("アップデート情報","/updates")%></li> -->
-          <li class= "login-btn"><%=link_to("ログアウト","/logout",{method:"post"})%></li>
+          <li class= "login-btn"><%=link_to("Logout","/logout",{method:"post"})%></li>
         <%else%>
-          <li><%=link_to("afecとは？","/about")%></li>
+          <li><%=link_to("About Afec","/about")%></li>
           <!-- <li><%=link_to("ユーザー登録","/signup")%></li> -->
           <!-- <li><%=link_to("アップデート情報","/updates")%></li> -->
-          <li class= "login-btn"><a class = "login-show">ログイン</a></li>
+          <li class= "login-btn"><a class = "login-show">Login</a></li>
         <%end%>
       </lu>
     </header>
-<!-- モーダルテスト -->
+
+<!-- モーダル========================================================================================================= -->
+<!-- モーダルログイン -->
     <div class="login-modal-wrapper" id="login-modal">
-    <div class="modal">
-      <!-- モーダルの閉じるボタンのHTMLを貼り付けてください -->
-      <div class = "close-modal">
-        <i class="fa fa-2x fa-times"></i>
-      </div>
-
-
-      <div id="login-form">
-
-          <h2>ログイン</h2>
-          <div class="form-error">
-            <%if @error_message%>
-            <%=@error_message%>
-            <%end%>
-          </div>
-            <%=form_tag("/login") do%>
-              <input name = "email" class="form-control" type="text" placeholder="メールアドレス">
-              <input name = "password" class="form-control" type="password" placeholder="パスワード">
-              <input class="submit-btn" type="submit" value="ログイン">
-            <%end%>
-      </div>
-    </div>
-  </div>
-
-  <!-- モーダルテスト新規-->
-      <div class="signup-modal-wrapper" id="signup-modal">
       <div class="modal">
-        <!-- モーダルの閉じるボタンのHTMLを貼り付けてください -->
         <div class = "close-modal">
           <i class="fa fa-2x fa-times"></i>
         </div>
-
-
-        <div id="signup-form">
-
-            <h2>新規登録</h2>
-              <%=form_tag("/users/create") do%>
-                <input name = "name" class="form-control" type="text" placeholder="ユーザーネーム">
-                <input name = "email" class="form-control" type="text" placeholder="メールアドレス">
-                <input name = "password" class="form-control" type="password" placeholder="パスワード">
-                <input class= "submit-btn" type="submit" value="新規登録">
+        <div id="login-form">
+            <h2>Login</h2>
+            <div class="form-error">
+              <%if @error_message%>
+              <%=@error_message%>
+              <%end%>
+            </div>
+              <%=form_tag("/login") do%>
+                <input name = "email" class="form-control" type="text" placeholder="E-mail">
+                <input name = "password" class="form-control" type="password" placeholder="Password">
+                <input class="submit-btn" type="submit" value="Login">
               <%end%>
         </div>
       </div>
     </div>
+
+  <!-- モーダル新規-->
+      <div class="signup-modal-wrapper" id="signup-modal">
+        <div class="modal">
+          <div class = "close-modal">
+            <i class="fa fa-2x fa-times"></i>
+          </div>
+          <div id="signup-form">
+              <h2>Signup</h2>
+                <div class="form-error">
+                  <%if @error_message%>
+                  <%=@error_message%>
+                  <%end%>
+                </div>
+                <%=form_tag("/users/create") do%>
+                  <input name = "name" class="form-control" type="text" placeholder="Username">
+                  <input name = "email" class="form-control" type="text" placeholder="E-mail">
+                  <input name = "password" class="form-control" type="password" placeholder="Password">
+                  <input class= "submit-btn" type="submit" value="Signup">
+                <%end%>
+          </div>
+        </div>
+      </div>
+
+  <!-- モーダル投稿-->
+      <div class="signup-modal-wrapper" id="exchange-modal">
+        <div class="modal">
+          <div class = "close-modal">
+            <i class="fa fa-2x fa-times"></i>
+          </div>
+          <div id="exchange-form">
+              <h2>Exchange</h2>
+              <div class="form-error">
+                <%if @error_message%>
+                <%=@error_message%>
+                <%end%>
+              </div>
+              <div class="form">
+                <div class="form-body">
+                <%=form_tag("/posts/create") do%>
+                    <p>I have</p>
+                    <select name="currency_have" class="form-control editable" id="Currency">
+                          <!--option value="">▼通貨</option-->
+                          <option value="1">Currency</option>
+                          <option value="usd">$(USD)</option>
+                          <option value="eur">€(EUR)</option>
+                          <option value="jpy">¥(JPY)</option>
+                    </select>
+
+                    <input name="input_currency" class="form-control location editable" size="5" placeholder="amount" type="number" id="currency">
+                    <p>I want</p>
+                    <select name="currency_want" class="form-control editable" id="Currency_base">
+                          <!--option value="">▼通貨</option-->
+                          <option value="1">Currency</option>
+                          <option value="usd">$(USD)</option>
+                          <option value="eur">€(EUR)</option>
+                          <option value="jpy">¥(JPY)</option>
+                    </select>
+                    <input id="returnYen" class = "location" type="float" name="currency_want_amount"  placeholder="amount">
+                    <p>Message</p>
+                    <input class = "editable"id = "message" name="content" placeholder="message">
+                    <p id = "test">GPS Location&emsp;<span class = "gps">Not Ready</span></p>
+
+                    <div class="locations">
+                      <p>緯度</p><input name = "lat" class = "lat"  value="未取得">
+                      <p>経度</p><input name = "lng" class = "lng"  value="未取得">
+                    </div>
+
+
+                    <input class = "location" type="submit" name="" value="投稿">
+                <%end%>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
 
 
 

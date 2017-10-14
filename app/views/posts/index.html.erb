@@ -48,7 +48,7 @@
 
           <!--交換可能な金額、手数料の浮いた分を計算するーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー  -->
           <%if @mypost.currency_want_amount <= post.currency_have_amount
-             give = "#{@mypost.currency_want_amount}" +" "+ "#{@mypost.currency_want}"
+             give = "#{@mypost.currency_want}" + " " + "#{@mypost.currency_want_amount}"
             elsif @mypost.currency_want_amount > post.currency_have_amount
              give = "#{post.currency_have}" + " " + "#{post.currency_have_amount}"
            end%>

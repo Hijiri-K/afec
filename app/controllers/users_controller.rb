@@ -25,7 +25,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to("/posts/index")
     else
-      render("users/new")
+      render("home/top")
     end
   end
 

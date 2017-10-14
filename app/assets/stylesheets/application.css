@@ -99,10 +99,10 @@
   top: 20%;
   left: 34%;*/
   background-color: #FFFAF0;
-  padding: 20px 0 40px;
+  padding: 20px 0 20px;
   border-radius: 10px;
   max-width: 450px;
-  width: 80%;
+  width: 85%;
   height: auto;
   text-align: center;
 
@@ -140,10 +140,10 @@
     cursor: pointer;
 }
 
-#signup-form h2, #login-form h2 {
+#signup-form h2, #login-form h2, #exchange-form h2 {
     color: #5f5d60;
     letter-spacing: 1px;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
 }
 
 .fa-times {
@@ -152,6 +152,19 @@
   right: 12px;
   color: rgba(128, 128, 128, 0.46);
   cursor: pointer;
+}
+
+.exchange-show {
+  cursor: pointer;
+}
+
+.gps {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.locations{
+  display: none;
 }
 
 /*レスポンシブ----------------------------------------------------------------*/
