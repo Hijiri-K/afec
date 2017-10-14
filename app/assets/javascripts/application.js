@@ -30,15 +30,15 @@ $(document).ready(function(){
     $('#exchange-modal').fadeIn();
   });
 
-  $('.show-show').click(function(){
-    $('#show-modal').fadeIn();
-  });
+  // $('.show-show').click(function(){
+  //   $('#show-modal').fadeIn();
+  // });
 
   $('.close-modal').click(function(){
     $('#login-modal').fadeOut();
     $('#signup-modal').fadeOut();
     $('#exchange-modal').fadeOut();
-    $('#show-modal').fadeOut();
+    // $('#show-modal').fadeOut();
   });
 
 //============================
@@ -116,6 +116,13 @@ $(document).ready(function(){
     //
   });
 
+
+
+
+
+
+
+
 // 通貨換算==================================================================================================
 
     $(function() {
@@ -161,7 +168,7 @@ $(document).ready(function(){
                     }else{
                       rate = 1;
                     }
-//========================================================================================================================================================================================================
+//==有料のAPI======================================================================================================================================================================================================
 // // set endpoint and your access key
 // endpoint = 'convert';
 // access_key = '356b689f4db8b2616a786c31a7023829';
@@ -173,7 +180,8 @@ $(document).ready(function(){
 //
 // // execute the conversion using the "convert" endpoint:
 // $.ajax({
-//     url: 'http://apilayer.net/api/' + endpoint + '?access_key=' + access_key +'&from=' + from + '&to=' + to + '&amount=' + amount,
+//     url: 'https://apilayer.net/api/' + endpoint + '?access_key=' + access_key +'&from=' + from + '&to=' + to + '&amount=' + amount,
+//     // "http://apilayer.net/api/convert?access_key=356b689f4db8b2616a786c31a7023829&from=jpy&to=usd&amount=5000"
 //     dataType: 'jsonp',
 //     success: function(json) {
 //
@@ -182,7 +190,7 @@ $(document).ready(function(){
 //
 //         $('#returnYen').val(ansJpy + selectedCode_baseText);
 //     }
-
+//
 
 //============================================================================================================================================================================================================
 
@@ -238,6 +246,11 @@ $(document).ready(function(){
         return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
     }
 
-
+    $('.show-show').click(function showshow() {
+      get = $('#info-get').text();
+      give = $('#info-give').text()
+      $('#gettest').text(get);
+      $('#givetest').text(give);
+      });
 
   });

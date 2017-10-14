@@ -13,10 +13,16 @@ class PostsController < ApplicationController
   end
 
   def show
+    if Post.find_by(user_id: @current_user.id)
+        @mypost = Post.find_by(user_id: @current_user.id)
+        @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
+    else
+      @posts = Post.all.order(created_at: :desc)
+    end
     @id = params[:id]
     @post = Post.find_by(id: params[:id])
     @user = User.find_by(id: @post.user_id)
-    @likes_count = Like.where(post_id: @post.id).count
+
   end
 
   def new
@@ -77,6 +83,7 @@ else
     flash[:notice] = "投稿を削除しました～～～～"
     redirect_to("/posts/index")
   end
+
 
 
 end

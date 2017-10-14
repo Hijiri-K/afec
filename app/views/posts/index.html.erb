@@ -14,7 +14,7 @@
       <%if Post.find_by(user_id: @current_user.id)%>
 
               i have <%=@mypost.currency_have%>
-              <%=@mypost.currency_have_amount%>
+              <%=@mypost.currency_have_amount%><br>
               i want <%=@mypost.currency_want%>
               <%=@mypost.currency_want_amount%>
               <!-- location
@@ -86,25 +86,27 @@
                   <%=link_to("#{user.name}","/users/#{user.id}/show")%>
                   </div>
 
-                  <div class="info">
-
-                      <p class = "post-message" id = "show-show"> <a><%=simple_format(post.content)%></a></p>
+                  <div class="info"><!--投稿内の内容を表示-->
+                      <p class = "post-message" id = "show-show"> <a><%=link_to(simple_format(post.content), "/posts/#{post.id}")%></a></p>
                       <!-- <p>i have <%=post.currency_have%>
                       <%=post.currency_have_amount%></p>
                       <p>i want <%=post.currency_want%>
                       <%=post.currency_want_amount%></p> -->
                       <div class= "post-subtitle"><p>we can trade </p></div>
-                      <div class = "post-money"><p><%=get%> <span class = "fa fa-chevron-right"></span> <%=give%></p></div>
+                      <div class = "post-money"><p><a id = "info-get"><%=get%> </a><span class = "fa fa-chevron-right"></span><a id = "info-give"> <%=give%></a></p></div>
                       <div class = "post-subtitle"><p>save committion</p></div>
                       <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div>
                       <!-- location<br>
                       緯度<%=post.lat%><br>
                       経度<%=post.lng%><br> -->
+
                       <div class = "post-money"> <p><%=distance.to_i%>m</p></div>
                   </div>
-                  <a class = "show-show">EXHANGE</a>
+
+                  <%=link_to("EXHANGE","/posts/#{post.id}", class: "show-show")%>
               </div>
           <%end%>
+
             <div class="login-modal-wrapper" id="show-modal">
               <div class="modal">
                 <div class = "close-modal">
@@ -119,30 +121,16 @@
                     </div>
                     <div class="info">
                         <p class = "post-message"><%=link_to(simple_format(post.content), "/posts/#{post.id}")%></p>
-                        <!-- <p>i have <%=post.currency_have%>
-                        <%=post.currency_have_amount%></p>
-                        <p>i want <%=post.currency_want%>
-                        <%=post.currency_want_amount%></p> -->
-
-
-
-                        <!-- <div class = "post-money"><p>You will give <%=get%></p></div>
-                        <div class = "post-money"><p>You will recieve <%=give%></p></div>
-                        <div class = "post-money"><p>You can save committion</p></div>
-                        <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div> -->
-
-
                         <div class= "post-subtitle"><p>You will give</p></div>
-                        <div class = "post-money"><p><%=get%></p></div>
+                        <div class = "post-money"><p id = "gettest"></p></div>
                         <div class= "post-subtitle"><p>You will recieve</p></div>
-                        <div class = "post-money"><p><%=give%></p></div>
+                        <div class = "post-money"><p id = "givetest"></p></div>
                         <div class = "post-subtitle"><p>You can save</p></div>
                         <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div>
                         <!-- location<br>
                         緯度<%=post.lat%><br>
                         経度<%=post.lng%><br> -->
                         <div class = "post-money"> <p><%=distance.to_i%>m</p></div>
-                        <a class = "exchange-btn">EXHANGE</a>
                     </div>
                       <!-- <%=form_tag("/login") do%>
                         <input name = "email" class="form-control" type="text" placeholder="E-mail">
@@ -152,9 +140,7 @@
                 </div>
               </div>
             </div>
-
-      <%end%>
-
+          <%end%>
   　<%end%>
   </div>
 </div>

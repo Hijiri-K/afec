@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
 
 
-
+  post 'posts/index' => "posts#index"
   get 'posts/index' => "posts#index"
   get "posts/new" => "posts#new"
   post "posts/create" => "posts#create"
@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   get "posts/:id/edit" => "posts#edit"
   post "posts/:id/update" => "posts#update"
   post "posts/:id/destroy" => "posts#destroy"
+  post "posts/showshow" => "posts#showshow"
 
 
   get '/' => "home#top"
