@@ -88,7 +88,7 @@
 
                   <div class="info">
 
-                      <p class = "post-message"><%=link_to(simple_format(post.content), "/posts/#{post.id}")%></p>
+                      <p class = "post-message" id = "show-show"> <a><%=simple_format(post.content)%></a></p>
                       <!-- <p>i have <%=post.currency_have%>
                       <%=post.currency_have_amount%></p>
                       <p>i want <%=post.currency_want%>
@@ -102,10 +102,59 @@
                       経度<%=post.lng%><br> -->
                       <div class = "post-money"> <p><%=distance.to_i%>m</p></div>
                   </div>
-                  <a class = "exchange-btn" href="#">EXHANGE</a>
+                  <a class = "show-show">EXHANGE</a>
               </div>
           <%end%>
+            <div class="login-modal-wrapper" id="show-modal">
+              <div class="modal">
+                <div class = "close-modal">
+                  <i class="fa fa-2x fa-times"></i>
+                </div>
+                <div id="login-form">
+                    <!-- <h2>Login</h2> -->
+                    <div class="post-user-name">
+                      <%user = User.find_by(id: post.user_id)%>
+                      <img src="<%="/user_images/#{user.image_name}"%>" alt="">
+                    <%=link_to("#{user.name}","/users/#{user.id}/show")%>
+                    </div>
+                    <div class="info">
+                        <p class = "post-message"><%=link_to(simple_format(post.content), "/posts/#{post.id}")%></p>
+                        <!-- <p>i have <%=post.currency_have%>
+                        <%=post.currency_have_amount%></p>
+                        <p>i want <%=post.currency_want%>
+                        <%=post.currency_want_amount%></p> -->
+
+
+
+                        <!-- <div class = "post-money"><p>You will give <%=get%></p></div>
+                        <div class = "post-money"><p>You will recieve <%=give%></p></div>
+                        <div class = "post-money"><p>You can save committion</p></div>
+                        <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div> -->
+
+
+                        <div class= "post-subtitle"><p>You will give</p></div>
+                        <div class = "post-money"><p><%=get%></p></div>
+                        <div class= "post-subtitle"><p>You will recieve</p></div>
+                        <div class = "post-money"><p><%=give%></p></div>
+                        <div class = "post-subtitle"><p>You can save</p></div>
+                        <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div>
+                        <!-- location<br>
+                        緯度<%=post.lat%><br>
+                        経度<%=post.lng%><br> -->
+                        <div class = "post-money"> <p><%=distance.to_i%>m</p></div>
+                        <a class = "exchange-btn">EXHANGE</a>
+                    </div>
+                      <!-- <%=form_tag("/login") do%>
+                        <input name = "email" class="form-control" type="text" placeholder="E-mail">
+                        <input name = "password" class="form-control" type="password" placeholder="Password">
+                        <input class="submit-btn" type="submit" value="Login">
+                      <%end%> -->
+                </div>
+              </div>
+            </div>
+
       <%end%>
+
   　<%end%>
   </div>
 </div>

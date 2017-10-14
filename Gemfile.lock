@@ -75,6 +75,9 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    jquery-turbolinks (2.1.0)
+      railties (>= 3.1.0)
+      turbolinks
     loofah (2.1.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -185,6 +188,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   geokit-rails
   jbuilder (~> 2.5)
+  jquery-turbolinks
   nokogiri
   open_uri_redirections
   pg

@@ -11,8 +11,11 @@
 // about supported directives.
 //
 //= require rails-ujs
+//= require jquery.turbolinks
 //= require turbolinks
 //= require_tree .
+
+//エラー防止のためjquery.turbolinksとturbolinksのgemを無効化中
 
 $(document).ready(function(){
   $('.login-show').click(function(){
@@ -27,10 +30,15 @@ $(document).ready(function(){
     $('#exchange-modal').fadeIn();
   });
 
+  $('.show-show').click(function(){
+    $('#show-modal').fadeIn();
+  });
+
   $('.close-modal').click(function(){
     $('#login-modal').fadeOut();
     $('#signup-modal').fadeOut();
     $('#exchange-modal').fadeOut();
+    $('#show-modal').fadeOut();
   });
 
 //============================
