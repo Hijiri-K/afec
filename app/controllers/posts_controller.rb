@@ -71,7 +71,6 @@ class PostsController < ApplicationController
         @post.lat = params[:lat]
         @post.lng = params[:lng]
         @post.user_id = @current_user.id
-        @post.offer = 0
     else
         @post = Post.new(
           content: params[:content],

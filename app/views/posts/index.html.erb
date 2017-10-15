@@ -17,14 +17,7 @@
               <%=@mypost.currency_have_amount%><br>
               i want <%=@mypost.currency_want%>
               <%=@mypost.currency_want_amount%>
-<%if @mypost.offer%>
-                <%= @mypost.offer%>
-                <%offerpost = Post.find_by(id: @mypost.offer)%>
-                <%offeruser = User.find_by(id: offerpost.user_id)%>
-                <%=offeruser.name%>
-<%end%>
-
-              <!-- location
+            <!-- location
               緯度<%=@mypost.lat%>
               経度<%=@mypost.lng%> -->
       <%end%>
