@@ -18,11 +18,13 @@ Rails.application.routes.draw do
   post "logout" => "users#logout"
 
 
-
+  post "posts/offer/:id" => "posts#offer"
+  post "posts/destroyoffer" => "posts#destroyoffer"
   post 'posts/index' => "posts#index"
   get 'posts/index' => "posts#index"
   get "posts/new" => "posts#new"
   post "posts/create" => "posts#create"
+
 
   get "posts/:id" => "posts#show"
   get "posts/:id/edit" => "posts#edit"

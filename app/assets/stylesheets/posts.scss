@@ -63,6 +63,11 @@
   font-size: 18px;
 }
 
+.info  {
+  font-size: 24px;
+  padding:20px;
+}
+
 .info a {
   font-size: 24px;
 }
@@ -76,6 +81,13 @@
 .post-money p{
   font-size: 22px;
   font-weight: bold;
+  // padding-bottom: 10px;
+}
+
+.post-distance p{
+  font-size: 22px;
+  font-weight: bold;
+  padding-bottom: 20px;
   // padding-bottom: 10px;
 }
 
@@ -102,11 +114,22 @@
   color: white;
 }
 
-.exchange-btn {
+.exchange-btn a {
   background-color: #7b5544;
-  padding:10px 20px;
+  padding:10px 100px;
   border-radius: 3px;
   color: white;
+}
+
+.exchange-btn-show{
+}
+
+.exchange-btn-show a {
+  background-color: #7b5544;
+  padding:10px 10px;
+  border-radius: 3px;
+  color: white;
+  margin: 10px;
 }
 
 /* posts/show ================================ */

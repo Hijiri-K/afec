@@ -68,71 +68,37 @@
 
 
 <!--＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
-    <%if @mypost.currency_have === "jpy"
-      coffee = (savem / 50).to_i
-    elsif @mypost.currency_have === "usd"
-      coffee = (savem / 0.5).to_i
-    elsif @mypost.currency_have === "eur"
-      coffee = (savem / 0.7).to_i
-    end%>
+      <%if @mypost.currency_have === "jpy"
+        coffee = (savem / 50).to_i
+      elsif @mypost.currency_have === "usd"
+        coffee = (savem / 0.5).to_i
+      elsif @mypost.currency_have === "eur"
+        coffee = (savem / 0.7).to_i
+      end%>
 
 
-    <%if distance < 200 %>　<!--200メートル以内の投稿のみを表示-->
-        <div class="posts-index-item">
-            <div class="post-user-name">
-              <%user = User.find_by(id: @post.user_id)%>
-              <img src="<%="/user_images/#{user.image_name}"%>" alt="">
-            <%=link_to("#{user.name}","/users/#{user.id}/show")%>
-            </div>
-
-            <div class="info"><!--投稿内の内容を表示-->
-                <p class = "post-message" id = "show-show"> <a><%=link_to(simple_format(@post.content), "/posts/#{@post.id}")%></a></p>
-
-                <div class= "post-subtitle"><p>we can trade </p></div>
-                <div class = "post-money"><p><a id = "info-get"><%=get%></a></p><p class = "mark">&emsp;&emsp;&emsp;<span class="fa fa-exchange" aria-hidden="true"></span></p><p><a id = "info-give"> <%=give%></a></p></div>                <div class = "post-subtitle"><p>save committion</p></div>
-                <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div>
-
-
-                <div class = "post-money"> <p><%=distance.to_i%>m</p></div>
-            </div>
-
-            <a class = "show-show">EXHANGE</a>
-        </div>
-    <%end%>
-
-      <div class="login-modal-wrapper" id="show-modal">
-        <div class="modal">
-          <div class = "close-modal">
-            <i class="fa fa-2x fa-times"></i>
-          </div>
-          <div id="login-form">
-              <!-- <h2>Login</h2> -->
+      <%if distance < 200 %>　<!--200メートル以内の投稿のみを表示-->
+          <div class="posts-index-item">
               <div class="post-user-name">
                 <%user = User.find_by(id: @post.user_id)%>
                 <img src="<%="/user_images/#{user.image_name}"%>" alt="">
               <%=link_to("#{user.name}","/users/#{user.id}/show")%>
               </div>
-              <div class="info">
-                  <p class = "post-message"><%=simple_format(@post.content)%></p>
-                  <div class= "post-subtitle"><p>You will give</p></div>
-                  <div class = "post-money"><p id = "gettest"></p></div>
-                  <div class= "post-subtitle"><p>You will recieve</p></div>
-                  <div class = "post-money"><p id = "givetest"></p></div>
-                  <div class = "post-subtitle"><p>You can save</p></div>
+
+              <div class="info"><!--投稿内の内容を表示-->
+                  <p class = "post-message" id = "show-show"> <a><%=link_to(simple_format(@post.content), "/posts/#{@post.id}")%></a></p>
+
+                  <div class= "post-subtitle"><p>we can trade </p></div>
+                  <div class = "post-money"><p><a id = "info-get"><%=get%></a></p><p class = "mark">&emsp;&emsp;&emsp;<span class="fa fa-exchange" aria-hidden="true"></span></p><p><a id = "info-give"> <%=give%></a></p></div>                <div class = "post-subtitle"><p>save committion</p></div>
                   <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div>
-                  <!-- location<br>
-                  緯度<%=@post.lat%><br>
-                  経度<%=@post.lng%><br> -->
+
+
                   <div class = "post-money"> <p><%=distance.to_i%>m</p></div>
               </div>
-                <!-- <%=form_tag("/login") do%>
-                  <input name = "email" class="form-control" type="text" placeholder="E-mail">
-                  <input name = "password" class="form-control" type="password" placeholder="Password">
-                  <input class="submit-btn" type="submit" value="Login">
-                <%end%> -->
+
+            <div class="exchange-btn"><%=link_to("EXHANGE", "/posts/offer/#{@post.id}", {method:"post"})%></div>
           </div>
-        </div>
-      </div>
-    <%end%>
+      <%end%>
+  <%end%>
 </div>
 </div>

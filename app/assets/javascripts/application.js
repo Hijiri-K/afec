@@ -30,15 +30,15 @@ $(document).ready(function(){
     $('#exchange-modal').fadeIn();
   });
 
-  // $('.show-show').click(function(){
-  //   $('#show-modal').fadeIn();
-  // });
+  $(function(){
+    $('#show-modal').fadeIn();
+  });
 
   $('.close-modal').click(function(){
     $('#login-modal').fadeOut();
     $('#signup-modal').fadeOut();
     $('#exchange-modal').fadeOut();
-    // $('#show-modal').fadeOut();
+    $('#show-modal').fadeOut();
   });
 
 //============================
@@ -114,7 +114,11 @@ $(document).ready(function(){
     //   });
     // });
     //
-  });
+  setInterval(getPosition, 5000); //5秒おきに現在地を取得
+  }
+
+
+);
 
 
 
@@ -251,10 +255,30 @@ $.ajax({
     }
 
     $('.show-show').click(function showshow() {
-      get = $('#info-get').text();
-      give = $('#info-give').text()
+      get = $('#getinfo').text();
+      give = $('#giveinfo').text()
       $('#gettest').text(get);
       $('#givetest').text(give);
       });
+
+
+
+
+
+
+
+// $(function(){
+//   $(function(){
+//     setInterval(update, 10000);
+//     //10000ミリ秒ごとにupdateという関数を実行する
+//   });
+//   function update(){ //この関数では以下のことを行う
+//     $.ajax({ //ajax通信で以下のことを行う
+//       url: location.href, //urlは現在のページを指定
+//       type: 'GET', //メソッドを指定
+//       dataType: 'json' //データはjson形式
+//     })
+//   }
+// });
 
   });

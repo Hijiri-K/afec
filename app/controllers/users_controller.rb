@@ -21,7 +21,7 @@ class UsersController < ApplicationController
       password: params[:password]
     )
     if @user.save
-      flash[:notice] = "ユーザー登録が完了しました。"
+      flash[:notice] = "Success to Signup"
       session[:user_id] = @user.id
       redirect_to("/posts/index")
     else
@@ -70,18 +70,18 @@ class UsersController < ApplicationController
       password: params[:password]
     )
     if @user
-      flash[:notice] = "ログインしました。"
+      flash[:notice] = "Success to Login"
       session[:user_id] = @user.id
       redirect_to("/posts/index")
     else
-      @error_message = "メールアドレスかパスワードがまちがってますよ～～～"
+      @error_message = "E-mail or Password is worng"
       render("home/top")
     end
   end
 
   def logout
     session[:user_id] = nil
-    # flash[:notice] = "ログアウトしました。"
+    flash[:notice] = "logouted"
     redirect_to("/")
   end
 
