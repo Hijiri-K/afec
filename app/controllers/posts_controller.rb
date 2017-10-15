@@ -47,7 +47,7 @@ class PostsController < ApplicationController
 
   def destroyoffer
     @mypost = Post.find_by(user_id: @current_user.id)
-    @mypost.offer = ""
+    @mypost.offer = nil
         if @mypost.save
           flash[:notice] = "You decline the offer"
           redirect_to("/posts/index")
