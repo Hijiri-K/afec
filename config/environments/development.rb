@@ -54,4 +54,11 @@ Rails.application.configure do
 
   #test hk eeable asset pipeline for development
 
+
+
+
+
+config.assets.precompile +=  ['cable.js', 'application.js', '*.css', '*.scss']
+
+
 end

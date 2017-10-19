@@ -13,14 +13,11 @@
 //= require rails-ujs
 //= require jquery.turbolinks
 //= require turbolinks
-//= require_tree .
+
 
 //エラー防止のためjquery.turbolinksとturbolinksのgemを無効化中
 
 $(document).ready(function(){
-
-
-
 
   $('.login-show').click(function(){
     $('#login-modal').fadeIn();
@@ -45,10 +42,6 @@ $(document).ready(function(){
 
   $('td').click(function(){
       $('#show-modal').fadeIn();
-    // console.log('Row: ' + row + ', Column: ' + col);
-    // var postmessage = $(this).find('a#show-show').text();
-    // var getinfo = $(this).find('a#getinfo').text();
-    // var giveinfo = $(this).find('a#giveinfo').text();
         var postmessageshow = $(this).find('.postmessage').text();
             getshow = $(this).find('.getinfo').text();
             giveshow = $(this).find('.giveinfo').text();
@@ -85,22 +78,6 @@ $(document).ready(function(){
           });
         });
 
-
-
-//============================
-
-  // $(function(){
-  //     var $items_wrapper = $('.container-i');
-  //     var $items = $('.save');
-  //     $items.sort(function(a, b){
-  //         return parseInt($(a).text()) < parseInt($(b).text());
-  //     });
-  //     // $items_wrapper.html("");
-  //     $items.each(function(){
-  //         $items_wrapper.append($(this));
-  //     })
-  // });
-//================================================
 
 // 現在地取得===================================================================
   $('.form-control').click(
@@ -145,21 +122,6 @@ $(document).ready(function(){
         // ,{enableHighAccuracy:true;}
       );
 
-    // $("div#source_form").click(function(){
-    //   $.ajax({
-    //     url: "sources/set_content",
-    //     type: "GET",
-    //     data: {content : $("div#editor").text()},
-    //     datatype: "html",
-    //     success: function(data){
-    //       //成功時の処理
-    //     },
-    //     error: function(data){
-    //       //失敗時の処理
-    //     }
-    //   });
-    // });
-    //
   setInterval(getPosition, 5000); //5秒おきに現在地を取得
   }
 );
@@ -268,9 +230,7 @@ $.ajax({
                 // $('#returnYen').text(ansJpy + selectedCode_baseText);   // 結果の表示
                 $('#returnYen').val(ansJpy + selectedCode_baseText);
             }
-        // })
       }
-
 
         // リセットボタン押下処理
         $('#resetButton').click(function(){
@@ -278,10 +238,8 @@ $.ajax({
         });
     });
 
-    /**
-     * 3桁のカンマ区切りの値をセット
-     *
-     */
+
+    //  3桁のカンマ区切りの値をセット
     function insertComma(num) {
         return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
     }
@@ -294,41 +252,20 @@ $.ajax({
       $('#givetest').text(give);
       });
 
-// $(function(){
-//   $(function(){
-//     setInterval(update, 10000);
-//     //10000ミリ秒ごとにupdateという関数を実行する
-//   });
-//   function update(){ //この関数では以下のことを行う
-//     $.ajax({ //ajax通信で以下のことを行う
-//       url: location.href, //urlは現在のページを指定
-//       type: 'GET', //メソッドを指定
-//       dataType: 'json' //データはjson形式
-//     })
-//   }
-// });
 
-
-
-
-
-
-
-  $(function(){
-      setInterval(function(){
-        $.ajax({
-            url: "/posts/checkoffer",
-            type: "post",
-
-            success: function(responce) {
-              // alert("ok");
-            },
-            error: function(xhr) {
-              // alert("error");
-            }
-        });
-
-
-      },5000);
-  });
+  // $(function(){
+  //     setInterval(function(){
+  //       $.ajax({
+  //           url: "/posts/checkoffer",
+  //           type: "post",
+  //
+  //           success: function(responce) {
+  //             // alert("ok");
+  //           },
+  //           error: function(xhr) {
+  //             // alert("error");
+  //           }
+  //       });
+  //     },5000);
+  // });
 });
