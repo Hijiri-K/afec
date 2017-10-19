@@ -1,58 +1,55 @@
 
 <div class="main posts-index">
-  <div class="new-post">
-    <div class="post-user-name">
+<!-- 自分のステータスを表示================================================================================ -->
+  <div class="mypost-status">
+    <div class="mypost-user-name">
       <img src="<%="/user_images/#{@current_user.image_name}"%>" alt="">
       <%=link_to("#{@current_user.name}","/users/#{@current_user.id}/show")%>
-      <%if Post.find_by(user_id: @current_user.id)%>
-          &emsp;&emsp;&emsp;<%=@mypost.content%>
-      <%end%>
-
     </div>
-
-    <div class="post-info">
+    <div class="myposts">
       <%if Post.find_by(user_id: @current_user.id)%>
-
-              i have <%=@mypost.currency_have%>
-              <%=@mypost.currency_have_amount%><br>
-              i want <%=@mypost.currency_want%>
-              <%=@mypost.currency_want_amount%>
-            <!-- location
-              緯度<%=@mypost.lat%>
-              経度<%=@mypost.lng%> -->
+      <div class = "mypost"><a>i have <%=@mypost.currency_have%><%=@mypost.currency_have_amount%></a></div>
+      <div class = "mypost"><a>i want <%=@mypost.currency_want%><%=@mypost.currency_want_amount%></a></div>
+      <%end%>
+    </div>
+      <%if Post.find_by(user_id: @current_user.id)%>
+        <p class = "mypostMessage">"<%=@mypost.content%>"</p>
       <%end%>
 
     </div>
   </div>
 
+<!-- 投稿の表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
   <div class="container-i">
+    <table align="center" cellspacing = "10">
     <%for post in @posts do%>
+    <tr>
       <%if Post.find_by(user_id: @current_user.id)%><!--自分が投稿している場合。（以下の処理は自分の投稿情報（@mypost）を使うので自分の投稿がない場合に実行するとエラーになる）-->
-<!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+      <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
           <!-- 距離の計算 -->
-          <%
-          lat1 = post.lat
-          lng1 = post.lng
-          lat2 = @mypost.lat
-          lng2 = @mypost.lng
+            <%
+            lat1 = post.lat
+            lng1 = post.lng
+            lat2 = @mypost.lat
+            lng2 = @mypost.lng
 
-          y1 = lat1 * Math::PI / 180
-          x1 = lng1 * Math::PI / 180
-          y2 = lat2 * Math::PI / 180
-          x2 = lng2 * Math::PI / 180
-          earth_r = 6378140
+            y1 = lat1 * Math::PI / 180
+            x1 = lng1 * Math::PI / 180
+            y2 = lat2 * Math::PI / 180
+            x2 = lng2 * Math::PI / 180
+            earth_r = 6378140
 
-          deg = Math::sin(y1) * Math::sin(y2) + Math::cos(y1) * Math::cos(y2) * Math::cos(x2 - x1)
-          distance = earth_r * (Math::atan(-deg / Math::sqrt(-deg * deg + 1)) + Math::PI / 2)
-          # /1000
-          %>
+            deg = Math::sin(y1) * Math::sin(y2) + Math::cos(y1) * Math::cos(y2) * Math::cos(x2 - x1)
+            distance = earth_r * (Math::atan(-deg / Math::sqrt(-deg * deg + 1)) + Math::PI / 2)
+            # /1000
+            %>
 
           <!--交換可能な金額、手数料の浮いた分を計算するーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー  -->
-          <%if @mypost.currency_want_amount <= post.currency_have_amount
-             give = "#{@mypost.currency_want}" + " " + "#{@mypost.currency_want_amount}"
-            elsif @mypost.currency_want_amount > post.currency_have_amount
-             give = "#{post.currency_have}" + " " + "#{post.currency_have_amount}"
-           end%>
+           <%if @mypost.currency_want_amount <= post.currency_have_amount
+              give = "#{@mypost.currency_want}" + " " + "#{@mypost.currency_want_amount}"
+             elsif @mypost.currency_want_amount > post.currency_have_amount
+              give = "#{post.currency_have}" + " " + "#{post.currency_have_amount}"
+             end%>
 
            <%if @mypost.currency_want_amount <= post.currency_have_amount
               get = "#{@mypost.currency_have}" + " " + "#{@mypost.currency_have_amount}"
@@ -60,16 +57,15 @@
               get = "#{post.currency_want}" + " " + "#{post.currency_want_amount}"
             end%>
 
-            <%if  @mypost.currency_want_amount <= post.currency_have_amount
-              savem = (@mypost.currency_have_amount * 0.05).round(1)
-              save ="#{@mypost.currency_have}" + " " + "#{(@mypost.currency_have_amount * 0.05).round(1)}"
-              elsif @mypost.currency_want_amount > post.currency_have_amount
-              savem = (post.currency_want_amount * 0.05).round(1)
-              save ="#{post.currency_want}" + " " + "#{(post.currency_want_amount * 0.05).round(1)}"
-            end%>
+          <%if  @mypost.currency_want_amount <= post.currency_have_amount
+            savem = (@mypost.currency_have_amount * 0.05).round(1)
+            save ="#{@mypost.currency_have}" + " " + "#{(@mypost.currency_have_amount * 0.05).round(1)}"
+            elsif @mypost.currency_want_amount > post.currency_have_amount
+            savem = (post.currency_want_amount * 0.05).round(1)
+            save ="#{post.currency_want}" + " " + "#{(post.currency_want_amount * 0.05).round(1)}"
+          end%>
 
-
-<!--＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+        <!--コーヒーの数を計算（1杯５０円で計算）＝＝＝＝＝＝＝＝===＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
           <%if @mypost.currency_have === "jpy"
             coffee = (savem / 50).to_i
           elsif @mypost.currency_have === "usd"
@@ -78,121 +74,151 @@
             coffee = (savem / 0.7).to_i
           end%>
 
-
+<!--投稿の表示===========================================================================================================================  -->
           <%if distance < 200 %>　<!--200メートル以内の投稿のみを表示-->
-              <div class="posts-index-item">
+              <td class="posts-index-item">
                   <div class="post-user-name">
                     <%user = User.find_by(id: post.user_id)%>
-                    <img src="<%="/user_images/#{user.image_name}"%>" alt="">
+                    <img class = "user-image"  src="<%="/user_images/#{user.image_name}"%>" alt="">
                   <%=link_to("#{user.name}","/users/#{user.id}/show")%>
                   </div>
 
                   <div class="info"><!--投稿内の内容を表示-->
-                      <p class = "post-message" id = "show-show"> <a><%=link_to(simple_format(post.content), "/posts/#{post.id}")%></a></p>
+                      <p class = "mypostMessage-post"><a>"<%=post.content%>"</a></p>
                       <!-- <p>i have <%=post.currency_have%>
                       <%=post.currency_have_amount%></p>
                       <p>i want <%=post.currency_want%>
                       <%=post.currency_want_amount%></p> -->
+                      <p class = "postid"><%=post.id%></p>
                       <div class= "post-subtitle"><p>we can trade </p></div>
-                      <div class = "post-money"><p><a id = "getinfo"><%=get%></a></p><p class = "mark">&emsp;&emsp;&emsp;<span class="fa fa-exchange" aria-hidden="true"></span></p><p><a id = "giveinfo"> <%=give%></a></p></div>
+                      <!-- <div class = "post-money"><p class = "getinfo"><a><%=get%></a></p><p class = "mark">&emsp;&emsp;&emsp;<span class="fa fa-exchange" aria-hidden="true"></span></p><p class = "giveinfo"><a> <%=give%></a></p></div> -->
+
+                      <div class="myposts-post">
+                        <div class = "mypost-post"><a class = "getinfo"><%=get%></a></div>
+                        <a class="fa fa-exchange"></a>
+                        <div class = "mypost-post"><a class = "giveinfo"><%=give%></a></div>
+                      </div>
+
                       <div class = "post-subtitle"><p>save committion</p></div>
-                      <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div>
+                      <div class = "post-money"><p><a class = "saveinfo"><%=save%></a>&emsp;<a class = "coffeeinfo"><i class="fa fa-coffee"></i><%=coffee%></a></p></div>
                       <!-- location<br>
                       緯度<%=post.lat%><br>
                       経度<%=post.lng%><br> -->
 
+
+
                       <div class = "post-money"> <p><%=distance.to_i%>m</p></div>
                   </div>
-
-                  <%=link_to("EXHANGE","/posts/#{post.id}", class: "show-show")%>
-              </div>
+              </td>
           <%end%>
-
-<!--offerが来てる場合の処理＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
-          <%if @mypost.offer%>
-          <%offerpost = Post.find_by(id: @mypost.offer)%>
-          <%offeruser = User.find_by(id: offerpost.user_id)%>
-
-          <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-                    <!-- 距離の計算 -->
-                    <%
-                    lat1 = offerpost.lat
-                    lng1 = offerpost.lng
-                    lat2 = @mypost.lat
-                    lng2 = @mypost.lng
-
-                    y1 = lat1 * Math::PI / 180
-                    x1 = lng1 * Math::PI / 180
-                    y2 = lat2 * Math::PI / 180
-                    x2 = lng2 * Math::PI / 180
-                    earth_r = 6378140
-
-                    deg = Math::sin(y1) * Math::sin(y2) + Math::cos(y1) * Math::cos(y2) * Math::cos(x2 - x1)
-                    distance = earth_r * (Math::atan(-deg / Math::sqrt(-deg * deg + 1)) + Math::PI / 2)
-                    # /1000
-                    %>
-
-                    <!--交換可能な金額、手数料の浮いた分を計算するーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー  -->
-                    <%if @mypost.currency_want_amount <= offerpost.currency_have_amount
-                       give = "#{@mypost.currency_want}" + " " + "#{@mypost.currency_want_amount}"
-                      elsif @mypost.currency_want_amount > offerpost.currency_have_amount
-                       give = "#{offerpost.currency_have}" + " " + "#{offerpost.currency_have_amount}"
-                     end%>
-
-                     <%if @mypost.currency_want_amount <= offerpost.currency_have_amount
-                        get = "#{@mypost.currency_have}" + " " + "#{@mypost.currency_have_amount}"
-                        elsif @mypost.currency_want_amount > offerpost.currency_have_amount
-                        get = "#{offerpost.currency_want}" + " " + "#{offerpost.currency_want_amount}"
-                      end%>
-
-                      <%if  @mypost.currency_want_amount <= offerpost.currency_have_amount
-                        savem = (@mypost.currency_have_amount * 0.05).round(1)
-                        save ="#{@mypost.currency_have}" + " " + "#{(@mypost.currency_have_amount * 0.05).round(1)}"
-                        elsif @mypost.currency_want_amount > offerpost.currency_have_amount
-                        savem = (offerpost.currency_want_amount * 0.05).round(1)
-                        save ="#{offerpost.currency_want}" + " " + "#{(offerpost.currency_want_amount * 0.05).round(1)}"
-                      end%>
-
-<!-- ===================================================================================================================== -->
-
-
-
-
-
-
-
-            <div class="show-modal-wrapper" id="show-modal">
-              <div class="modal">
-                <div class = "close-modal">
-                  <i class="fa fa-2x fa-times"></i>
-                </div>
-                <div id="login-form">
-                    <h2>Recieved offer</h2>
-                    <div class="post-user-name">
-                      <%offeruser = User.find_by(id: offerpost.user_id)%>
-                      <img src="<%="/user_images/#{offeruser.image_name}"%>" alt="">
-                    <%=link_to("#{offeruser.name}","/users/#{offeruser.id}/show")%>
-                    </div>
-                    <div class="info">
-                        <p class = "post-message"><%=link_to(simple_format(offerpost.content), "/offerposts/#{post.id}")%></p>
-                        <div class= "post-subtitle"><p>You will give</p></div>
-                        <div class = "post-money"><p id = "gettest"><%=get%></p></div>
-                        <div class= "post-subtitle"><p>You will recieve</p></div>
-                        <div class = "post-money"><p id = "givetest"><%=give%></p></div>
-                        <div class = "post-subtitle"><p>You can save</p></div>
-                        <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div>
-                        <!-- location<br>
-                        緯度<%=post.lat%><br>
-                        経度<%=post.lng%><br> -->
-                        <div class = "post-distance"> <p><%=distance.to_i%>m</p></div>
-
-                    <div class ="exchange-btn-show"><%=link_to("Accept")%><%=link_to("decline", "/posts/destroyoffer",{method:"post"})%></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <%end%>
-          <%end%>
-  　<%end%>
+        <%end%>
+       </tr>
+    　<%end%>
+    </table>
   </div>
 </div>
+<!--詳細モーダル ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+  <div class="show-modal-wrapper" id="show-modal">
+    <div class="modal">
+      <div class = "close-modal">
+        <i class="fa fa-2x fa-times"></i>
+      </div>
+      <div id="login-form">
+        <h2>detail</h2>
+        <div class="post-user-name" id ="post-user-name-show">
+          </div>
+            <div class="info">
+                <div class = "post-message"><p id = "postmessageshow"></p></div>
+                <div class = "post-subtitle"><p>You will give</p></div>
+                <!-- <div class = "post-money"><p id = "getshow"></p></div> -->
+                <div class = "mypost-detail"><a id = "getshow"></a></div>
+                <div class = "post-subtitle"><p>You will recieve</p></div>
+                <!-- <div class = "post-money"><p id = "giveshow"></p></div> -->
+                <div class = "mypost-detail"><a id = "giveshow"></a></div>
+                <div class = "post-subtitle"><p>You can save</p></div>
+                <div class = "post-money"><p><a id = "saveshow"></a>&emsp;<a id = "coffeeshow"></a></p></div>
+
+            </div>
+          </div>
+          <a class="exchange-btn" id = "offersubmit">OFFER</a>
+    </div>
+  </div>
+<!-- 詳細モーダルおわり==================================================================================================================== -->
+
+  <!-- offerが来てる場合の処理＝＝オファーモーダルの表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
+  <%if @checkoffer%>
+    <%offerpost = Post.find_by(id: @checkoffer)%>
+    <%offeruser = User.find_by(id: offerpost.user_id)%>
+
+  <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+        <!-- 距離の計算 -->
+        <%
+        lat1 = offerpost.lat
+        lng1 = offerpost.lng
+        lat2 = @mypost.lat
+        lng2 = @mypost.lng
+
+        y1 = lat1 * Math::PI / 180
+        x1 = lng1 * Math::PI / 180
+        y2 = lat2 * Math::PI / 180
+        x2 = lng2 * Math::PI / 180
+        earth_r = 6378140
+
+        deg = Math::sin(y1) * Math::sin(y2) + Math::cos(y1) * Math::cos(y2) * Math::cos(x2 - x1)
+        distance = earth_r * (Math::atan(-deg / Math::sqrt(-deg * deg + 1)) + Math::PI / 2)
+        # /1000
+        %>
+
+        <!--交換可能な金額、手数料の浮いた分を計算するーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー  -->
+        <%if @mypost.currency_want_amount <= offerpost.currency_have_amount
+            give = "#{@mypost.currency_want}" + " " + "#{@mypost.currency_want_amount}"
+          elsif @mypost.currency_want_amount > offerpost.currency_have_amount
+            give = "#{offerpost.currency_have}" + " " + "#{offerpost.currency_have_amount}"
+        end%>
+
+        <%if @mypost.currency_want_amount <= offerpost.currency_have_amount
+            get = "#{@mypost.currency_have}" + " " + "#{@mypost.currency_have_amount}"
+          elsif @mypost.currency_want_amount > offerpost.currency_have_amount
+            get = "#{offerpost.currency_want}" + " " + "#{offerpost.currency_want_amount}"
+        end%>
+
+        <%if  @mypost.currency_want_amount <= offerpost.currency_have_amount
+            savem = (@mypost.currency_have_amount * 0.05).round(1)
+            save ="#{@mypost.currency_have}" + " " + "#{(@mypost.currency_have_amount * 0.05).round(1)}"
+          elsif @mypost.currency_want_amount > offerpost.currency_have_amount
+            savem = (offerpost.currency_want_amount * 0.05).round(1)
+            save ="#{offerpost.currency_want}" + " " + "#{(offerpost.currency_want_amount * 0.05).round(1)}"
+        end%>
+
+  <!--モーダルの内容  ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+      <div class="offer-modal-wrapper">
+        <div class="modal">
+          <div class = "close-modal">
+            <i class="fa fa-2x fa-times"></i>
+          </div>
+          <div id="login-form">
+              <h2>Recieved offer</h2>
+              <div class="post-user-name">
+                <%offeruser = User.find_by(id: offerpost.user_id)%>
+                <img src="<%="/user_images/#{offeruser.image_name}"%>" alt="">
+              <%=link_to("#{offeruser.name}","/users/#{offeruser.id}/show")%>
+              </div>
+              <div class="info">
+                  <p class = "post-message"><%=link_to(simple_format(offerpost.content), "/offerposts/#{post.id}")%></p>
+                  <div class= "post-subtitle"><p>You will give</p></div>
+                  <div class = "post-money"><p id = "gettest"><%=get%></p></div>
+                  <div class= "post-subtitle"><p>You will recieve</p></div>
+                  <div class = "post-money"><p id = "givetest"><%=give%></p></div>
+                  <div class = "post-subtitle"><p>You can save</p></div>
+                  <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div>
+                  <!-- location<br>
+                  緯度<%=post.lat%><br>
+                  経度<%=post.lng%><br> -->
+                  <div class = "post-distance"> <p><%=distance.to_i%>m</p></div>
+              <div class ="exchange-btn-show"><%=link_to("Accept")%><%=link_to("decline", "/posts/destroyoffer",{method:"post"})%></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <%end%>
+    <!--オファーモーダルおわり＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->

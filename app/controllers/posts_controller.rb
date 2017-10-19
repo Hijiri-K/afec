@@ -8,16 +8,17 @@ class PostsController < ApplicationController
     else
       @posts = Post.all.order(created_at: :desc)
     end
-
-    # respond_to do |format|
-    #       format.html # html形式でアクセスがあった場合は特に何もなし(@messages = Message.allして終わり）
-    #       format.json {@offer = Post.find_by(offer: @mypost.id)} # json形式でアクセスがあった場合は、:offer に自分のidがないかを検索して@offerに代入する
-    # end
-    #
-    # if Post.find_by(offer: @mypost.id)
-    #       @offer = Post.find_by(offer: @mypost.id)
-    # end
+    require 'json'
+    @mypost = Post.find_by(user_id: @current_user.id)
+    if File.exist?("app/assets/javascripts/offers/#{@mypost.id}.json")
+      File.open("app/assets/javascripts/offers/#{@mypost.id}.json", 'r') do |f|
+      offers = JSON.load(f)
+      @checkoffer = offers.fetch("offer_from")
+      @offer_to = offers.fetch("offer_from")
+    end
   end
+  end
+
 
   def show
     if Post.find_by(user_id: @current_user.id)
@@ -31,30 +32,45 @@ class PostsController < ApplicationController
     @user = User.find_by(id: @post.user_id)
   end
 
+
   def offer
         @mypost = Post.find_by(user_id: @current_user.id)
         @post = Post.find_by(id: params[:id])
-        @post.offer = @mypost.id
+        # @post.offer = @mypost.id
 
+        File.open("app/assets/javascripts/offers/#{@post.id}.json", 'w') do |f|
+          hash = {"offer_from"=> @mypost.id, "offer_to" => @post.id}
+          str = JSON.dump(hash, f)
+        end
 
-    if @post.save
+    # if @post.save
       flash[:notice] = "Success to send offer"
       redirect_to("/posts/index")
-    else
-      render("posts/show")
-    end
+    # else
+    #   render("posts/show")
+    # end
   end
+
 
   def destroyoffer
     @mypost = Post.find_by(user_id: @current_user.id)
     @mypost.offer = nil
-        if @mypost.save
-          flash[:notice] = "You decline the offer"
+    File.delete("app/assets/javascripts/offers/#{@mypost.id}.json")
+        # if @mypost.save
+        #   flash[:notice] = "You decline the offer"
           redirect_to("/posts/index")
-        else
-          # render("posts/index")
-        end
+        # else
+        #   # render("posts/index")
+        # end
   end
+
+  def checkoffer
+      @mypost = Post.find_by(user_id: @current_user.id)
+      if File.exist?("app/assets/javascripts/offers/#{@mypost.id}.json")
+        redirect_to("/posts/index")
+      end
+  end
+
 
   def new
     @post = Post.new
@@ -96,6 +112,7 @@ class PostsController < ApplicationController
     @post = Post.find_by(id: params[:id])
   end
 
+
   def update
     @post = Post.find_by(id: params[:id])
     @post.content = params[:content]
@@ -106,6 +123,7 @@ class PostsController < ApplicationController
       render("posts/edit")
     end
   end
+
 
   def destroy
     @post = Post.find_by(id: params[:id])

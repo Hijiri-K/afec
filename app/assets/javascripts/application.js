@@ -18,6 +18,10 @@
 //エラー防止のためjquery.turbolinksとturbolinksのgemを無効化中
 
 $(document).ready(function(){
+
+
+
+
   $('.login-show').click(function(){
     $('#login-modal').fadeIn();
   });
@@ -30,16 +34,58 @@ $(document).ready(function(){
     $('#exchange-modal').fadeIn();
   });
 
-  $(function(){
-    $('#show-modal').fadeIn();
+  $('.close-modal').click(function(){
+            $('#login-modal').fadeOut();
+            $('#signup-modal').fadeOut();
+            $('#exchange-modal').fadeOut();
+            $('#show-modal').fadeOut();
   });
 
-  $('.close-modal').click(function(){
-    $('#login-modal').fadeOut();
-    $('#signup-modal').fadeOut();
-    $('#exchange-modal').fadeOut();
-    $('#show-modal').fadeOut();
-  });
+
+
+  $('td').click(function(){
+      $('#show-modal').fadeIn();
+    // console.log('Row: ' + row + ', Column: ' + col);
+    // var postmessage = $(this).find('a#show-show').text();
+    // var getinfo = $(this).find('a#getinfo').text();
+    // var giveinfo = $(this).find('a#giveinfo').text();
+        var postmessageshow = $(this).find('.postmessage').text();
+            getshow = $(this).find('.getinfo').text();
+            giveshow = $(this).find('.giveinfo').text();
+            saveshow = $(this).find('.saveinfo').text();
+            coffeeshow = $(this).find('.coffeeinfo').html();
+            postusernameshow = $(this).find('.post-user-name').html();
+            postid = $(this).find('.postid').text();
+
+            $('#postmessageshow').text(postmessageshow);
+            $('#getshow').text(getshow);
+            $('#giveshow').text(giveshow);
+            $('#saveshow').text(saveshow);
+            $('#coffeeshow').html(coffeeshow);
+            $('#post-user-name-show').html(postusernameshow);
+
+        $('#offersubmit').click(function(){
+            $.ajax({
+                url: "/posts/offer",
+                type: "post",
+                data: {id: postid},
+                success: function(responce) {
+                  var postmessageshow = null
+                      getshow = null
+                      giveshow = null
+                      saveshow = null
+                      coffeeshow = null
+                      postusernameshow = null
+                      postid = null
+            },
+            error: function(xhr) {
+                // alert("errror");
+            }
+            });
+          });
+        });
+
+
 
 //============================
 
@@ -116,16 +162,7 @@ $(document).ready(function(){
     //
   setInterval(getPosition, 5000); //5秒おきに現在地を取得
   }
-
-
 );
-
-
-
-
-
-
-
 
 // 通貨換算==================================================================================================
 
@@ -149,8 +186,6 @@ $(document).ready(function(){
             selectedCodeText = $('#Currency option:selected').text();// 選択した通貨(key)
             selectedCode_baseText = $('#Currency_base option:selected').text();  //================================
             // var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&to=jpy&code=' + selectedCode; //元のこーど
-
-
 
 
 //レートテスト
@@ -234,10 +269,7 @@ $.ajax({
                 $('#returnYen').val(ansJpy + selectedCode_baseText);
             }
         // })
-
-
       }
-
 
 
         // リセットボタン押下処理
@@ -254,18 +286,13 @@ $.ajax({
         return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
     }
 
+
     $('.show-show').click(function showshow() {
-      get = $('#getinfo').text();
-      give = $('#giveinfo').text()
+      get = $('.getinfo').text();
+      give = $('.giveinfo').text()
       $('#gettest').text(get);
       $('#givetest').text(give);
       });
-
-
-
-
-
-
 
 // $(function(){
 //   $(function(){
@@ -281,4 +308,27 @@ $.ajax({
 //   }
 // });
 
+
+
+
+
+
+
+  $(function(){
+      setInterval(function(){
+        $.ajax({
+            url: "/posts/checkoffer",
+            type: "post",
+
+            success: function(responce) {
+              // alert("ok");
+            },
+            error: function(xhr) {
+              // alert("error");
+            }
+        });
+
+
+      },5000);
   });
+});

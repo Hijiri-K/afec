@@ -2,17 +2,58 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 /* posts/index ================================ */
+.posts-index{
+  margin: 0 auto;
 
-.new-post  {
-  padding: 15px 20px;
+}
+.mypost-status  {
   background-color:#cc8d70;
-  // overflow: hidden;
-  vertical-align: middle;
+  overflow: hidden;
   margin-top: 64px;
   position: fixed;
   width:100%;
-  height:120px; //60pxから変更
+  height:110px;
   z-index: 10;
+}
+
+.mypost {
+  background-color: rgba(255,255,255,.8);
+  margin: 3px 5px;
+  padding:0 8px;
+  border-radius: 30px;
+  width:100%;
+}
+
+.mypost-post {
+  background-color: rgba(204, 141, 112,.8);
+  padding:0 8px;
+  border-radius: 30px;
+  width:43%;
+  display: inline-block;
+}
+
+.mypost-detail {
+  background-color: rgba(204, 141, 112,.8);
+  margin: 0 auto;
+  margin-bottom: 10px;
+  padding:0 8px;
+  border-radius: 30px;
+  width:80%;
+}
+
+
+
+.myposts{
+  width:55%;
+  display: inline-block;
+  padding-top:5px;
+}
+
+.myposts-post{
+  width:100%;
+  display: inline-block;
+    padding-bottom:10px;
+
 }
 
 .mypostcontent p {
@@ -21,42 +62,78 @@
 
 
 .posts-index-item {
-  padding: 20px 30px;
+  padding: 15px 15px;
   background-color: white;
   overflow: hidden;
   box-shadow: 0 2px 6px #c1ced7;
+  width:600px;
 }
 
+
+.mypost-user-name  {
+  font-size: 16px;
+  width:40%;
+  display: inline-block;
+  // vertical-align: middle;
+}
 
 .post-user-name  {
-  height: 56px;
-  line-height: 56px;
+  font-size: 16px;
+  display: inline-block;
+  // vertical-align: middle;
 }
 
+
+.mypost-user-name img {
+  width: 40px;
+  height:40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 10px;
+}
 
 .post-user-name img {
   width: 40px;
   height:40px;
-  border-radius: 40%;
-  box-shadow: 0 2px 6px #c1ced7;
+  border-radius: 50%;
   object-fit: cover;
-  vertical-align: middle;
+  margin-left: 10px;
 }
 
 .post-user-name a {
-  font-weight: 600;
-  vertical-align: middle;
+  font-size: 16px;
+  font-weight:normal;
   padding-left: 10px;
+  vertical-align: top;
+  line-height: 40px;
+}
+
+.mypost-user-name a {
+  font-size: 16px;
+  font-weight:normal;
+  padding-left: 10px;
+  vertical-align: top;
+  line-height: 40px;
+}
+
+.mypostMessage {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.mypostMessage-post {
+  text-align: center;
 }
 
 .container-i {
   max-width:600px;
-  margin: 30px auto;
-  padding-top: 140px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-top: 150px;
+
+
   clear: both;
   position:relative;
+  margin: auto;
+  align:center;
 }
 
 .container-i a{
@@ -64,23 +141,22 @@
 }
 
 .info  {
-  font-size: 24px;
-  padding:20px;
+  // padding:0 10px;
 }
 
 .info a {
-  font-size: 24px;
+  font-size: 18px;
+
 }
 
 .post-subtitle p{
-  padding-top: 10px;
-  font-size: 22px;
+  // padding-top: 10px;
+  font-size: 20px;
 
 }
 
 .post-money p{
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 18px;
   // padding-bottom: 10px;
 }
 
@@ -114,24 +190,24 @@
   color: white;
 }
 
-.exchange-btn a {
+.exchange-btn  {
   background-color: #7b5544;
-  padding:10px 100px;
+  padding:3% 30%;
   border-radius: 3px;
   color: white;
+  margin-top: 30px;
 }
 
-.exchange-btn-show{
+
+.nomatch {
+  text-align: center;
+  font-size: 20px;
+  vertical-align: middle;
 }
 
-.exchange-btn-show a {
-  background-color: #7b5544;
-  padding:10px 10px;
-  border-radius: 3px;
-  color: white;
-  margin: 10px;
+.postid{
+  display: none;
 }
-
 /* posts/show ================================ */
 .posts-show form {
   display: inline;
