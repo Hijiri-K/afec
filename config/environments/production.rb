@@ -90,7 +90,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
 
-config.assets.precompile +=  ['cable.js', 'application.js', '*.css', '*.scss']
+# config.assets.precompile +=  ['cable.js', 'application.js', '*.css', '*.scss']
 
 
 
