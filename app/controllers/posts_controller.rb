@@ -38,7 +38,7 @@ class PostsController < ApplicationController
         @post = Post.find_by(id: params[:id])
         # @post.offer = @mypost.id
 
-        File.open("app/assets/javascripts/offers/#{@post.id}.json", 'w+') do |f|
+        File.open("app/assets/javascripts/#{@post.id}.json", 'w') do |f| 
           hash = {"offer_from": @mypost.id, "offer_to": @post.id}
           str = JSON.dump(hash, f)
         end
