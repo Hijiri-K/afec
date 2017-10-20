@@ -62,13 +62,14 @@ $(document).ready(function(){
             $('#saveshow').text(saveshow);
             $('#coffeeshow').html(coffeeshow);
             $('#post-user-name-show').html(postusernameshow);
+            $('#postid-show').text(postid);
 
         $('#offersubmit').click(function(){
             $.ajax({
                 url: "/posts/offer",
                 type: "post",
                 // dataType: "html",
-                data: {id: 12},
+                data: {id: postid},
                 success: function(responce) {
                   var postmessageshow = null
                       getshow = null
@@ -260,19 +261,19 @@ $.ajax({
       });
 
 
-  // $(function(){
-  //     setInterval(function(){
-  //       $.ajax({
-  //           url: "/posts/checkoffer",
-  //           type: "post",
-  //
-  //           success: function(responce) {
-  //             // alert("ok");
-  //           },
-  //           error: function(xhr) {
-  //             // alert("error");
-  //           }
-  //       });
-  //     },5000);
-  // });
+  $(function(){
+      setInterval(function(){
+        $.ajax({
+            url: "/posts/checkoffer",
+            type: "post",
+
+            success: function(responce) {
+              // alert("ok");
+            },
+            error: function(xhr) {
+              // alert("error");
+            }
+        });
+      },5000);
+  });
 });
