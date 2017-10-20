@@ -13,9 +13,9 @@
 //= require rails-ujs
 //= require jquery.turbolinks
 //= require turbolinks
-// = require_tree .
+// = require_tree 
 
-//エラー防止のためjquery.turbolinksとturbolinksのgemを無効化中
+//エラー防止のためjquery.turbolinksとturbolinksと require_treeのgemを無効化中
 
 $(document).ready(function(){
 
