@@ -61,6 +61,7 @@ $(document).ready(function(){
             $.ajax({
                 url: "/posts/offer",
                 type: "post",
+                dataType: "html",
                 data: {id: 12},
                 success: function(responce) {
                   var postmessageshow = null
