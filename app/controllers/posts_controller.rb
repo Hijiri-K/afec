@@ -10,8 +10,8 @@ class PostsController < ApplicationController
     end
     require 'json'
     @mypost = Post.find_by(user_id: @current_user.id)
-    if File.exist?("app/assets/javascripts/offers/#{@mypost.id}.json")
-      File.open("app/assets/javascripts/offers/#{@mypost.id}.json", 'r') do |f|
+    if File.exist?("tmp/#{@mypost.id}.json")
+      File.open("tmp/#{@mypost.id}.json", 'r') do |f|
       offers = JSON.load(f)
       @checkoffer = offers.fetch("offer_from")
       @offer_to = offers.fetch("offer_from")
@@ -38,7 +38,7 @@ class PostsController < ApplicationController
         @post = Post.find_by(id: params[:id])
         # @post.offer = @mypost.id
 
-        File.open("app/assets/javascripts/#{@post.id}.json", 'w') do |f|
+        File.open("tmp/#{@post.id}.json", 'w') do |f|
           hash = {"offer_from": @mypost.id, "offer_to": @post.id}
           str = JSON.dump(hash, f)
         end
@@ -55,7 +55,7 @@ class PostsController < ApplicationController
   def destroyoffer
     @mypost = Post.find_by(user_id: @current_user.id)
     @mypost.offer = nil
-    File.delete("app/assets/javascripts/#{@mypost.id}.json")
+    File.delete("tmp/#{@mypost.id}.json")
         # if @mypost.save
         #   flash[:notice] = "You decline the offer"
           redirect_to("/posts/index")
@@ -66,7 +66,8 @@ class PostsController < ApplicationController
 
   def checkoffer
       @mypost = Post.find_by(user_id: @current_user.id)
-      if File.exist?("app/assets/javascripts/#{@mypost.id}.json")
+      if File.exist?("tmp/#{@mypost.id}.json")
+
         redirect_to("/posts/index")
       end
   end
