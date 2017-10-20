@@ -13,7 +13,7 @@
 //= require rails-ujs
 //= require jquery.turbolinks
 //= require turbolinks
-// = require_tree 
+// = require_tree
 
 //エラー防止のためjquery.turbolinksとturbolinksと require_treeのgemを無効化中
 
@@ -72,7 +72,7 @@ $(document).ready(function(){
                       postid = null
             },
             error: function(xhr) {
-                // alert("errror");
+                alert("errror");
             }
             });
           });
@@ -253,19 +253,19 @@ $.ajax({
       });
 
 
-  // $(function(){
-  //     setInterval(function(){
-  //       $.ajax({
-  //           url: "/posts/checkoffer",
-  //           type: "post",
-  //
-  //           success: function(responce) {
-  //             // alert("ok");
-  //           },
-  //           error: function(xhr) {
-  //             // alert("error");
-  //           }
-  //       });
-  //     },5000);
-  // });
+  $(function(){
+      setInterval(function(){
+        $.ajax({
+            url: "/posts/checkoffer",
+            type: "post",
+
+            success: function(responce) {
+              // alert("ok");
+            },
+            error: function(xhr) {
+              // alert("error");
+            }
+        });
+      },5000);
+  });
 });
