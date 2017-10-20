@@ -19,6 +19,12 @@
 
 $(document).ready(function(){
 
+  $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+});
+
   $('.login-show').click(function(){
     $('#login-modal').fadeIn();
   });
@@ -61,7 +67,7 @@ $(document).ready(function(){
             $.ajax({
                 url: "/posts/offer",
                 type: "post",
-                dataType: "html",
+                // dataType: "html",
                 data: {id: 12},
                 success: function(responce) {
                   var postmessageshow = null
