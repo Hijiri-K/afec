@@ -1,266 +1,77 @@
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="author" content="">
-<meta name="description" content="">
-<title>通貨コンバータ‐ To 日本円</title>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="../../bootstrap/css/bootstrap/js/bootstrap.min.js"></script>
-<link  href="../../bootstrap/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../../../css/base_responsive.css" />
-<link rel="stylesheet" type="text/css" href="../../../css/my-bootstrap.css" />
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
 
-<script>
-// $(function() {
-//     $('#Currency').change( function(e) {
-//
-//         // 表示の初期化
-//         $('#code').empty();
-//         $("#code_base").empty();
-//         $('#code2').empty();
-//         $('#update').empty();
-//         $('#rate').empty();
-//         $('#example1').empty();
-//         $('#exampleYen1').empty();
-//
-//         e.preventDefault();     // hrefが無効になり、画面遷移が行わない
-//
-//         selectedCode = $('#Currency').val();                        // 選択した通貨(value)
-//         selectedCode_base = $('#Currency_base').val()             //===========================================================================================================-自分でアレンジ
-//         selectedCodeText = $('#Currency option:selected').text();   // 選択した通貨(key)
-//         selectedCode_baseText = $('#Currency_base option:selected').text();  //================================
-//         // var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&to=jpy&code=' + selectedCode; //元のこーど
-//         var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&code=' + selectedCode;  //====================================自分でアレンジ
-//         $.ajax({
-//             url: url,
-//             type: 'GET',
-//             dataType: 'jsonp',
-//             success: function(json) {
-//                 update = json.update;           // アップデート日時
-//                 if (selectedCode_base === 'jpy'){
-//                 rate = json.JPY;
-//                 }else if (selectedCode_base === 'eur') {
-//                   rate = json.EUR;
-//                 } else if (selectedCode_base === 'usd') {
-//                   rate = json.USD;
-//                 }else{
-//                   rate = 1;
-//                 }     // 選択した通貨の対日本円レート(JPYは固定)``
-//
-//                 example1 = 300;                 // サンプル
-//                 exampleYen1 = example1 * rate;  // サンプル計算
-//
-//                 $("#code").append(selectedCodeText.toUpperCase());
-//                 $("#code_base").append(selectedCode_baseText.toUpperCase());
-//                 $("#code2").append(selectedCodeText.toUpperCase());
-//                 $("#update").append(update);
-//                 $("#rate").append(rate);
-//                 $("#example1").append(example1);
-//                 $("#exampleYen1").append(exampleYen1);
-//             }
-//         });
-//     }).change();
-//
-//
-//     // Convertボタン 押下後処理
-//     $('#calcButton').click( function(e) {
-//         e.preventDefault();     // hrefが無効になり、画面遷移が行わない
-//
-//         var inputCurrency = $('#currency').val();   // input通貨
-//
-//         // 計算
-//         if (inputCurrency !== '') {
-//             var ansJpy = rate * inputCurrency;      // 計算
-//             ansJpy = Math.floor(ansJpy);            // 小数点切り捨て
-//             ansJpy = insertComma(ansJpy);           // 3桁カンマ追加
-//             $('#returnYen').text(ansJpy + selectedCode_baseText);   // 結果の表示
-//         }
-//     })
-//
-//     // リセットボタン押下処理
-//     $('#resetButton').click(function(){
-//         $('#returnYen').text("Result");
-//     });
-// });
-//
-// /**
-//  * 3桁のカンマ区切りの値をセット
-//  *
-//  */
-// function insertComma(num) {
-//     return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-// }
-</script>
+    .map-container {
+      width:80%;
+      height:80%;
+      margin: auto;
+      padding-top: 100px;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="map-container">
+    <div id="map"></div>
+    </div>
+    <script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 6
+        });
+        var Marker = new google.maps.Marker({map: map});
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.watchPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            Marker.setPosition(pos);
+            // infoWindow.setContent('Location found.');
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+      }
 
 
-
-
-
-
-
-
-
-
-<style>
-#mainContents{
-    margin: 0 auto 30px auto;
-    text-align: center;
-}
-
-#result{
-    margin: 1.5em auto;
-}
-
-p#ans{
-    margin: 0.5em 0;
-    padding: 0.5em;
-    border: 1px solid #aaa;
-    background-color: #ededed;
-    text-align: center;
-    font-size: 2em;
-}
-
-.buttons{
-    margin: 1em auto 0.5em 0;
-    text-align: center;
-}
-
-footer{
-    text-align: center;
-}
-</style>
-
-</head>
-<body>
-<header><span></span></header>
-
-<div class="container">
-    <div class="row">
-
-        <div class="col-md-12">
-            <h1 id="start">jqueryでの通貨換算テスト</h1>
-        </div>
-
-
-        <div class="col-md-12" id="mainContents">
-
-            <!-- Large button group -->
-            <div class="form-group form-inline">
-                <label for="currency" class="head">通貨</label>
-                <select name="currency" class="form-control" id="Currency">
-                    <!--option value="">▼通貨</option-->
-                    <option value="USD">usd(米/ドル)</option>
-                    <option value="eur">eur(ユーロ)</option>
-                    <!-- <option value="gbp">bgp(英/ポンド)</option>
-                    <option value="aud">aud(豪/ドル)</option> -->
-                    <option value="JPY">jpy(日本/円)</option>
-                    <!-- <option value="twd">twd(台湾/ドル)</option>
-                    <option value="cny">cny(中国/元)</option>
-                    <option value="hkd">hkd(香港/ドル)</option>
-                    <option value="krw">krw(韓国/ウォン)</option>
-                    <option value="isk">isk(アイスランド/クローナ)</option>
-                    <option value="ars">ars(アルゼンチン/ペソ)</option>
-                    <option value="inr">inr(インド/ルピー)</option>
-                    <option value="uyu">uyu(ウルグアイ/ウルグアイ・ペソ)</option>
-                    <option value="egp">egp(エジプト/ポンド)</option>
-                    <option value="svc">svc(エルサルバドル/コロン)</option>
-                    <option value="omr">omr(オマーン/リアル)</option>
-                    <option value="qar">qar(カタール/リヤル)</option>
-                    <option value="cad">cad(カナダ/ドル)</option>
-                    <option value="kwd">kwd(クウェート/ディナール)</option>
-                    <option value="hrk">hrk(クロアチア/クーナ)</option>
-                    <option value="cop">cop(コロンビア/ペソ)</option>
-                    <option value="sar">sar(サウジアラビア/リヤル)</option>
-                    <option value="jmd">jmd(ジャマイカ/ドル)</option>
-                    <option value="syp">syp(シリア/ポンド)</option>
-                    <option value="sgd">sgd(シンガポール/ドル)</option>
-                    <option value="chf">chf(スイス/フラン)</option>
-                    <option value="sek">sek(スウェーデン/クローネ)</option>
-                    <option value="lkr">lkr(スリランカ/ルピー)</option>
-                    <option value="thb">thb(タイ/バーツ)</option>
-                    <option value="czk">czk(チェコ/コルナ)</option>
-                    <option value="clp">clp(チリ/ペソ)</option>
-                    <option value="tnd">tnd(チュニジア/ディナール)</option>
-                    <option value="dkk">dkk(デンマーク/クローネ)</option>
-                    <option value="try">try(トルコ/トルコリラ)</option>
-                    <option value="ngn">ngn(ナイジェリア/ナイラ)</option>
-                    <option value="nzd">nzd(ニュージーランド/ドル)</option>
-                    <option value="nok">nok(ノルウェー/クローネ)</option>
-                    <option value="bhd">bhd(バーレーン/ディナール)</option>
-                    <option value="pab">pab(パナマ/バルボア)</option>
-                    <option value="pyg">pyg(パラグアイ/グアラニー)</option>
-                    <option value="huf">huf(ハンガリー/フォリント)</option>
-                    <option value="php">php(フィリピン/ペソ)</option>
-                    <option value="brl">brl(ブラジル/レアル)</option>
-                    <option value="bgn">bgn(ブルガリア/レフ)</option>
-                    <option value="pen">pen(ペルー/ヌエボ・ソル)</option>
-                    <option value="pln">pln(ポーランド/ズウォティ)</option>
-                    <option value="hnl">hnl(ホンジュラス/レンピラ)</option>
-                    <option value="myr">myr(マレーシア/リンギット)</option>
-                    <option value="zar">zar(南アフリカ/ランド)</option>
-                    <option value="mxn">mxn(メキシコ/ペソ)</option>
-                    <option value="mad">mad(モロッコ/ディルハム)</option>
-                    <option value="lvl">lvl(ラトビア/ラッツ)</option>
-                    <option value="ltl">ltl(リトアニア/リタス)</option>
-                    <option value="ron">ron(ルーマニア/レウ)</option>
-                    <option value="rub">rub(ロシア/ルーブル)</option> -->
-                </select>
-
-                <select name="currency" class="form-control" id="Currency_base"> <!--//========================じぶんでアレンジ -->
-                    <!--option value="">▼通貨</option-->
-                    <option value="usd">usd(米/ドル)</option>
-                    <option value="eur">eur(ユーロ)</option>
-                    <option value="jpy">jpy(日本/円)</option>
-
-                </select>
-            </div>
-
-
-            <div>
-                <p class="text-left">
-                    <span id="update"></span> 更新<br>
-                    1 <span id="code"></span> ≒ <strong><span id="rate"></span></strong><span id="code_base"></span><br>
-                </p>
-
-                <p class="text-left">
-                    例）<span id="example1"></span> <span id="code2"></span> = <span id="exampleYen1"></span> 円
-                </p>
-            </div>
-
-
-            <!--結果-->
-            <div id="result">
-                <p id="ans"><span id="returnYen">Result</span></p>
-            </div>
-
-
-            <form method="post" name="from" action="/" id="test1">
-
-            <div class="input-group input-group-sm">
-                <span class="input-group-addon">金額</span>
-                <input name="input_currency" class="form-control" size="5" placeholder="" type="number" id="currency">
-            </div>
-
-            <div class="buttons">
-                <input type="submit" name="regist" value="Convert" id="calcButton" class="btn btn-success btn-lg">
-                <input type="reset" name="reset" value="Reset" id="resetButton" class="btn btn-default btn-lg">
-            </div>
-
-            </form>
-
-        </div><!--mainContents-->
-
-    </div><!--//.row-->
-</div><!--//.container-->
-
-<footer>
-<script type="text/javascript">
-now = new Date();
-nowyear = now.getFullYear();
-document.write("Copyright &copy; 2011-" + nowyear);
-</script>
-<a href="http://wataame.sumomo.ne.jp/archives/category/web" targtet="_blank">Wataame Frog</a> . All Rights Reserved.
-</footer>
-</body>
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&callback=initMap">
+    </script>
+  </body>
 </html>
