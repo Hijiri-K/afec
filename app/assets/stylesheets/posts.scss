@@ -218,6 +218,20 @@
 .postid{
   display: none;
 }
+
+#map {
+  height: 100%;
+  width:100%;
+}
+/* Optional: Makes the sample page fill the window. */
+
+
+.map-container {
+width:280px;
+height:330px;
+margin: auto;
+margin-bottom: 20px;
+}
 /* posts/show ================================ */
 .posts-show form {
   display: inline;

@@ -36,13 +36,19 @@ $(document).ready(function(){
     $('#exchange-modal').fadeIn();
   });
 
+  // $('.open-map').click(function(){
+  //   $('#map-modal').fadeIn();
+  // });
+
+
+
   $('.close-modal').click(function(){
             $('#login-modal').fadeOut();
             $('#signup-modal').fadeOut();
             $('#exchange-modal').fadeOut();
             $('#show-modal').fadeOut();
+            $('#map-modal').fadeOut();
   });
-
 
 
   $('td').click(function(){
@@ -252,12 +258,12 @@ $.ajax({
     }
 
 
-    $('.show-show').click(function showshow() {
-      get = $('.getinfo').text();
-      give = $('.giveinfo').text()
-      $('#gettest').text(get);
-      $('#givetest').text(give);
-      });
+    // $('.show-show').click(function showshow() {
+    //   get = $('.getinfo').text();
+    //   give = $('.giveinfo').text()
+    //   $('#gettest').text(get);
+    //   $('#givetest').text(give);
+    //   });
 
 
   // $(function(){

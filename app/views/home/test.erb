@@ -8,26 +8,36 @@
        * element that contains the map. */
       #map {
         height: 100%;
+        width:100%;
       }
       /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+
 
     .map-container {
-      width:80%;
-      height:80%;
+      width:280px;
+      height:330px;
       margin: auto;
-      padding-top: 100px;
+      margin-bottom: 20px;
     }
     </style>
   </head>
   <body>
-    <div class="map-container">
-    <div id="map"></div>
+
+    <div class="map-modal-wrapper" id="map-modal">
+      <div class="modal">
+        <div class = "close-modal">
+          <i class="fa fa-2x fa-times"></i>
+        </div>
+        <div id="login-form">
+            <h2>Map to Cafe</h2>
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+            <div class ="exchange-btn-show close-modal"><%=link_to("Arrived")%></div>
+        </div>
+      </div>
     </div>
+
     <script>
       // Note: This example requires that you consent to location sharing when
       // prompted by your browser. If you see the error "The Geolocation service
@@ -36,10 +46,15 @@
 
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 6
+          center: {lat: 35.839500, lng: 139.794899},
+          zoom: 17,
+          disableDefaultUI: true,
+          draggable: false
+
         });
         var Marker = new google.maps.Marker({map: map});
+
+
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -67,8 +82,6 @@
                               'Error: The Geolocation service failed.' :
                               'Error: Your browser doesn\'t support geolocation.');
       }
-
-
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&callback=initMap">

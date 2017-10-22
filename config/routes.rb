@@ -20,9 +20,12 @@ Rails.application.routes.draw do
   post "posts/checkoffer" => "posts#checkoffer"
   post "posts/offer" => "posts#offer"
   post "posts/destroyoffer" => "posts#destroyoffer"
+  post "posts/acceptoffer" => "posts#acceptoffer"
+  post "posts/destroyaccept" => "posts#destroyaccept"
+  post "posts/destroymap" => "posts#destroymap"
   post 'posts/index' => "posts#index"
   get 'posts/index' => "posts#index"
-    get 'posts/index' => "posts#index"
+  get 'posts/index' => "posts#index"
   get "posts/new" => "posts#new"
   post "posts/create" => "posts#create"
 

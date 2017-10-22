@@ -146,8 +146,9 @@
   </div>
 <!-- 詳細モーダルおわり==================================================================================================================== -->
 
-  <!-- offerが来てる場合の処理＝＝オファーモーダルの表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
+<!-- offerが来てる場合の処理＝＝オファーモーダルの表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
   <%if @checkoffer%>
+  <%@offerpost = Post.find_by(id: @checkoffer)%>
     <%offerpost = Post.find_by(id: @checkoffer)%>
     <%offeruser = User.find_by(id: offerpost.user_id)%>
 
@@ -194,9 +195,6 @@
   <!--モーダルの内容  ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
       <div class="offer-modal-wrapper">
         <div class="modal">
-          <div class = "close-modal">
-            <i class="fa fa-2x fa-times"></i>
-          </div>
           <div id="login-form">
               <h2>Recieved offer</h2>
               <div class="post-user-name">
@@ -216,11 +214,107 @@
                   緯度<%=post.lat%><br>
                   経度<%=post.lng%><br> -->
                   <div class = "post-distance"> <p><%=distance.to_i%>m</p></div>
-              <div class ="exchange-btn-show"><%=link_to("Accept")%><%=link_to("decline", "/posts/destroyoffer",{method:"post"})%></div>
+              <div class ="exchange-btn-show"><span class = "open-map"><%=link_to("Accept", "/posts/acceptoffer",{method:"post"})%></span><span><%=link_to("decline", "/posts/destroyoffer",{method:"post"})%></span></div>
             </div>
           </div>
         </div>
       </div>
     <%end%>
-    <!--オファーモーダルおわり＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
+    <!--=========================オファーモーダルおわり====================================================================================================================  -->
+
+<!-- acceptモーダル ================================================================================================================================-->
+<!-- acceptが来てる場合の処理＝＝オファーモーダルの表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
+  <%if @acceptcheckoffer%>
+    <%offerpost = Post.find_by(id: @acceptcheckoffer)%>
+    <%offeruser = User.find_by(id: offerpost.user_id)%>
+
+  <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+        <!-- 距離の計算 -->
+        <%
+        lat1 = offerpost.lat
+        lng1 = offerpost.lng
+        lat2 = @mypost.lat
+        lng2 = @mypost.lng
+
+        y1 = lat1 * Math::PI / 180
+        x1 = lng1 * Math::PI / 180
+        y2 = lat2 * Math::PI / 180
+        x2 = lng2 * Math::PI / 180
+        earth_r = 6378140
+
+        deg = Math::sin(y1) * Math::sin(y2) + Math::cos(y1) * Math::cos(y2) * Math::cos(x2 - x1)
+        distance = earth_r * (Math::atan(-deg / Math::sqrt(-deg * deg + 1)) + Math::PI / 2)
+        # /1000
+        %>
+
+        <!--交換可能な金額、手数料の浮いた分を計算するーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー  -->
+        <%if @mypost.currency_want_amount <= offerpost.currency_have_amount
+            give = "#{@mypost.currency_want}" + " " + "#{@mypost.currency_want_amount}"
+          elsif @mypost.currency_want_amount > offerpost.currency_have_amount
+            give = "#{offerpost.currency_have}" + " " + "#{offerpost.currency_have_amount}"
+        end%>
+
+        <%if @mypost.currency_want_amount <= offerpost.currency_have_amount
+            get = "#{@mypost.currency_have}" + " " + "#{@mypost.currency_have_amount}"
+          elsif @mypost.currency_want_amount > offerpost.currency_have_amount
+            get = "#{offerpost.currency_want}" + " " + "#{offerpost.currency_want_amount}"
+        end%>
+
+        <%if  @mypost.currency_want_amount <= offerpost.currency_have_amount
+            savem = (@mypost.currency_have_amount * 0.05).round(1)
+            save ="#{@mypost.currency_have}" + " " + "#{(@mypost.currency_have_amount * 0.05).round(1)}"
+          elsif @mypost.currency_want_amount > offerpost.currency_have_amount
+            savem = (offerpost.currency_want_amount * 0.05).round(1)
+            save ="#{offerpost.currency_want}" + " " + "#{(offerpost.currency_want_amount * 0.05).round(1)}"
+        end%>
+
+  <!--モーダルの内容  ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+      <div class="offer-modal-wrapper">
+        <div class="modal">
+          <div id="login-form">
+              <h2>Your offer accepted</h2>
+              <div class="post-user-name">
+                <%offeruser = User.find_by(id: offerpost.user_id)%>
+                <img src="<%="/user_images/#{offeruser.image_name}"%>" alt="">
+              <%=link_to("#{offeruser.name}","/users/#{offeruser.id}/show")%>
+              </div>
+              <div class="info">
+                  <p class = "post-message"><%=link_to(simple_format(offerpost.content), "/offerposts/#{post.id}")%></p>
+                  <div class= "post-subtitle"><p>You will give</p></div>
+                  <div class = "post-money"><p id = "gettest"><%=get%></p></div>
+                  <div class= "post-subtitle"><p>You will recieve</p></div>
+                  <div class = "post-money"><p id = "givetest"><%=give%></p></div>
+                  <div class = "post-subtitle"><p>You can save</p></div>
+                  <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div>
+                  <!-- location<br>
+                  緯度<%=post.lat%><br>
+                  経度<%=post.lng%><br> -->
+                  <div class = "post-distance"> <p><%=distance.to_i%>m</p></div>
+              <div class ="exchange-btn-show"><span class = "open-map"><%=link_to("Go to Cafe", "/posts/destroyaccept",{method:"post"})%></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <%end%>
+<!-- =============================-acceptモーダルおわり ==================================================================================================-->
+<!-- mapモーダル========================================================================================================================================== -->
+<%if @mapshow%>
+
+<div class="map-modal-wrapper" id="map-modal">
+  <div class="modal">
+    <div id="login-form">
+        <h2>Map to Cafe</h2>
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+        <div class ="exchange-btn-show close-modal"><%=link_to("Arrived", "/posts/destroymap",{method:"post"})%></div>
+    </div>
+  </div>
+</div>
+<%end%>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&callback=initMap">
+</script>
+<!-- =====================mapモーダルおわり================================================================================================================= -->
 <%= javascript_include_tag 'checkoffer.js' %>
+<%= javascript_include_tag 'googlemap.js' %>
