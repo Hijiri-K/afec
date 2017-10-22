@@ -21,7 +21,7 @@ class UsersController < ApplicationController
       password: params[:password]
     )
     if @user.save
-      flash[:notice] = "Success to Signup"
+      # flash[:notice] = "Success to Signup"
       session[:user_id] = @user.id
       redirect_to("/posts/index")
     else
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     end
 
     if @user.save
-      flash[:notice] = "ユーザー情報の編集に成功しました～～～～"
+      # flash[:notice] = "ユーザー情報の編集に成功しました～～～～"
       redirect_to("/users/index")
     else
       render("users/edit")
@@ -55,7 +55,7 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find_by(id: params[:id])
     @user.destroy
-    flash[:notice] = "ユーザーを削除しました～～～～"
+    # flash[:notice] = "ユーザーを削除しました～～～～"
     session[:user_id] = nil
     redirect_to("/")
   end
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
       password: params[:password]
     )
     if @user
-      flash[:notice] = "Success to Login"
+      # flash[:notice] = "Success to Login"
       session[:user_id] = @user.id
       redirect_to("/posts/index")
     else
@@ -81,7 +81,7 @@ class UsersController < ApplicationController
 
   def logout
     session[:user_id] = nil
-    flash[:notice] = "logouted"
+    # flash[:notice] = "logouted"
     redirect_to("/")
   end
 

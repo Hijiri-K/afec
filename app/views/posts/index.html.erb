@@ -1,6 +1,7 @@
 
 <div class="main posts-index">
 <!-- 自分のステータスを表示================================================================================ -->
+<%if Post.find_by(user_id: @current_user.id)%>
   <div class="mypost-status">
     <div class="mypost-user-name">
       <img src="<%="/user_images/#{@current_user.image_name}"%>" alt="">
@@ -15,10 +16,13 @@
       <%if Post.find_by(user_id: @current_user.id)%>
         <p class = "mypostMessage">"<%=@mypost.content%>"</p>
       <%end%>
-
     </div>
   </div>
-
+<%else%>
+  <div class="nomypost">
+    <p>Please post your status</p>
+  </div>
+<%end%>
 <!-- 投稿の表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
   <div class="container-i">
     <table align="center" cellspacing = "10">
@@ -104,9 +108,6 @@
                       <!-- location<br>
                       緯度<%=post.lat%><br>
                       経度<%=post.lng%><br> -->
-
-
-
                       <div class = "post-money"> <p><%=distance.to_i%>m</p></div>
                   </div>
               </td>
