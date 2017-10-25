@@ -1,118 +1,217 @@
-<script type="text/javascript" charset="utf-8">
-	window.onload = function() {
-		setTimeout(function(){window.scrollTo(0, 1);}, 100);
-	}
+
+<div class="main posts-index">
+<!-- 自分のステータスを表示================================================================================ -->
+<%if Post.find_by(user_id: @current_user.id)%>
+  <div class="mypost-status">
+    <div class="mypost-user-name">
+      <img src="<%="/user_images/#{@current_user.image_name}"%>" alt="">
+      <%=link_to("#{@current_user.name}","/users/#{@current_user.id}/show")%>
+    </div>
+    <div class="myposts">
+      <%if Post.find_by(user_id: @current_user.id)%>
+      <div class = "mypost"><a>i have <%=@mypost.currency_have%><%=@mypost.currency_have_amount%></a></div>
+      <div class = "mypost"><a>i want <%=@mypost.currency_want%><%=@mypost.currency_want_amount%></a></div>
+      <%end%>
+    </div>
+      <%if Post.find_by(user_id: @current_user.id)%>
+        <p class = "mypostMessage">"<%=@mypost.content%>"</p>
+      <%end%>
+    </div>
+  </div>
+<%else%>
+  <div class="nomypost">
+    <p>Please post your status</p>
+  </div>
+<%end%>
+<!-- 投稿の表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
+  <div class="container-i">
+    <table align="center" cellspacing = "10">
+    <%for post in @posts do%>
+    <tr>
+      <%if Post.find_by(user_id: @current_user.id)%><!--自分が投稿している場合。（以下の処理は自分の投稿情報（@mypost）を使うので自分の投稿がない場合に実行するとエラーになる）-->
+			<%cal(@mypost.lat, @mypost.lng,
+						@mypost.currency_want, @mypost.currency_have,
+						@mypost.currency_want_amount, @mypost.currency_have_amount,
+						post.lat, post.lng,
+						post.currency_want, post.currency_have,
+						post.currency_want_amount, post.currency_have_amount
+						)%>
+<!--投稿の表示===========================================================================================================================  -->
+          <%if @distance < 200 %>　<!--200メートル以内の投稿のみを表示-->
+              <td class="posts-index-item">
+                  <div class="post-user-name">
+                    <%user = User.find_by(id: post.user_id)%>
+                    <img class = "user-image"  src="<%="/user_images/#{user.image_name}"%>" alt="">
+                  <%=link_to("#{user.name}","/users/#{user.id}/show")%>
+                  </div>
+
+                  <div class="info"><!--投稿内の内容を表示-->
+                      <p class = "mypostMessage-post"><a>"<%=post.content%>"</a></p>
+                      <!-- <p>i have <%=post.currency_have%>
+                      <%=post.currency_have_amount%></p>
+                      <p>i want <%=post.currency_want%>
+                      <%=post.currency_want_amount%></p> -->
+                      <p class = "postid"><%=post.id%></p>
+                      <div class= "post-subtitle"><p>we can trade </p></div>
+                      <div class="myposts-post">
+                        <div class = "mypost-post"><a class = "getinfo"><%=@get%></a></div>
+                        <a class="fa fa-exchange"></a>
+                        <div class = "mypost-post"><a class = "giveinfo"><%=@give%></a></div>
+                      </div>
+
+                      <div class = "post-subtitle"><p>save committion</p></div>
+                      <div class = "post-money"><p><a class = "saveinfo"><%=@save%></a>&emsp;<a class = "coffeeinfo"><i class="fa fa-coffee"></i><%=@coffee%></a></p></div>
+                      <!-- location<br>
+                      緯度<%=post.lat%><br>
+                      経度<%=post.lng%><br> -->
+                      <div class = "post-money"> <p><%=@distance.to_i%>m</p></div>
+                  </div>
+              </td>
+          <%end%>
+        <%end%>
+       </tr>
+    　<%end%>
+    </table>
+  </div>
+</div>
+<!--詳細モーダル ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+  <div class="show-modal-wrapper" id="show-modal">
+    <div class="modal">
+      <div class = "close-modal">
+        <i class="fa fa-2x fa-times"></i>
+      </div>
+      <div id="login-form">
+        <h2>detail</h2>
+        <div class="post-user-name" id ="post-user-name-show">
+          </div>
+            <div class="info">
+                <!-- <p id = "postid-show"></p> -->
+                <div class = "post-message"><p id = "postmessageshow"></p></div>
+                <div class = "post-subtitle"><p>You will give</p></div>
+                <!-- <div class = "post-money"><p id = "getshow"></p></div> -->
+                <div class = "mypost-detail"><a id = "getshow"></a></div>
+                <div class = "post-subtitle"><p>You will recieve</p></div>
+                <!-- <div class = "post-money"><p id = "giveshow"></p></div> -->
+                <div class = "mypost-detail"><a id = "giveshow"></a></div>
+                <div class = "post-subtitle"><p>You can save</p></div>
+                <div class = "post-money"><p><a id = "saveshow"></a>&emsp;<a id = "coffeeshow"></a></p></div>
+
+            </div>
+          </div>
+          <a class="exchange-btn" id = "offersubmit">OFFER</a>
+    </div>
+  </div>
+<!-- 詳細モーダルおわり==================================================================================================================== -->
+
+<!-- offerが来てる場合の処理＝＝オファーモーダルの表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
+  <%if @checkoffer%>
+  <%@offerpost = Post.find_by(id: @checkoffer)%>
+    <%offerpost = Post.find_by(id: @checkoffer)%>
+    <%offeruser = User.find_by(id: offerpost.user_id)%>
+
+  <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+	<%cal(@mypost.lat, @mypost.lng,
+				@mypost.currency_want, @mypost.currency_have,
+				@mypost.currency_want_amount, @mypost.currency_have_amount,
+				offerpost.lat, offerpost.lng,
+				offerpost.currency_want, offerpost.currency_have,
+				offerpost.currency_want_amount, offerpost.currency_have_amount
+				)%>
+
+  <!--モーダルの内容  ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+      <div class="offer-modal-wrapper">
+        <div class="modal">
+          <div id="login-form">
+              <h2>Recieved offer</h2>
+              <div class="post-user-name">
+                <%offeruser = User.find_by(id: offerpost.user_id)%>
+                <img src="<%="/user_images/#{offeruser.image_name}"%>" alt="">
+              <%=link_to("#{offeruser.name}","/users/#{offeruser.id}/show")%>
+              </div>
+              <div class="info">
+                  <p class = "post-message"><%=link_to(simple_format(offerpost.content), "/offerposts/#{post.id}")%></p>
+                  <div class= "post-subtitle"><p>You will give</p></div>
+                  <div class = "post-money"><p id = "gettest"><%=get%></p></div>
+                  <div class= "post-subtitle"><p>You will recieve</p></div>
+                  <div class = "post-money"><p id = "givetest"><%=give%></p></div>
+                  <div class = "post-subtitle"><p>You can save</p></div>
+                  <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div>
+                  <!-- location<br>
+                  緯度<%=post.lat%><br>
+                  経度<%=post.lng%><br> -->
+                  <div class = "post-distance"> <p><%=distance.to_i%>m</p></div>
+              <div class ="exchange-btn-show"><span class = "open-map"><%=link_to("Accept", "/posts/acceptoffer",{method:"post"})%></span><span><%=link_to("decline", "/posts/destroyoffer",{method:"post"})%></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <%end%>
+    <!--=========================オファーモーダルおわり====================================================================================================================  -->
+
+<!-- acceptモーダル ================================================================================================================================-->
+<!-- acceptが来てる場合の処理＝＝オファーモーダルの表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
+  <%if @acceptcheckoffer%>
+    <%offerpost = Post.find_by(id: @acceptcheckoffer)%>
+    <%offeruser = User.find_by(id: offerpost.user_id)%>
+
+  <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+        <!-- 距離の計算 -->
+				<%cal(@mypost.lat, @mypost.lng,
+							@mypost.currency_want, @mypost.currency_have,
+							@mypost.currency_want_amount, @mypost.currency_have_amount,
+							acceptpost.lat, acceptpost.lng,
+							acceptpost.currency_want, acceptpost.currency_have,
+							acceptpost.currency_want_amount, acceptpost.currency_have_amount
+							)%>
+
+      
+  <!--モーダルの内容  ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+      <div class="offer-modal-wrapper">
+        <div class="modal">
+          <div id="login-form">
+              <h2>Your offer accepted</h2>
+              <div class="post-user-name">
+                <%offeruser = User.find_by(id: offerpost.user_id)%>
+                <img src="<%="/user_images/#{offeruser.image_name}"%>" alt="">
+              <%=link_to("#{offeruser.name}","/users/#{offeruser.id}/show")%>
+              </div>
+              <div class="info">
+                  <p class = "post-message"><%=link_to(simple_format(offerpost.content), "/offerposts/#{post.id}")%></p>
+                  <div class= "post-subtitle"><p>You will give</p></div>
+                  <div class = "post-money"><p id = "gettest"><%=get%></p></div>
+                  <div class= "post-subtitle"><p>You will recieve</p></div>
+                  <div class = "post-money"><p id = "givetest"><%=give%></p></div>
+                  <div class = "post-subtitle"><p>You can save</p></div>
+                  <div class = "post-money"><p><%=save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=coffee%></p></div>
+                  <!-- location<br>
+                  緯度<%=post.lat%><br>
+                  経度<%=post.lng%><br> -->
+                  <div class = "post-distance"> <p><%=distance.to_i%>m</p></div>
+              <div class ="exchange-btn-show"><span class = "open-map"><%=link_to("Go to Cafe", "/posts/destroyaccept",{method:"post"})%></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <%end%>
+<!-- =============================-acceptモーダルおわり ==================================================================================================-->
+<!-- mapモーダル========================================================================================================================================== -->
+<%if @mapshow%>
+
+<div class="map-modal-wrapper" id="map-modal">
+  <div class="modal">
+    <div id="login-form">
+        <h2>Map to Cafe</h2>
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+        <div class ="exchange-btn-show close-modal"><%=link_to("Arrived", "/posts/destroymap",{method:"post"})%></div>
+    </div>
+  </div>
+</div>
+<%end%>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&callback=initMap">
 </script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&sensor=true&libraries=visualization"></script>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<style>
-#map_canvas {
-	width: 500px;
-	height: 500px;
-	border: 1px solid #000;
-}
-</style>
-</head>
-<body>
-	<div>
-		<b>現在地情報</b><br />
-		取得<div id="n"></div>
-		経度<div id="x"></div>
-		緯度<div id="y"></div>
-	</div><br />
-
-	<div id="map_canvas">マップ読み込み中</div>
-
-	<img src="1.jpg">→現在地<br />
-	<img src="1.jpg">→目的地(大阪城を設定)
-
-	<script>
-	$(function(){
-		var count = 1;
-		var currentWindow = null;
-		var map;
-		var marker;
-		var sampleMarker;
-		var geoOptions = {
-			enableHighAccuracy : true, //精度を高める
-			timeout : 6000, //タイムアウトは6秒
-			maximumAge : 0 //キャッシュはさせない
-		}
-
-		//現在位置の取得
-		if (navigator.geolocation) {
-			navigator.geolocation.watchPosition( //watchPositionとすることで定期的に現在地を取得
-			function (pos) {
-				//取得状況
-				$('#n').html((count++) + "回目");
-				$('#x').html(pos.coords.latitude);
-				$('#y').html(pos.coords.longitude);
-
-				var mapData = { 'x':pos.coords.latitude, 'y':pos.coords.longitude, 'balloon':'現在位置' };
-				var latlng = new google.maps.LatLng(mapData.x, mapData.y);
-				if( !map ){ //初回のみマップ生成
-					var myOptions = { zoom: 10, center: latlng, mapTypeId: google.maps.MapTypeId.ROADMAP };
-					map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-				}
-				if( marker ){ //現在地マーカーが設置されている場合は消去
-					marker.setMap(null);
-				}
-				if( !sampleMarker ){ //初回のみ目的地マーカーを設置
-					sampleMarker = { 'x':'34.687315', 'y':'135.526201', 'balloon':'大阪城' };
-					makeMarker2( sampleMarker );
-				}
-				makeMarker( mapData ); //現在地マーカーを設置
-			},
-			function (error) {
-				var msg;
-				switch( error.code ){
-					case 1: msg = "位置情報の利用が許可されていません"; break;
-					case 2: msg = "位置が判定できません"; break;
-					case 3: msg = "タイムアウトしました"; break;
-				}
-				alert(msg);
-			});
-		} else {
-			alert("本ブラウザではGeolocationが使えません");
-		}
-
-		//マーカー作成
-		function makeMarker( mapData ){
-			marker = new google.maps.Marker({
-				position : new google.maps.LatLng(mapData.x,mapData.y),
-				map: map,
-				icon: 'public/user_images/1.jpg'
-			});
-
-			var infoWindow = new google.maps.InfoWindow();
-			google.maps.event.addListener(marker, 'click', function() {
-				if (currentWindow) {
-					currentWindow.close();
-				}
-				infoWindow.setContent(mapData.balloon);
-				infoWindow.open(map,marker);
-				currentWindow = infoWindow;
-			});
-		}
-
-		//マーカー作成
-		function makeMarker2( mapData ){
-			var marker2 = new google.maps.Marker({
-				position : new google.maps.LatLng(mapData.x,mapData.y),
-				map: map,
-				icon: "public/user_images/1.jpg"
-			});
-
-			var infoWindow = new google.maps.InfoWindow();
-			google.maps.event.addListener(marker2, 'click', function() {
-				if (currentWindow) {
-					currentWindow.close();
-				}
-				infoWindow.setContent(mapData.balloon);
-				infoWindow.open(map,marker2);
-				currentWindow = infoWindow;
-			});
-		}
-	});
-	</script>
+<!-- =====================mapモーダルおわり================================================================================================================= -->
+<%= javascript_include_tag 'checkoffer.js' %>
+<%= javascript_include_tag 'googlemap.js' %>
