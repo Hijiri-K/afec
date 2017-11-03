@@ -17,10 +17,12 @@
 
  /* ヘッダー ================================ */
  header {
-   height: 64px;
+   height:58px;
    position: fixed;
-   background-color: #7b5544;
-   opacity: 0.8;
+   background-color: #795548;
+   /*background-color: #FF9800;*/
+   /*background-color: #FFA000;*/
+   /*opacity: 0.8;*/
    z-index: 10;
    width: 100%;
  }
@@ -30,7 +32,7 @@
    padding-left: 20px;
    color: white;
    font-size: 22px;
-   line-height: 64px;
+   line-height: 58px;
  }
 
  .header-logo a{
@@ -45,7 +47,7 @@
 
  .header-menus li {
    float: left;
-   line-height: 64px;
+   line-height: 58px;
    font-size: 13px;
 
  }
@@ -64,14 +66,14 @@
  .header-menus input[type="submit"] {
    padding: 0 20px;
    float: left;
-   line-height: 64px;
+   line-height: 58px;
    color: white;
    margin: 0;
    font-size: 13px;
  }
 
 .login-btn{
-   background-color:#996a54;
+   background-color:#906556;
  }
 
  .login-btn :hover {
@@ -167,7 +169,8 @@
     display: inline-block;
     width:70%;
     padding: 14px 0;
-    background-color: #7b5544;
+    /*background-color: #7b5544;*/
+    background-color: #FFA000;
     border: none;
     border-radius: 3px;
     color: white;
@@ -209,7 +212,7 @@
 
 /*レスポンシブ----------------------------------------------------------------*/
 
-@media(max-width: 670px) {
+/*@media(max-width: 670px) {
   header {
     height: 64px;
   }
@@ -223,4 +226,4 @@
     font-size: 30px;
   }
 
-}
+}*/

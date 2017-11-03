@@ -7,46 +7,59 @@
 
 }
 .mypost-status  {
-  background-color:#cc8d70;
+  // background-color:#A1887F;
+  background-color: white;
   overflow: hidden;
-  margin-top: 64px;
+  margin-top: 57px;
   position: fixed;
   width:100%;
   height:90px;
   z-index: 10;
+    // color: white;
+      box-shadow: 0 2px 6px #c1ced7;
+}
+
+.mypost-status a{
+  // color: white;
 }
 
 .mypost {
-  background-color: rgba(255,255,255,.8);
+  // background-color: #FFC107;
+  background-color: #ac8374;
   margin: 3px 5px;
-  padding:0 8px;
+  padding:0 12px;
   border-radius: 30px;
   width:100%;
 }
 
 .mypost-post {
-  background-color: rgba(204, 141, 112,.8);
-  padding:0 8px;
+  // background-color: rgba(204, 141, 112,.8);
+  // background-color: #FFC107;
+  background-color: #ac8374;
+  padding:0 12px;
   border-radius: 30px;
   width:43%;
   display: inline-block;
 }
 
 .mypost-detail {
-  background-color: rgba(204, 141, 112,.8);
+  // background-color: #FFC107;
+  background-color: #ac8374;
   margin: 0 auto;
   margin-bottom: 10px;
-  padding:0 8px;
+  padding:0 12px;
   border-radius: 30px;
   width:80%;
 }
 
-
+.mypost a, .mypost-post a, .mypost-detail a {
+  // color:white;
+}
 
 .myposts{
   width:55%;
   display: inline-block;
-  padding-top:10px;//５から１０に
+  padding-top:12px;//５から１０に
   vertical-align: top;//追加
 }
 
@@ -102,7 +115,7 @@
 }
 
 .post-user-name a {
-  font-size: 16px;
+  font-size: 18px;
   font-weight:normal;
   padding-left: 10px;
   vertical-align: top;
@@ -110,7 +123,7 @@
 }
 
 .mypost-user-name a {
-  font-size: 16px;
+  font-size: 18px;
   font-weight:normal;
   padding-left: 10px;
   vertical-align: top;
@@ -146,13 +159,13 @@
 }
 
 .info a {
-  font-size: 18px;
+  font-size: 16px;
 
 }
 
 .post-subtitle p{
   // padding-top: 10px;
-  font-size: 20px;
+  font-size: 18px;
 
 }
 
@@ -184,7 +197,7 @@
 
 
 .show-show {
-  background-color: #7b5544;
+  background-color: #795548;
   padding:5px 10px;
   border-radius: 3px;
   float: right;
@@ -192,20 +205,18 @@
 }
 
 .exchange-btn  {
-  background-color: #7b5544;
+  background-color: #795548;
   padding:3% 30%;
-  border-radius: 3px;
+  border-radius: 30px;
+
   color: white;
   margin-top: 30px;
 }
 
-.exchange-btn-show{
-}
-
 .exchange-btn-show a {
-  background-color: #7b5544;
+  background-color: #795548;
   padding:10px 10px;
-  border-radius: 3px;
+  // border-radius: 3px;
   color: white;
   margin: 10px;
 }
@@ -291,13 +302,7 @@ margin-bottom: 20px;
   font-size: 20px;
 }
 
-.like {
-  color:#FFC0CB;
-}
 
-.unlike {
-  color:#A9A9A9;
-}
 /* posts/new ================================ */
 .posts-new textarea {
   font-size: 20px;
@@ -314,7 +319,7 @@ margin-bottom: 20px;
 
 
 #command {
-  background-color: #7b5544;
+  background-color: #4CAF50;
   height:60px;
   width:60px;
   border-radius: 50%;

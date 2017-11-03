@@ -38,11 +38,11 @@ module ApplicationHelper
           end
 
         if  mypost_currency_want_amount <= post_currency_have_amount
-          @savem = (mypost_currency_have_amount * 0.05).to_i
-          @save ="#{mypost_currency_have}" + " " + "#{(mypost_currency_have_amount * 0.05).to_i}"
+          @savem = (mypost_currency_have_amount * 0.05).round(1)
+          @save ="#{mypost_currency_have}" + " " + "#{(mypost_currency_have_amount * 0.05).round(1)}"
         elsif mypost_currency_want_amount > post_currency_have_amount
-          @savem = (post_currency_want_amount * 0.05).to_i
-          @save ="#{post_currency_want}" + " " + "#{(post_currency_want_amount * 0.05).to_i}"
+          @savem = (post_currency_want_amount * 0.05).round(1)
+          @save ="#{post_currency_want}" + " " + "#{(post_currency_want_amount * 0.05).round(1)}"
         end
 
       # <!__コーヒーの数を計算（1杯５０円で計算）＝＝＝＝＝＝＝＝===＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ __>

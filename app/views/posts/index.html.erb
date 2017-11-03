@@ -9,7 +9,7 @@
     </div>
     <div class="myposts">
       <%if Post.find_by(user_id: @current_user.id)%>
-      <div class = "mypost"><a>i have <%=@mypost.currency_have%><%=@mypost.currency_have_amount.to_i%></a></div>
+      <div class = "mypost"><a>i have <%=@mypost.currency_have%> <%=@mypost.currency_have_amount.to_i%></a></div>
       <!-- <div class = "mypost"><a>i want <%=@mypost.currency_want%><%=@mypost.currency_want_amount.to_i%></a></div> -->
       <%end%>
     </div>
