@@ -9,8 +9,8 @@
     </div>
     <div class="myposts">
       <%if Post.find_by(user_id: @current_user.id)%>
-      <div class = "mypost"><a>i have <%=@mypost.currency_have%><%=@mypost.currency_have_amount%></a></div>
-      <div class = "mypost"><a>i want <%=@mypost.currency_want%><%=@mypost.currency_want_amount%></a></div>
+      <div class = "mypost"><a>i have <%=@mypost.currency_have%><%=@mypost.currency_have_amount.to_i%></a></div>
+      <!-- <div class = "mypost"><a>i want <%=@mypost.currency_want%><%=@mypost.currency_want_amount.to_i%></a></div> -->
       <%end%>
     </div>
       <%if Post.find_by(user_id: @current_user.id)%>
@@ -29,14 +29,17 @@
     <%for post in @posts do%>
     <tr>
       <%if Post.find_by(user_id: @current_user.id)%><!--自分が投稿している場合。（以下の処理は自分の投稿情報（@mypost）を使うので自分の投稿がない場合に実行するとエラーになる）-->
-			<%cal(@mypost.lat, @mypost.lng,
+
+<!-- 個別投稿の表示 ========================================================-->
+    <!--計算 =====================================================================================================================-->
+      <%cal(@mypost.lat, @mypost.lng,
 						@mypost.currency_want, @mypost.currency_have,
 						@mypost.currency_want_amount, @mypost.currency_have_amount,
 						post.lat, post.lng,
 						post.currency_want, post.currency_have,
 						post.currency_want_amount, post.currency_have_amount
 						)%>
-<!--投稿の表示===========================================================================================================================  -->
+
           <%if @distance < 200 %>　<!--200メートル以内の投稿のみを表示-->
               <td class="posts-index-item">
                   <div class="post-user-name">
@@ -74,6 +77,10 @@
     </table>
   </div>
 </div>
+
+<a class="fa fa-exchange exchange-show" id = "command"></a>
+
+
 <!--詳細モーダル ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
   <div class="show-modal-wrapper" id="show-modal">
     <div class="modal">
@@ -155,7 +162,6 @@
     <%offeruser = User.find_by(id: offerpost.user_id)%>
 
   <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-        <!-- 距離の計算 -->
 				<%cal(@mypost.lat, @mypost.lng,
 							@mypost.currency_want, @mypost.currency_have,
 							@mypost.currency_want_amount, @mypost.currency_have_amount,
