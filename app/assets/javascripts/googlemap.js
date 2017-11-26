@@ -6,7 +6,7 @@ function initMap() {
     draggable: false
 
   });
-  var Marker = new google.maps.Marker({map: map});
+  var Marker = new google.maps.Marker({map: map});//マーカーを青い点に変更予定（maps.Markerを変更すればできるはず？）
 
 
 

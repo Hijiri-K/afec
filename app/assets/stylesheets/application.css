@@ -85,7 +85,7 @@
 
 
 /*モーダルテスト*/
-.login-modal-wrapper, .signup-modal-wrapper {
+.login-modal-wrapper, .signup-modal-wrapper, .show-modal-wrapper  {
   position: fixed;
   top: 0;
   right: 0;
@@ -96,6 +96,7 @@
   display: none;
 }
 
+/*
 .show-modal-wrapper {
   position: fixed;
   top: 0;
@@ -105,9 +106,9 @@
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 100;
   display: none;
-}
+}*/
 
-.offer-modal-wrapper {
+.offer-modal-wrapper, .map-modal-wrapper  {
   position: fixed;
   top: 0;
   right: 0;
@@ -118,7 +119,7 @@
   display: block;
 }
 
-.map-modal-wrapper {
+/*.map-modal-wrapper {
   position: fixed;
   top: 0;
   right: 0;
@@ -127,7 +128,7 @@
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 100;
   display: block;
-}
+}*/
 
 .modal {
   /*position: absolute;
@@ -167,14 +168,13 @@
 
 .submit-btn {
     display: inline-block;
-    width:70%;
-    padding: 14px 0;
-    /*background-color: #7b5544;*/
-    background-color: #FFA000;
-    border: none;
-    border-radius: 3px;
+    width:80%;
+    padding: 12px 0;
+    background-color: #4CAF50;
+    /*border: none;*/
+    border-radius: 50px;
     color: white;
-    margin: 10px auto;
+    margin: 0 auto;
     cursor: pointer;
 }
 
@@ -206,7 +206,11 @@
   font-weight: normal;
 }
 
-.locations{
+/*.locations{
+  display: none;
+}*/
+
+.invisible{
   display: none;
 }
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171015060634) do
+ActiveRecord::Schema.define(version: 20171124092212) do
 
   create_table "likes", force: :cascade do |t|
     t.integer "user_id"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20171015060634) do
     t.text "currency_have"
     t.float "currency_have_amount"
     t.text "currency_want"
-    t.float "location"
+    t.text "location"
     t.decimal "lat"
     t.decimal "lng"
     t.float "currency_want_amount"

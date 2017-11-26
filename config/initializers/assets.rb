@@ -15,3 +15,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 Rails.application.config.assets.precompile += %w( checkoffer.js )
 Rails.application.config.assets.precompile += %w( googlemap.js )
+Rails.application.config.assets.precompile += %w( gps.js )

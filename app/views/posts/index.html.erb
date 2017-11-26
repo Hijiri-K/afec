@@ -23,6 +23,56 @@
     <p>Please post your status</p>
   </div>
 <%end%>
+
+<!-- location確認モーダル========================================================================================================= -->
+<%unless @mypost%>
+      <div class="map-modal-wrapper" id="location-modal">
+        <div class="modal">
+          <div class = "close-modal">
+            <i class="fa fa-2x fa-times"></i>
+          </div>
+          <div id="exchange-form">
+              <h2>Location</h2>
+              <div class="form">
+                <div class="form-body">
+                <!-- <%=form_tag() do%> -->
+                    <p>You are in</p>
+                    <input name = "location" class = "airport" id="location" value="">
+                    <select name="terminal" class="editable" id="terminal">
+                          <!--option value="">▼通貨</option-->
+                          <option value="0">Select Terminal</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="3">4</option>
+                    </select>
+
+                    <input id="returnYen" class = "location" type="float" name="currency_want_amount"  placeholder="amount">
+
+                    <p id = "test">GPS Location&emsp;<span class = "gps">Not Ready</span></p>
+
+                    <div class="invisible">
+                      <p>lat</p><input name = "lat" class = "lat"  value="">
+                      <p>lng</p><input name = "lng" class = "lng"  value="">
+                      <p>airport</p><input name = "location" class = "airport"  value="">
+                    </div>
+
+
+                    <input class = "location close-modal exchange-show" type="submit" name="" value="OK">
+                <!-- <%end%> -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+<%end%>
+
+<!-- location確認モーダルおわり============================================= -->
+
+
+
 <!-- 投稿の表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
   <div class="container-i">
     <table align="center" cellspacing = "10">

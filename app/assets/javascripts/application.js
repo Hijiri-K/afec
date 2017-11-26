@@ -45,9 +45,14 @@ $(document).ready(function(){
   $('.close-modal').click(function(){
             $('#login-modal').fadeOut();
             $('#signup-modal').fadeOut();
-            $('#exchange-modal').fadeOut();
+            // $('#exchange-modal').fadeOut();
             $('#show-modal').fadeOut();
             $('#map-modal').fadeOut();
+            $('#location-modal').fadeOut();
+  });
+
+  $('.close-modal2').click(function(){
+            $('#exchange-modal').fadeOut();
   });
 
 
@@ -92,52 +97,59 @@ $(document).ready(function(){
         });
 
 
-// 現在地取得===================================================================
-  $('.form-control').click(
-    // Geolocation APIに対応している
-    // if (navigator.geolocation) {
-    //   alert("この端末では位置情報が取得できます");
-    // // Geolocation APIに対応していない
-    // } else {
-    //   alert("この端末では位置情報が取得できません");
-    // }
-
-    function getPosition() {
-      // 現在地を取得
-      navigator.geolocation.getCurrentPosition(
-        // 取得成功した場合
-        function(position) {
-
-            lat = position.coords.latitude;
-            lng = position.coords.longitude;
-            // alert("緯度:"+lat+",経度"+lng);
-          $('.lat').val(lat);
-          $('.lng').val(lng);
-          $('.gps').addClass("fa fa-location-arrow").text(" Ready");
-        },
-        // 取得失敗した場合
-        function(error) {
-          switch(error.code) {
-            case 1: //PERMISSION_DENIED
-              alert("位置情報の利用が許可されていません");
-              break;
-            case 2: //POSITION_UNAVAILABLE
-              alert("現在位置が取得できませんでした");
-              break;
-            case 3: //TIMEOUT
-              alert("タイムアウトになりました");
-              break;
-            default:
-              alert("その他のエラー(エラーコード:"+error.code+")");
-              break;
-          }
-        }
-        // ,{enableHighAccuracy:true;}
-      );
-
-  setInterval(getPosition, 5000); //5秒おきに現在地を取得
-  }
-);
+// 現在地取得======gps.jsに移動済み=============================================================
+//   $('.form-control').click(
+//     // Geolocation APIに対応している
+//     // if (navigator.geolocation) {
+//     //   alert("この端末では位置情報が取得できます");
+//     // // Geolocation APIに対応していない
+//     // } else {
+//     //   alert("この端末では位置情報が取得できません");
+//     // }
+//
+//     function getPosition() {
+//       // 現在地を取得
+//       navigator.geolocation.getCurrentPosition(
+//         // 取得成功した場合
+//         function(position) {
+//
+//             lat = position.coords.latitude;
+//             lng = position.coords.longitude;
+//             // alert("緯度:"+lat+",経度"+lng);
+//           $('.lat').val(lat);
+//           $('.lng').val(lng);
+//           $('.gps').addClass("fa fa-location-arrow").text(" Ready");
+//
+//           if (30 <= lat && lat <= 40 && 120 <= lng && lng <= 150) {//とりあえず適当な緯度経度で指定（日本にいれば成田になる）
+//             airport = "Narita";
+//           }else{
+//             airport = "Out of Airport";
+//           }
+//             $('.airport').val(airport);
+//         },
+//         // 取得失敗した場合
+//         function(error) {
+//           switch(error.code) {
+//             case 1: //PERMISSION_DENIED
+//               alert("位置情報の利用が許可されていません");
+//               break;
+//             case 2: //POSITION_UNAVAILABLE
+//               alert("現在位置が取得できませんでした");
+//               break;
+//             case 3: //TIMEOUT
+//               alert("タイムアウトになりました");
+//               break;
+//             default:
+//               alert("その他のエラー(エラーコード:"+error.code+")");
+//               break;
+//           }
+//         }
+//         // ,{enableHighAccuracy:true;}
+//       );
+//
+//   setInterval(getPosition, 5000); //5秒おきに現在地を取得
+//   }
+// );
 
 // 通貨換算==================================================================================================
 
@@ -164,7 +176,7 @@ $(document).ready(function(){
 
 
 //レートテスト
-//================================================================================================================================================================================================
+//======無料API==========================================================================================================================================================================================
             // var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&code=' + selectedCode;  //====================================自分でアレン
             //
             // $.ajax({

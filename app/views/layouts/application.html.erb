@@ -94,7 +94,7 @@
   <!-- モーダル投稿-->
       <div class="signup-modal-wrapper" id="exchange-modal">
         <div class="modal">
-          <div class = "close-modal">
+          <div class = "close-modal2">
             <i class="fa fa-2x fa-times"></i>
           </div>
           <div id="exchange-form">
@@ -127,16 +127,17 @@
                     </select>
                     <input id="returnYen" class = "location" type="float" name="currency_want_amount"  placeholder="amount">
                     <p>Message</p>
-                    <input class = "editable"id = "message" name="content" placeholder="message">
+                    <input class = "editable" id = "message" name="content" placeholder="message">
                     <p id = "test">GPS Location&emsp;<span class = "gps">Not Ready</span></p>
 
-                    <div class="locations">
-                      <p>緯度</p><input name = "lat" class = "lat"  value="">
-                      <p>経度</p><input name = "lng" class = "lng"  value="">
+                    <div class="invisible">
+                      <p>lat</p><input name = "lat" class = "lat"  value="">
+                      <p>lng</p><input name = "lng" class = "lng"  value="">
+                      <p>airport</p><input name = "location" class = "airport2"  value="">
                     </div>
 
 
-                    <input class = "location" type="submit" name="" value="Update">
+                    <input class = "submit-btn" type="submit" name="" value="Update">
                 <%end%>
               </div>
             </div>
@@ -148,6 +149,17 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     <%if flash[:notice]%>
       <div class="flash">
         <%=flash[:notice]%>
@@ -159,7 +171,8 @@
         <%=flash[:notice]%>
       </div>
     <%end%>
+
     <%= yield %>
-
+  <%= javascript_include_tag 'gps.js' %>
   </body>
 </html>

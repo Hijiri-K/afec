@@ -1,51 +1,53 @@
 class PostsController < ApplicationController
   before_action :authenticate_user
+  before_action :set_mypost
 
   def index
     if Post.find_by(user_id: @current_user.id)
         @mypost = Post.find_by(user_id: @current_user.id)
-        @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
+        # @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
+        @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have, location: @mypost.location)
     else
       @posts = Post.all.order(created_at: :desc)
     end
 
-      if Post.find_by(user_id: @current_user.id)
+    if Post.find_by(user_id: @current_user.id)
     require 'json'
     @mypost = Post.find_by(user_id: @current_user.id)
-    if File.exist?("tmp/#{@mypost.id}.json")
-      File.open("tmp/#{@mypost.id}.json", 'r') do |f|
-      offers = JSON.load(f)
-      @checkoffer = offers.fetch("offer_from")
-      # @offer_to = offers.fetch("offer_to")
-      end
-    end
+        if File.exist?("tmp/#{@mypost.id}.json")
+          File.open("tmp/#{@mypost.id}.json", 'r') do |f|
+          offers = JSON.load(f)
+          @checkoffer = offers.fetch("offer_from")
+          # @offer_to = offers.fetch("offer_to")
+          end
+        end
 
-    if File.exist?("tmp/accept#{@mypost.id}.json")
-      File.open("tmp/accept#{@mypost.id}.json", 'r') do |f|
-      offers = JSON.load(f)
-      @acceptcheckoffer = offers.fetch("offer_from")
-      # @acceptoffer_to = offers.fetch("offer_to")
-      end
-    end
+        if File.exist?("tmp/accept#{@mypost.id}.json")
+          File.open("tmp/accept#{@mypost.id}.json", 'r') do |f|
+          offers = JSON.load(f)
+          @acceptcheckoffer = offers.fetch("offer_from")
+          # @acceptoffer_to = offers.fetch("offer_to")
+          end
+        end
 
-    if File.exist?("tmp/map#{@mypost.id}.json")
-      @mapshow = true
+        if File.exist?("tmp/map#{@mypost.id}.json")
+          @mapshow = true
+        end
     end
   end
-  end
 
 
-  def show
-    if Post.find_by(user_id: @current_user.id)
-        @mypost = Post.find_by(user_id: @current_user.id)
-        @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
-    else
-      @posts = Post.all.order(created_at: :desc)
-    end
-    @id = params[:id]
-    @post = Post.find_by(id: params[:id])
-    @user = User.find_by(id: @post.user_id)
-  end
+  # def show
+  #   if Post.find_by(user_id: @current_user.id)
+  #       @mypost = Post.find_by(user_id: @current_user.id)
+  #       @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
+  #   else
+  #     @posts = Post.all.order(created_at: :desc)
+  #   end
+  #   @id = params[:id]
+  #   @post = Post.find_by(id: params[:id])
+  #   @user = User.find_by(id: @post.user_id)
+  # end
 
 
   def offer
@@ -136,9 +138,9 @@ class PostsController < ApplicationController
   end
 
 
-  def new
-    @post = Post.new
-  end
+  # def new
+  #   @post = Post.new
+  # end
 
   def create
     if Post.find_by(user_id: @current_user.id)
@@ -150,6 +152,7 @@ class PostsController < ApplicationController
         @post.currency_want_amount = params[:currency_want_amount]
         @post.lat = params[:lat]
         @post.lng = params[:lng]
+        @post.location = params[:location]
         @post.user_id = @current_user.id
     else
         @post = Post.new(
@@ -160,6 +163,7 @@ class PostsController < ApplicationController
           currency_want_amount: params[:currency_want_amount],
           lat: params[:lat],
           lng: params[:lng],
+          location: params[:location],
           user_id: @current_user.id
         )
   end
@@ -172,21 +176,21 @@ class PostsController < ApplicationController
     end
   end
 
-  def edit
-    @post = Post.find_by(id: params[:id])
-  end
+  # def edit
+  #   @post = Post.find_by(id: params[:id])
+  # end
 
 
-  def update
-    @post = Post.find_by(id: params[:id])
-    @post.content = params[:content]
-    if @post.save
-      flash[:notice] = "編集に成功しました～～～～"
-      redirect_to("/posts/index")
-    else
-      render("posts/edit")
-    end
-  end
+  # def update
+  #   @post = Post.find_by(id: params[:id])
+  #   @post.content = params[:content]
+  #   if @post.save
+  #     flash[:notice] = "編集に成功しました～～～～"
+  #     redirect_to("/posts/index")
+  #   else
+  #     render("posts/edit")
+  #   end
+  # end
 
 
   def destroy
