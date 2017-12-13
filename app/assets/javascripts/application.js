@@ -36,6 +36,10 @@ $(document).ready(function(){
     $('#exchange-modal').fadeIn();
   });
 
+  $('.location-show').click(function(){
+    $('.location-modal-wrapper').fadeIn();
+  });
+
   // $('.open-map').click(function(){
   //   $('#map-modal').fadeIn();
   // });
@@ -49,6 +53,7 @@ $(document).ready(function(){
             $('#show-modal').fadeOut();
             $('#map-modal').fadeOut();
             $('#location-modal').fadeOut();
+            $('.location-modal-wrapper').fadeOut();
   });
 
   $('.close-modal2').click(function(){

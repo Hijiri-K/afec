@@ -12,6 +12,12 @@
     <!-- jQueryの読み込み -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
+    <!-- push.js テスト用-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
+    <script type="text/javascript">
+      Push.Permission.request();
+    </script>
+
     <%= csrf_meta_tags %>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -33,6 +39,7 @@
           <!-- <li><%=link_to("投稿一覧","/posts/index")%></li> -->
           <!-- <li><%=link_to("Exhange","/posts/new")%></li> -->
           <li><a class = "exchange-show">Exhange</a></li>
+          <li><a class = "location-show">Location</a></li>
           <!-- <li><%=link_to("ユーザー一覧","/users/index")%></li> -->
           <!-- <li><%=link_to("アップデート情報","/updates")%></li> -->
           <li class= "login-btn"><%=link_to("Logout","/logout",{method:"post"})%></li>
@@ -91,75 +98,9 @@
         </div>
       </div>
 
-  <!-- モーダル投稿-->
-      <div class="signup-modal-wrapper" id="exchange-modal">
-        <div class="modal">
-          <div class = "close-modal2">
-            <i class="fa fa-2x fa-times"></i>
-          </div>
-          <div id="exchange-form">
-              <h2>Exchange</h2>
-              <div class="form-error">
-                <%if @error_message%>
-                <%=@error_message%>
-                <%end%>
-              </div>
-              <div class="form">
-                <div class="form-body">
-                <%=form_tag("/posts/create") do%>
-                    <p>I have</p>
-                    <select name="currency_have" class="form-control editable" id="Currency">
-                          <!--option value="">▼通貨</option-->
-                          <option value="1">Select currency</option>
-                          <option value="usd">$(USD)</option>
-                          <option value="eur">€(EUR)</option>
-                          <option value="jpy">¥(JPY)</option>
-                    </select>
-
-                    <input name="input_currency" class="form-control location editable" size="5" placeholder="amount" type="number" id="currency">
-                    <p>I want</p>
-                    <select name="currency_want" class="form-control editable" id="Currency_base">
-                          <!--option value="">▼通貨</option-->
-                          <option value="1">Select currency</option>
-                          <option value="usd">$(USD)</option>
-                          <option value="eur">€(EUR)</option>
-                          <option value="jpy">¥(JPY)</option>
-                    </select>
-                    <input id="returnYen" class = "location" type="float" name="currency_want_amount"  placeholder="amount">
-                    <p>Message</p>
-                    <input class = "editable" id = "message" name="content" placeholder="message">
-                    <p id = "test">GPS Location&emsp;<span class = "gps">Not Ready</span></p>
-
-                    <div class="invisible">
-                      <p>lat</p><input name = "lat" class = "lat"  value="">
-                      <p>lng</p><input name = "lng" class = "lng"  value="">
-                      <p>airport</p><input name = "location" class = "airport2"  value="">
-                    </div>
 
 
-                    <input class = "submit-btn" type="submit" name="" value="Update">
-                <%end%>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <!-- フラッシュ表示======================================================================================== -->
     <%if flash[:notice]%>
       <div class="flash">
         <%=flash[:notice]%>

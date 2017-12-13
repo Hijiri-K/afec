@@ -24,11 +24,16 @@
         }else{
           airport = "Out of Airport";
         }
-        
+
+    ;
+
         $('.airport').val(airport);
           $(function() {
               $('#terminal').change( function() {
-              $('.airport2').val(airport + $('#terminal').val());
+               var terminal = $('#terminal').val();
+              $('.airport2').val(airport);
+              $('.terminal2').val(terminal);
+              console.log(terminal)
             });
           });
       },

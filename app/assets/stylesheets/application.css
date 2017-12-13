@@ -85,7 +85,7 @@
 
 
 /*モーダルテスト*/
-.login-modal-wrapper, .signup-modal-wrapper, .show-modal-wrapper  {
+.login-modal-wrapper, .signup-modal-wrapper, .show-modal-wrapper, .location-modal-wrapper  {
   position: fixed;
   top: 0;
   right: 0;
@@ -169,13 +169,19 @@
 .submit-btn {
     display: inline-block;
     width:80%;
-    padding: 12px 0;
+    padding: 8px 0;
     background-color: #4CAF50;
-    /*border: none;*/
+    border: none;
     border-radius: 50px;
     color: white;
-    margin: 0 auto;
+    margin: 5px auto;
     cursor: pointer;
+    font-size: 18px;
+}
+
+.submit-btn a, input[type="submit"] {
+  color:white;
+  font-size: 18px;
 }
 
 #signup-form h2, #login-form h2, #exchange-form h2 {

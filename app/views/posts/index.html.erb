@@ -9,7 +9,7 @@
     </div>
     <div class="myposts">
       <%if Post.find_by(user_id: @current_user.id)%>
-      <div class = "mypost"><a>i have <%=@mypost.currency_have%> <%=@mypost.currency_have_amount.to_i%></a></div>
+      <div class = "mypost"><a>I have <%=@mypost.currency_have%> <%=@mypost.currency_have_amount.to_i%></a></div>
       <!-- <div class = "mypost"><a>i want <%=@mypost.currency_want%><%=@mypost.currency_want_amount.to_i%></a></div> -->
       <%end%>
     </div>
@@ -24,7 +24,102 @@
   </div>
 <%end%>
 
-<!-- location確認モーダル========================================================================================================= -->
+
+<!-- モーダル投稿======================================================================================================-->
+<%if @mypost%>
+    <div class="signup-modal-wrapper" id="exchange-modal">
+      <div class="modal">
+        <div class = "close-modal2">
+          <i class="fa fa-2x fa-times"></i>
+        </div>
+        <div id="exchange-form">
+            <h2>Exchange</h2>
+            <div class="form-error">
+              <%if @error_message%>
+              <%=@error_message%>
+              <%end%>
+            </div>
+            <div class="form">
+              <div class="form-body">
+              <%=form_tag("/posts/create") do%>
+                  <p>I have</p>
+                  <select name="currency_have" class="form-control editable" id="Currency">
+                        <!--option value="">▼通貨</option-->
+                        <option value="">Select currency</option>
+                        <%if @mypost.currency_have == "USD"%>
+                          <option value="USD"selected>$(USD)</option>
+                          <%else%>
+                          <option value="USD">$(USD)</option>
+                        <%end%>
+
+                        <%if @mypost.currency_have == "EUR"%>
+                          <option value="EUR"selected>€(EUR)</option>
+                          <%else%>
+                          <option value="EUR">€(EUR)</option>
+                        <%end%>
+
+                        <%if @mypost.currency_have == "JPY"%>
+                            <option value="JPY"selected>¥(JPY)</option>
+                            <%else%>
+                            <option value="JPY">¥(JPY)</option>
+                        <%end%>
+                  </select>
+                  <input name="input_currency" class="form-control location editable" size="5" placeholder="amount" value = "<%=@mypost.currency_have_amount%>" type="number" id="currency">
+
+                  <p>I want</p>
+                  <select name="currency_want" class="form-control editable" id="Currency_base">
+                        <!--option value="">▼通貨</option-->
+                        <option value="">Select currency</option>
+                        <%if @mypost.currency_want == "USD"%>
+                          <option value="USD"selected>$(USD)</option>
+                          <%else%>
+                          <option value="USD">$(USD)</option>
+                        <%end%>
+
+                        <%if @mypost.currency_want == "EUR"%>
+                          <option value="EUR"selected>€(EUR)</option>
+                          <%else%>
+                          <option value="EUR">€(EUR)</option>
+                        <%end%>
+
+                        <%if @mypost.currency_want == "JPY"%>
+                            <option value="JPY"selected>¥(JPY)</option>
+                            <%else%>
+                            <option value="JPY">¥(JPY)</option>
+                        <%end%>
+                  </select>
+                  <input id="returnYen" class = "location" type="float" name="currency_want_amount"  placeholder="amount">
+                  <p>Message</p>
+                  <input class = "editable" id = "message" name="content" placeholder="message" value = "<%=@mypost.content%>">
+                  <p id = "test">GPS Location&emsp;<span class = "gps">Not Ready</span></p>
+
+                  <div class="invisible">
+                    <%if @mypost%>
+                      <p>lat</p><input name = "lat" class = "lat"  value="<%=@mypost.lat%>">
+                      <p>lng</p><input name = "lng" class = "lng"  value="<%=@mypost.lng%>">
+                      <p>airport</p><input name = "location" class = "airport2"  value="<%=@mypost.location%>">
+                      <p>terminal</p><input name = "terminal" class = "terminal2"  value="<%=@mypost.terminal%>">
+                    <%else%>
+                      <p>lat</p><input name = "lat" class = "lat"  value="">
+                      <p>lng</p><input name = "lng" class = "lng"  value="">
+                      <p>airport</p><input name = "location" class = "airport2"  value="">
+                      <p>terminal</p><input name = "terminal" class = "terminal2"  value="">
+                    <%end%>
+                  </div>
+
+
+                  <input class = "submit-btn" type="submit" name="" value="Update">
+              <%end%>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+<%end%>
+
+
+<!-- location確認モーダル===初期ログイン用====================================================================================================== -->
 <%unless @mypost%>
       <div class="map-modal-wrapper" id="location-modal">
         <div class="modal">
@@ -41,10 +136,30 @@
                     <select name="terminal" class="editable" id="terminal">
                           <!--option value="">▼通貨</option-->
                           <option value="0">Select Terminal</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="3">4</option>
+                          <%if @mypost.terminal == "1"%>
+                            <option value="1" selected>1</option>
+                          <%else%>
+                            <option value="1">1</option>
+                          <%end%>
+
+                          <%if @mypost.terminal == "2"%>
+                            <option value="2" selected>2</option>
+                          <%else%>
+                            <option value="2">2</option>
+                          <%end%>
+
+                          <%if @mypost.terminal == "3"%>
+                            <option value="3" selected>3</option>
+                          <%else%>
+                            <option value="3">3</option>
+                          <%end%>
+
+                          <%if @mypost.terminal == "4"%>
+                            <option value="4" selected>4</option>
+                          <%else%>
+                            <option value="4">4</option>
+                          <%end%>
+
                     </select>
 
                     <input id="returnYen" class = "location" type="float" name="currency_want_amount"  placeholder="amount">
@@ -57,21 +172,76 @@
                       <p>airport</p><input name = "location" class = "airport"  value="">
                     </div>
 
-
                     <input class = "location close-modal exchange-show" type="submit" name="" value="OK">
                 <!-- <%end%> -->
               </div>
             </div>
-
           </div>
         </div>
       </div>
-
 <%end%>
 
 <!-- location確認モーダルおわり============================================= -->
 
+<!-- location変更モーダル=======================================================================================- -->
+    <div class="location-modal-wrapper" id="location-modal">
+      <div class="modal">
+        <div class = "close-modal">
+          <i class="fa fa-2x fa-times"></i>
+        </div>
+        <div id="exchange-form">
+            <h2>Location</h2>
+            <div class="form">
+              <div class="form-body">
+              <!-- <%=form_tag() do%> -->
+                  <p>You are in</p>
+                  <input name = "location" class = "airport" id="location" value="">
+                  <select name="terminal" class="editable" id="terminal">
+                        <!--option value="">▼通貨</option-->
+                        <option value="0">Select Terminal</option>
+                        <%if @mypost.terminal == 1%>
+                          <option value="1" selected>1</option>
+                        <%else%>
+                          <option value="1">1</option>
+                        <%end%>
 
+                        <%if @mypost.terminal == 2%>
+                          <option value="2" selected>2</option>
+                        <%else%>
+                          <option value="2">2</option>
+                        <%end%>
+
+                        <%if @mypost.terminal == 3%>
+                          <option value="3" selected>3</option>
+                        <%else%>
+                          <option value="3">3</option>
+                        <%end%>
+
+                        <%if @mypost.terminal == 4%>
+                          <option value="4" selected>4</option>
+                        <%else%>
+                          <option value="4">4</option>
+                        <%end%>
+                  </select>
+
+                  <input id="returnYen" class = "location" type="float" name="currency_want_amount"  placeholder="amount">
+
+                  <p id = "test">GPS Location&emsp;<span class = "gps">Not Ready</span></p>
+
+                  <div class="invisible">
+                    <p>lat</p><input name = "lat" class = "lat"  value="">
+                    <p>lng</p><input name = "lng" class = "lng"  value="">
+                    <p>airport</p><input name = "location" class = "airport"  value="">
+                  </div>
+
+                  <input class = "location close-modal exchange-show" type="submit" name="" value="OK">
+              <!-- <%end%> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- location変更モーダル==おわり=====================================================================================- -->
 
 <!-- 投稿の表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
   <div class="container-i">
@@ -155,7 +325,7 @@
 
             </div>
           </div>
-          <a class="exchange-btn" id = "offersubmit">OFFER</a>
+          <input class = "submit-btn" id="offersubmit" type="submit" name="" value="Offer">
     </div>
   </div>
 <!-- 詳細モーダルおわり==================================================================================================================== -->
@@ -166,93 +336,106 @@
     <%offerpost = Post.find_by(id: @checkoffer)%>
     <%offeruser = User.find_by(id: offerpost.user_id)%>
 
-  <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-	<%cal(@mypost.lat, @mypost.lng,
-				@mypost.currency_want, @mypost.currency_have,
-				@mypost.currency_want_amount, @mypost.currency_have_amount,
-				offerpost.lat, offerpost.lng,
-				offerpost.currency_want, offerpost.currency_have,
-				offerpost.currency_want_amount, offerpost.currency_have_amount
-				)%>
+<!-- 通知のテスト用 -================================-->
+    <script type="text/javascript">
+          Push.create('You recieved offer', {
+          　　body: "check afec out!!",
+          　　timeout: 8000, // 通知が消えるタイミング
+          　　vibrate: [100, 100, 100], // モバイル端末でのバイブレーション秒数
+          　　onClick: function() {
+          　　　　// 通知がクリックされた場合の設定
+          　　　　console.log(this);
+          　　}
+          });
+      </script>
+      <!-- ここまで -->
 
-  <!--モーダルの内容  ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-      <div class="offer-modal-wrapper">
-        <div class="modal">
-          <div id="login-form">
-              <h2>Recieved offer</h2>
-              <div class="post-user-name">
-                <%offeruser = User.find_by(id: offerpost.user_id)%>
-                <img src="<%="/user_images/#{offeruser.image_name}"%>" alt="">
-              <%=link_to("#{offeruser.name}","/users/#{offeruser.id}/show")%>
+      <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+    	<%cal(@mypost.lat, @mypost.lng,
+    				@mypost.currency_want, @mypost.currency_have,
+    				@mypost.currency_want_amount, @mypost.currency_have_amount,
+    				offerpost.lat, offerpost.lng,
+    				offerpost.currency_want, offerpost.currency_have,
+    				offerpost.currency_want_amount, offerpost.currency_have_amount
+    				)%>
+
+      <!--モーダルの内容  ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+          <div class="offer-modal-wrapper">
+            <div class="modal">
+              <div id="login-form">
+                  <h2>Recieved offer</h2>
+                  <div class="post-user-name">
+                    <%offeruser = User.find_by(id: offerpost.user_id)%>
+                    <img src="<%="/user_images/#{offeruser.image_name}"%>" alt="">
+                  <%=link_to("#{offeruser.name}","/users/#{offeruser.id}/show")%>
+                  </div>
+                  <div class="info">
+                      <p class = "post-message"><%=link_to(simple_format(offerpost.content), "/offerposts/#{post.id}")%></p>
+                      <div class= "post-subtitle"><p>You will give</p></div>
+                      <div class = "post-money"><p id = "gettest"><%=@get%></p></div>
+                      <div class= "post-subtitle"><p>You will recieve</p></div>
+                      <div class = "post-money"><p id = "givetest"><%=@give%></p></div>
+                      <div class = "post-subtitle"><p>You can save</p></div>
+                      <div class = "post-money"><p><%=@save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=@coffee%></p></div>
+                      <!-- location<br>
+                      緯度<%=post.lat%><br>
+                      経度<%=post.lng%><br> -->
+                      <div class = "post-distance"> <p><%=@distance.to_i%>m</p></div>
+                  <div><span class = " submit-btn open-map"><%=link_to("Accept", "/posts/acceptoffer",{method:"post"})%></span><span class = "submit-btn"><%=link_to("decline", "/posts/destroyoffer",{method:"post"})%></span></div>
+                </div>
               </div>
-              <div class="info">
-                  <p class = "post-message"><%=link_to(simple_format(offerpost.content), "/offerposts/#{post.id}")%></p>
-                  <div class= "post-subtitle"><p>You will give</p></div>
-                  <div class = "post-money"><p id = "gettest"><%=@get%></p></div>
-                  <div class= "post-subtitle"><p>You will recieve</p></div>
-                  <div class = "post-money"><p id = "givetest"><%=@give%></p></div>
-                  <div class = "post-subtitle"><p>You can save</p></div>
-                  <div class = "post-money"><p><%=@save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=@coffee%></p></div>
-                  <!-- location<br>
-                  緯度<%=post.lat%><br>
-                  経度<%=post.lng%><br> -->
-                  <div class = "post-distance"> <p><%=@distance.to_i%>m</p></div>
-              <div class ="exchange-btn-show"><span class = "open-map"><%=link_to("Accept", "/posts/acceptoffer",{method:"post"})%></span><span><%=link_to("decline", "/posts/destroyoffer",{method:"post"})%></span></div>
             </div>
           </div>
-        </div>
-      </div>
-    <%end%>
+        <%end%>
     <!--=========================オファーモーダルおわり====================================================================================================================  -->
 
 <!-- acceptモーダル ================================================================================================================================-->
-<!-- acceptが来てる場合の処理＝＝オファーモーダルの表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
-  <%if @acceptcheckoffer%>
-    <%offerpost = Post.find_by(id: @acceptcheckoffer)%>
-    <%offeruser = User.find_by(id: offerpost.user_id)%>
+    <!-- acceptが来てる場合の処理＝＝オファーモーダルの表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
+      <%if @acceptcheckoffer%>
+        <%offerpost = Post.find_by(id: @acceptcheckoffer)%>
+        <%offeruser = User.find_by(id: offerpost.user_id)%>
 
-  <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-				<%cal(@mypost.lat, @mypost.lng,
-							@mypost.currency_want, @mypost.currency_have,
-							@mypost.currency_want_amount, @mypost.currency_have_amount,
-							offerpost.lat, offerpost.lng,
-							offerpost.currency_want, offerpost.currency_have,
-							offerpost.currency_want_amount, offerpost.currency_have_amount
-							)%>
+      <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+    				<%cal(@mypost.lat, @mypost.lng,
+    							@mypost.currency_want, @mypost.currency_have,
+    							@mypost.currency_want_amount, @mypost.currency_have_amount,
+    							offerpost.lat, offerpost.lng,
+    							offerpost.currency_want, offerpost.currency_have,
+    							offerpost.currency_want_amount, offerpost.currency_have_amount
+    							)%>
 
 
-  <!--モーダルの内容  ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-      <div class="offer-modal-wrapper">
-        <div class="modal">
-          <div id="login-form">
-              <h2>Your offer accepted</h2>
-              <div class="post-user-name">
-                <%offeruser = User.find_by(id: offerpost.user_id)%>
-                <img src="<%="/user_images/#{offeruser.image_name}"%>" alt="">
-              <%=link_to("#{offeruser.name}","/users/#{offeruser.id}/show")%>
+      <!--モーダルの内容  ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
+          <div class="offer-modal-wrapper">
+            <div class="modal">
+              <div id="login-form">
+                  <h2>Your offer accepted</h2>
+                  <div class="post-user-name">
+                    <%offeruser = User.find_by(id: offerpost.user_id)%>
+                    <img src="<%="/user_images/#{offeruser.image_name}"%>" alt="">
+                  <%=link_to("#{offeruser.name}","/users/#{offeruser.id}/show")%>
+                  </div>
+                  <div class="info">
+                      <p class = "post-message"><%=link_to(simple_format(offerpost.content), "/offerposts/#{post.id}")%></p>
+                      <div class= "post-subtitle"><p>You will give</p></div>
+                      <div class = "post-money"><p id = "gettest"><%=@get%></p></div>
+                      <div class= "post-subtitle"><p>You will recieve</p></div>
+                      <div class = "post-money"><p id = "givetest"><%=@give%></p></div>
+                      <div class = "post-subtitle"><p>You can save</p></div>
+                      <div class = "post-money"><p><%=@save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=@coffee%></p></div>
+                      <!-- location<br>
+                      緯度<%=post.lat%><br>
+                      経度<%=post.lng%><br> -->
+                      <div class = "post-distance"> <p><%=@distance.to_i%>m</p></div>
+                  <div class ="submit-btn"><span class = "open-map"><%=link_to("Go to Cafe", "/posts/destroyaccept",{method:"post"})%></span></div>
+                </div>
               </div>
-              <div class="info">
-                  <p class = "post-message"><%=link_to(simple_format(offerpost.content), "/offerposts/#{post.id}")%></p>
-                  <div class= "post-subtitle"><p>You will give</p></div>
-                  <div class = "post-money"><p id = "gettest"><%=@get%></p></div>
-                  <div class= "post-subtitle"><p>You will recieve</p></div>
-                  <div class = "post-money"><p id = "givetest"><%=@give%></p></div>
-                  <div class = "post-subtitle"><p>You can save</p></div>
-                  <div class = "post-money"><p><%=@save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=@coffee%></p></div>
-                  <!-- location<br>
-                  緯度<%=post.lat%><br>
-                  経度<%=post.lng%><br> -->
-                  <div class = "post-distance"> <p><%=@distance.to_i%>m</p></div>
-              <div class ="exchange-btn-show"><span class = "open-map"><%=link_to("Go to Cafe", "/posts/destroyaccept",{method:"post"})%></span></div>
             </div>
           </div>
-        </div>
-      </div>
-    <%end%>
+        <%end%>
 <!-- =============================-acceptモーダルおわり ==================================================================================================-->
 <!-- mapモーダル========================================================================================================================================== -->
 <%if @mapshow%>
-
 <div class="map-modal-wrapper" id="map-modal">
   <div class="modal">
     <div id="login-form">
@@ -260,11 +443,15 @@
         <div class="map-container">
             <div id="map"></div>
         </div>
-        <div class ="exchange-btn-show close-modal"><%=link_to("Arrived", "/posts/destroymap",{method:"post"})%></div>
+        <div class ="submit-btn close-modal"><%=link_to("Arrived", "/posts/destroymap",{method:"post"})%></div>
     </div>
   </div>
 </div>
 <%end%>
+
+
+
+
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&callback=initMap">
 </script>
