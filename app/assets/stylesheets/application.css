@@ -85,7 +85,7 @@
 
 
 /*モーダルテスト*/
-.login-modal-wrapper, .signup-modal-wrapper, .show-modal-wrapper, .location-modal-wrapper  {
+.login-modal-wrapper, .signup-modal-wrapper, .show-modal-wrapper, .location-modal-wrapper, #exchange-modal2  {
   position: fixed;
   top: 0;
   right: 0;

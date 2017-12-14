@@ -36,6 +36,10 @@ $(document).ready(function(){
     $('#exchange-modal').fadeIn();
   });
 
+  $('.exchange-show2').click(function(){
+    $('#exchange-modal2').fadeIn();
+  });
+
   $('.location-show').click(function(){
     $('.location-modal-wrapper').fadeIn();
   });
