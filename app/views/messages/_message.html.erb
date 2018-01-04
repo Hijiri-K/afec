@@ -1,0 +1,121 @@
+<tr class = "<%=message.user_id%>">
+  <%#if Post.find_by(user_id: message.user_id)%><!--自分が投稿している場合。（以下の処理は自分の投稿情報（@mypost）を使うので自分の投稿がない場合に実行するとエラーになる）-->
+ <%#@mypost = Post.find_by(user_id: message.user_id)%>
+<!-- 個別投稿の表示 ========================================================-->
+<!--計算 =====================================================================================================================-->
+
+
+      <%#if @distance < 200 %>　<!--200メートル以内の投稿のみを表示-->
+          <td class="posts-index-item">
+              <div class="post-user-name">
+                <%user = User.find_by(id: message.user_id)%>
+                <img class = "user-image"  src="<%="/user_images/#{user.image_name}"%>" alt="">
+              <%=link_to("#{user.name}","/users/#{user.id}/show")%>
+              </div>
+
+              <div class="info"><!--投稿内の内容を表示-->
+                  <p class = "mypostMessage-post"><a>"<%=message.content%>"</a></p>
+                  <!-- <p>i have <%=message.currency_have%>
+                  <%=message.currency_have_amount%></p>
+                  <p>i want <%=message.currency_want%>
+                  <%=message.currency_want_amount%></p> -->
+                  <p class = "postid"><%=message.id%></p>
+                  <div class= "post-subtitle"><p>we can trade </p></div>
+                  <div class="myposts-post">
+                    <div class = "mypost-post"><a class = "getinfo<%=message.id%>"></a></div>
+                    <a class="fa fa-exchange"></a>
+                    <div class = "mypost-post"><a class = "giveinfo<%=message.id%>"></a></div>
+                  </div>
+
+                  <div class = "post-subtitle"><p>save committion</p></div>
+                  <div class = "post-money"><p><a class = "saveinfo<%=message.id%>"></a>&emsp;<a class = "coffeeinfo<%=message.id%>"></a></p></div>
+
+                   <span data-livestamp="<%=message.updated_at%>"></span>
+
+                   <div class="invisible">
+                     <div class="userid"><%=message.user_id%></div>
+                     <div class="offer_save_amount"></div>
+                   </div>
+
+              </div>
+          </td>
+      <%#end%>
+    <%#end%>
+   </tr>
+
+   <script type="text/javascript">
+    var　getinfoid = ".getinfo" + <%=message.id%>
+    var　giveinfoid = ".giveinfo" + <%=message.id%>
+    var　saveinfoid = ".saveinfo" + <%=message.id%>
+    var coffeeinfoid = ".coffeeinfo" + <%=message.id%>
+    var saveamount = 0
+   if ($('#mypost-currency-want-amount').val() <= <%=message.currency_have_amount%>){
+      $(getinfoid).text($('#mypost-currency-have').val() + " " + Math.floor($('#mypost-currency-have-amount').val()))
+      $(giveinfoid).text($('#mypost-currency-want').val() + " " + Math.floor($('#mypost-currency-want-amount').val()))
+      $(saveinfoid).text($('#mypost-currency-have').val() + " " +($('#mypost-currency-have-amount').val() * 0.05))
+      saveamount = ($('#mypost-currency-have-amount').val() * 0.05)
+   }else if(($('#mypost-currency-want-amount').val() > <%=message.currency_have_amount%>)){
+      $(getinfoid).text("<%=message.currency_want%>" + " " +"<%=message.currency_want_amount.to_i%>")
+      $(giveinfoid).text("<%=message.currency_have%>" + " " +"<%=message.currency_have_amount.to_i%>")
+      $(saveinfoid).text("<%=message.currency_want%>" + " " +"<%=(message.currency_want_amount*0.05).round(1)%>")
+      saveamount = <%=(message.currency_want_amount*0.05).round(1)%>
+   }
+
+   var coffee = 0
+
+  if ($('#mypost-currency-have').val() == "JPY"){
+    coffee = saveamount / 300
+  }else if($('#mypost-currency-have').val() == "USD"){
+    coffee = saveamount / 3
+  }else if($('#mypost-currency-have').val() == "EUR"){
+    coffee = saveamount / 3
+  }
+
+  if(coffee < 2){
+      $(coffeeinfoid).html('<i class="fa fa-coffee"></i>')
+  }else if(coffee < 3){
+      $(coffeeinfoid).html('<i class="fa fa-coffee"></i><i class="fa fa-coffee"></i>')
+  }else if(coffee >= 3){
+      $(coffeeinfoid).html('<i class="fa fa-coffee"></i><i class="fa fa-coffee"></i><i class="fa fa-coffee"></i>')
+  }
+
+ $('td').click(function(){
+     $('#show-modal').fadeIn();
+       var postmessageshow = $(this).find('.postmessage').text();
+           getshow = $(this).find('.getinfo<%=message.id%>').text();
+           giveshow = $(this).find('.giveinfo<%=message.id%>').text();
+           saveshow = $(this).find('.saveinfo<%=message.id%>').text();
+           coffeeshow = $(this).find('.coffeeinfo<%=message.id%>').html();
+           postusernameshow = $(this).find('.post-user-name').html();
+           postid = $(this).find('.postid').text();
+
+           $('#postmessageshow').text(postmessageshow);
+           $('#getshow').text(getshow);
+           $('#giveshow').text(giveshow);
+           $('#saveshow').text(saveshow);
+           $('#coffeeshow').html(coffeeshow);
+           $('#post-user-name-show').html(postusernameshow);
+           // $('#postid-show').text(postid);
+
+       $('#offfersubmit').click(function(){
+           $.ajax({
+               url: "/posts/offer",
+               type: "post",
+               // dataType: "html",
+               data: {id: postid},
+               success: function(responce) {
+                 var postmessageshow = null
+                     getshow = null
+                     giveshow = null
+                     saveshow = null
+                     coffeeshow = null
+                     postusernameshow = null
+                     postid = null
+           },
+           error: function(xhr) {
+               alert("errror");
+           }
+           });
+         });
+  });
+   </script>

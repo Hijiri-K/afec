@@ -1,0 +1,23 @@
+<div class="offer-modal-wrapper">
+  <div class="modal">
+    <div id="login-form">
+        <h2>Recieved Offer</h2>
+        <div class="post-user-name">
+          <%offeruser = User.find_by(id: offer['user_id'])%>
+          <img src="<%="/user_images/#{offeruser.image_name}"%>" alt="">
+        <%=link_to("#{offeruser.name}","/users/#{offeruser.id}/show")%>
+        </div>
+        <div class="info">
+            <div class = "post-message"><%=offer['message']%></div>
+            <div class= "post-subtitle"><p>You will give</p></div>
+            <div class = "post-money mypost-detail"><p id = "gettest"><%=offer['give']%></p></div>
+            <div class= "post-subtitle"><p>You will recieve</p></div>
+            <div class = "post-money mypost-detail" ><p id = "givetest"><%=offer['get']%></p></div>
+            <div class = "post-subtitle"><p>You can save</p></div>
+            <div class = "post-money"><p><%=offer['save']%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=@coffee%></p></div>
+            <!-- <div class = "post-distance"> <p><%=@distance.to_i%>m</p></div> -->
+        <div><span class = " submit-btn open-map"><%=link_to("Accept", "/posts/acceptoffer",{method:"post"})%></span><span class = "submit-btn"><%=link_to("Decline", "/posts/destroyoffer",{method:"post"})%></span></div>
+      </div>
+    </div>
+  </div>
+</div>

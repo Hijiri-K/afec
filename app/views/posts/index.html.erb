@@ -1,3 +1,5 @@
+<div class="post-index-container">
+
 
 <div class="main posts-index">
 <!-- 自分のステータスを表示================================================================================ -->
@@ -18,6 +20,17 @@
       <%end%>
     </div>
   </div>
+
+  <div class="invisible">
+    <input id="mypost-currency-have" type="text" name="" value="<%=@mypost.currency_have%>">
+    <input id="mypost-currency-have-amount" type="text" name="" value="<%=@mypost.currency_have_amount%>">
+    <input id="mypost-currency-want" type="text" name="" value="<%=@mypost.currency_want%>">
+    <input id="mypost-currency-want-amount" type="text" name="" value="<%=@mypost.currency_want_amount%>">
+    <input id="mypost-lat" type="text" name="" value="<%=@mypost.lat%>">
+    <input id="mypost-lng" type="text" name="" value="<%=@mypost.lng%>">
+  </div>
+
+
 <%else%>
   <div class="nomypost">
     <p>Please post your status</p>
@@ -41,7 +54,7 @@
             </div>
             <div class="form">
               <div class="form-body">
-              <%=form_tag("/posts/create") do%>
+              <!-- <%=form_tag("/posts/create") do%> -->
                   <p>I have</p>
                   <select name="currency_have" class="form-control editable" id="Currency">
                         <!--option value="">▼通貨</option-->
@@ -108,8 +121,8 @@
                   </div>
 
 
-                  <input class = "submit-btn" type="submit" name="" value="Update">
-              <%end%>
+                  <input class = "submit-btn" type="submit" name="" value="Update" id="exchange-submit">
+              <!-- <%end%> -->
             </div>
           </div>
 
@@ -134,7 +147,7 @@
         </div>
         <div class="form">
           <div class="form-body">
-          <%=form_tag("/posts/create") do%>
+          <!-- <%=form_tag("/posts/create") do%> -->
               <p>I have</p>
               <select name="currency_have" class="form-control editable" id="Currency">
                     <!--option value="">▼通貨</option-->
@@ -176,8 +189,8 @@
               </div>
 
 
-              <input class = "submit-btn" type="submit" name="" value="Update">
-          <%end%>
+              <input class = "submit-btn" type="submit" name="" value="Update" id="exchange-submit">
+          <!-- <%end%> -->
         </div>
       </div>
     </div>
@@ -327,9 +340,9 @@
 
 <!-- 投稿の表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ -->
   <div class="container-i">
-    <table align="center" cellspacing = "10">
+    <table align="center" cellspacing = "10" class = "posts-container" >
     <%for post in @posts do%>
-    <tr>
+    <tr class = "<%=post.user_id%>">
       <%if Post.find_by(user_id: @current_user.id)%><!--自分が投稿している場合。（以下の処理は自分の投稿情報（@mypost）を使うので自分の投稿がない場合に実行するとエラーになる）-->
 
 <!-- 個別投稿の表示 ========================================================-->
@@ -342,7 +355,7 @@
 						post.currency_want_amount, post.currency_have_amount
 						)%>
 
-          <%if @distance < 200 %>　<!--200メートル以内の投稿のみを表示-->
+          <%#if @distance < 200 %>　<!--200メートル以内の投稿のみを表示-->
               <td class="posts-index-item">
                   <div class="post-user-name">
                     <%user = User.find_by(id: post.user_id)%>
@@ -352,10 +365,6 @@
 
                   <div class="info"><!--投稿内の内容を表示-->
                       <p class = "mypostMessage-post"><a>"<%=post.content%>"</a></p>
-                      <!-- <p>i have <%=post.currency_have%>
-                      <%=post.currency_have_amount%></p>
-                      <p>i want <%=post.currency_want%>
-                      <%=post.currency_want_amount%></p> -->
                       <p class = "postid"><%=post.id%></p>
                       <div class= "post-subtitle"><p>we can trade </p></div>
                       <div class="myposts-post">
@@ -365,20 +374,30 @@
                       </div>
 
                       <div class = "post-subtitle"><p>save committion</p></div>
-                      <div class = "post-money"><p><a class = "saveinfo"><%=@save%></a>&emsp;<a class = "coffeeinfo"><i class="fa fa-coffee"></i><%=@coffee%></a></p></div>
-                      <!-- location<br>
-                      緯度<%=post.lat%><br>
-                      経度<%=post.lng%><br> -->
-                      <div class = "post-money"> <p><%=@distance.to_i%>m</p></div>
+                      <div class = "post-money"><p><a class = "saveinfo"><%=@save%></a>&emsp;
+                        <%if @coffee < 2%>
+                        <a class = "coffeeinfo"><i class='fa fa-coffee'></i></a>
+                        <%elsif @coffee < 3%>
+                          <a class = "coffeeinfo"><i class='fa fa-coffee'></i><i class='fa fa-coffee'></i></a>
+                        <%elsif @coffee >= 3%>
+                          <a class = "coffeeinfo"><i class='fa fa-coffee'></i><i class='fa fa-coffee'></i><i class='fa fa-coffee'></i></a>
+                        <%end%>
+                      </p></div>
+
+                      <span data-livestamp="<%=post.updated_at%>"></span>
+
+                      <div class="invisible">
+                        <div class="userid"><%=user.id%></div>
+                        <div class="offer_save_amount"><%=@savemoffer%></div>
+                      </div>
                   </div>
               </td>
-          <%end%>
+          <%#end%>
         <%end%>
        </tr>
     　<%end%>
     </table>
   </div>
-</div>
 
 <a class="fa fa-exchange exchange-show" id = "command"></a>
 
@@ -390,20 +409,25 @@
         <i class="fa fa-2x fa-times"></i>
       </div>
       <div id="login-form">
-        <h2>detail</h2>
-        <div class="post-user-name" id ="post-user-name-show">
+        <h2>Detail</h2>
+        <div class="post-user-name" id="post-user-name-show">
           </div>
             <div class="info">
                 <!-- <p id = "postid-show"></p> -->
-                <div class = "post-message"><p id = "postmessageshow"></p></div>
+                <div class = "post-message"><p id="postmessageshow"></p></div>
                 <div class = "post-subtitle"><p>You will give</p></div>
                 <!-- <div class = "post-money"><p id = "getshow"></p></div> -->
-                <div class = "mypost-detail"><a id = "getshow"></a></div>
+                <div class = "mypost-detail"><a id="getshow"></a></div>
                 <div class = "post-subtitle"><p>You will recieve</p></div>
                 <!-- <div class = "post-money"><p id = "giveshow"></p></div> -->
-                <div class = "mypost-detail"><a id = "giveshow"></a></div>
+                <div class = "mypost-detail"><a id="giveshow"></a></div>
                 <div class = "post-subtitle"><p>You can save</p></div>
-                <div class = "post-money"><p><a id = "saveshow"></a>&emsp;<a id = "coffeeshow"></a></p></div>
+                <div class = "post-money"><p><a id="saveshow"></a>&emsp;<a id="coffeeshow"></a></p></div>
+
+                <div class="invisible">
+                  <div id=post-userid></div>
+                  <div id="post_offer_savemoffer"></div>
+                </div>
 
             </div>
           </div>
@@ -411,65 +435,6 @@
     </div>
   </div>
 <!-- 詳細モーダルおわり==================================================================================================================== -->
-
-<!-- offerが来てる場合の処理＝＝オファーモーダルの表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
-  <%if @checkoffer%>
-  <%@offerpost = Post.find_by(id: @checkoffer)%>
-    <%offerpost = Post.find_by(id: @checkoffer)%>
-    <%offeruser = User.find_by(id: offerpost.user_id)%>
-
-<!-- 通知のテスト用 -================================-->
-    <script type="text/javascript">
-          Push.create('You recieved offer', {
-          　　body: "check afec out!!",
-          　　timeout: 8000, // 通知が消えるタイミング
-          　　vibrate: [100, 100, 100], // モバイル端末でのバイブレーション秒数
-          　　onClick: function() {
-          　　　　// 通知がクリックされた場合の設定
-          　　　　console.log(this);
-          　　}
-          });
-      </script>
-      <!-- ここまで -->
-
-      <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-    	<%cal(@mypost.lat, @mypost.lng,
-    				@mypost.currency_want, @mypost.currency_have,
-    				@mypost.currency_want_amount, @mypost.currency_have_amount,
-    				offerpost.lat, offerpost.lng,
-    				offerpost.currency_want, offerpost.currency_have,
-    				offerpost.currency_want_amount, offerpost.currency_have_amount
-    				)%>
-
-      <!--モーダルの内容  ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-          <div class="offer-modal-wrapper">
-            <div class="modal">
-              <div id="login-form">
-                  <h2>Recieved offer</h2>
-                  <div class="post-user-name">
-                    <%offeruser = User.find_by(id: offerpost.user_id)%>
-                    <img src="<%="/user_images/#{offeruser.image_name}"%>" alt="">
-                  <%=link_to("#{offeruser.name}","/users/#{offeruser.id}/show")%>
-                  </div>
-                  <div class="info">
-                      <p class = "post-message"><%=link_to(simple_format(offerpost.content), "/offerposts/#{post.id}")%></p>
-                      <div class= "post-subtitle"><p>You will give</p></div>
-                      <div class = "post-money"><p id = "gettest"><%=@get%></p></div>
-                      <div class= "post-subtitle"><p>You will recieve</p></div>
-                      <div class = "post-money"><p id = "givetest"><%=@give%></p></div>
-                      <div class = "post-subtitle"><p>You can save</p></div>
-                      <div class = "post-money"><p><%=@save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=@coffee%></p></div>
-                      <!-- location<br>
-                      緯度<%=post.lat%><br>
-                      経度<%=post.lng%><br> -->
-                      <div class = "post-distance"> <p><%=@distance.to_i%>m</p></div>
-                  <div><span class = " submit-btn open-map"><%=link_to("Accept", "/posts/acceptoffer",{method:"post"})%></span><span class = "submit-btn"><%=link_to("decline", "/posts/destroyoffer",{method:"post"})%></span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        <%end%>
-    <!--=========================オファーモーダルおわり====================================================================================================================  -->
 
 <!-- acceptモーダル ================================================================================================================================-->
     <!-- acceptが来てる場合の処理＝＝オファーモーダルの表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
@@ -531,12 +496,10 @@
 </div>
 <%end%>
 
-
-
+</div>
 
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&callback=initMap">
 </script>
+
 <!-- =====================mapモーダルおわり================================================================================================================= -->
-<%= javascript_include_tag 'checkoffer.js' %>
-<%= javascript_include_tag 'googlemap.js' %>

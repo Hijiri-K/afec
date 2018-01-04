@@ -27,32 +27,42 @@ module ApplicationHelper
         # <!--交換可能な金額、手数料の浮いた分を計算するーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー  -->
          if mypost_currency_want_amount <= post_currency_have_amount
             @give = "#{mypost_currency_want}" + " " + "#{mypost_currency_want_amount.to_i}"
+            @get = "#{mypost_currency_have}" + " " + "#{mypost_currency_have_amount.to_i}"
+            @savem = (mypost_currency_have_amount * 0.05).round(1)
+            @save ="#{mypost_currency_have}" + " " + "#{(mypost_currency_have_amount * 0.05).round(1)}"
+            @savemoffer = "#{mypost_currency_want}" + " " + "#{(mypost_currency_want_amount * 0.05).round(1)}"
           elsif mypost_currency_want_amount > post_currency_have_amount
             @give = "#{post_currency_have}" + " " + "#{post_currency_have_amount.to_i}"
-           end
-
-         if mypost_currency_want_amount <= post_currency_have_amount
-            @get = "#{mypost_currency_have}" + " " + "#{mypost_currency_have_amount.to_i}"
-          elsif mypost_currency_want_amount > post_currency_have_amount
             @get = "#{post_currency_want}" + " " + "#{post_currency_want_amount.to_i}"
+            @savem = (post_currency_want_amount * 0.05).round(1)
+            @save ="#{post_currency_want}" + " " + "#{(post_currency_want_amount * 0.05).round(1)}"
+            @savemoffer =  "#{post_currency_have}" + " " + "#{(post_currency_have_amount * 0.05).round(1)}"
           end
-
-        if  mypost_currency_want_amount <= post_currency_have_amount
-          @savem = (mypost_currency_have_amount * 0.05).round(1)
-          @save ="#{mypost_currency_have}" + " " + "#{(mypost_currency_have_amount * 0.05).round(1)}"
-        elsif mypost_currency_want_amount > post_currency_have_amount
-          @savem = (post_currency_want_amount * 0.05).round(1)
-          @save ="#{post_currency_want}" + " " + "#{(post_currency_want_amount * 0.05).round(1)}"
-        end
+        #
+        #  if mypost_currency_want_amount <= post_currency_have_amount
+        #     @get = "#{mypost_currency_have}" + " " + "#{mypost_currency_have_amount.to_i}"
+        #   elsif mypost_currency_want_amount > post_currency_have_amount
+        #     @get = "#{post_currency_want}" + " " + "#{post_currency_want_amount.to_i}"
+        #   end
+        #
+        # if  mypost_currency_want_amount <= post_currency_have_amount
+        #   @savem = (mypost_currency_have_amount * 0.05).round(1)
+        #   @save ="#{mypost_currency_have}" + " " + "#{(mypost_currency_have_amount * 0.05).round(1)}"
+        # elsif mypost_currency_want_amount > post_currency_have_amount
+        #   @savem = (post_currency_want_amount * 0.05).round(1)
+        #   @save ="#{post_currency_want}" + " " + "#{(post_currency_want_amount * 0.05).round(1)}"
+        # end
 
       # <!__コーヒーの数を計算（1杯５０円で計算）＝＝＝＝＝＝＝＝===＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ __>
-        if mypost_currency_have === "jpy"
+
+        if mypost_currency_have === "JPY"
           @coffee = (@savem / 300).to_i
-        elsif mypost_currency_have === "usd"
+        elsif mypost_currency_have === "USD"
           @coffee = (@savem / 3).to_i
-        elsif mypost_currency_have === "eur"
+        elsif mypost_currency_have === "EUR"
           @coffee = (@savem / 3).to_i
         end
+
       end
 
 end

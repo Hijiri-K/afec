@@ -7,6 +7,7 @@ class PostsController < ApplicationController
         @mypost = Post.find_by(user_id: @current_user.id)
         # @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
         @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have, location: @mypost.location, terminal: @mypost.terminal)
+        # @posts = Post.where(group: @mypost.stream)
     else
       @posts = Post.all.order(created_at: :desc)
     end
@@ -155,7 +156,8 @@ class PostsController < ApplicationController
         lng: params[:lng],
         location: params[:location],
         terminal: params[:terminal],
-        user_id: @current_user.id
+        user_id: @current_user.id,
+        group: params[:location] + params[:terminal]+ params[:currency_have]+ params[:currency_want]
       )
         # @post = Post.find_by(user_id: @current_user.id)
         # @post.content = params[:content]
@@ -178,7 +180,8 @@ class PostsController < ApplicationController
           lng: params[:lng],
           location: params[:location],
           terminal: params[:terminal],
-          user_id: @current_user.id
+          user_id: @current_user.id,
+          group: params[:location] + params[:terminal]+ params[:currency_have]+ params[:currency_want]
         )
   end
 

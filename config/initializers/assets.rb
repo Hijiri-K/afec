@@ -13,6 +13,7 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
-Rails.application.config.assets.precompile += %w( checkoffer.js )
-Rails.application.config.assets.precompile += %w( googlemap.js )
-Rails.application.config.assets.precompile += %w( gps.js )
+# Rails.application.config.assets.precompile += %w( checkoffer.js )
+# Rails.application.config.assets.precompile += %w( googlemap.js )
+# Rails.application.config.assets.precompile += %w( gps.js )
+# Rails.application.config.assets.precompile += %w( room.coffee )

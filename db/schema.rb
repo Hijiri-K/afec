@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171213075332) do
+ActiveRecord::Schema.define(version: 20180102112218) do
 
   create_table "likes", force: :cascade do |t|
     t.integer "user_id"
@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(version: 20171213075332) do
     t.float "currency_want_amount"
     t.integer "offer"
     t.integer "terminal"
+    t.string "group"
+    t.string "stream"
   end
 
   create_table "updates", force: :cascade do |t|
@@ -48,6 +50,7 @@ ActiveRecord::Schema.define(version: 20171213075332) do
     t.datetime "updated_at", null: false
     t.string "image_name"
     t.string "password"
+    t.string "group"
   end
 
 end

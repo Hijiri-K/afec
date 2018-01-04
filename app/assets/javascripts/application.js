@@ -13,6 +13,7 @@
 //= require rails-ujs
 //= require jquery.turbolinks
 //= require turbolinks
+//= require_tree
 
 //エラー防止のためjquery.turbolinksとturbolinksと require_treeのgemを無効化中
 
@@ -74,6 +75,8 @@ $(document).ready(function(){
             coffeeshow = $(this).find('.coffeeinfo').html();
             postusernameshow = $(this).find('.post-user-name').html();
             postid = $(this).find('.postid').text();
+            userid = $(this).find('.userid').text();
+            postsavemoffer = $(this).find('.offer_save_amount').text();
 
             $('#postmessageshow').text(postmessageshow);
             $('#getshow').text(getshow);
@@ -81,9 +84,11 @@ $(document).ready(function(){
             $('#saveshow').text(saveshow);
             $('#coffeeshow').html(coffeeshow);
             $('#post-user-name-show').html(postusernameshow);
-            // $('#postid-show').text(postid);
+            $('#post-userid').text(userid);
+            $('#post_offer_savemoffer').text(postsavemoffer);
 
-        $('#offersubmit').click(function(){
+
+        $('#offfersubmit').click(function(){
             $.ajax({
                 url: "/posts/offer",
                 type: "post",
@@ -239,7 +244,8 @@ $.ajax({
         ansJpy = json.result
         ansJpy = Math.floor(ansJpy);
 
-        $('#returnYen').val(ansJpy + selectedCode_baseText);
+        // $('#returnYen').val(ansJpy + selectedCode_baseText);
+          $('#returnYen').val(ansJpy);
     }
 
 
