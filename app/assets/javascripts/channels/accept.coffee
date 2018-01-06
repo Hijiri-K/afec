@@ -13,7 +13,7 @@ App.accept = App.cable.subscriptions.create "AcceptChannel",
     @perform 'accept', user_id: userid, message: message, get: get, give: give, save: save, id: id
     console.log(userid, message, get, give, save, id)
 
-  $(document).on 'click', '.offer-decline', (event) ->
+  $(document).on 'click', '.offer-accept', (event) ->
     console.log("accept");
     App.accept.accept $(this).parents('.slide').find('#useridtest').text(), $(this).parents('.slide').find('.post-message').text(), $(this).parents('.slide').find('#gettest').text(), $(this).parents('.slide').find('#givetest').text(), $(this).parents('.slide').find('#save2test').text(), $(this).parents('.slide').find('#idtest').text()
     console.log("ok");

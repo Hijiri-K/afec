@@ -78,50 +78,50 @@ $(document).ready(function(){
   });
 
 
-  $('td').click(function(){
-      $('#show-modal').fadeIn();
-        var postmessageshow = $(this).find('.postmessage').text();
-            getshow = $(this).find('.getinfo').text();
-            giveshow = $(this).find('.giveinfo').text();
-            saveshow = $(this).find('.saveinfo').text();
-            coffeeshow = $(this).find('.coffeeinfo').html();
-            postusernameshow = $(this).find('.post-user-name').html();
-            myid = $(this).find('.myid').text();
-            userid = $(this).find('.userid').text();
-            postsavemoffer = $(this).find('.offer_save_amount').text();
-            $('#postmessageshow').text(postmessageshow);
-            $('#getshow').text(getshow);
-            $('#giveshow').text(giveshow);
-            $('#saveshow').text(saveshow);
-            $('#coffeeshow').html(coffeeshow);
-            $('#post-user-name-show').html(postusernameshow);
-            $('#post-userid').text(userid);
-            $('#post_offer_savemoffer').text(postsavemoffer);
-            $('#post-myid').text(myid);
+  // $('td').on('click',function(){
+  //     $('#show-modal').fadeIn();
+  //       var postmessageshow = $(this).find('.postmessage').text();
+  //           getshow = $(this).find('.getinfo').text();
+  //           giveshow = $(this).find('.giveinfo').text();
+  //           saveshow = $(this).find('.saveinfo').text();
+  //           coffeeshow = $(this).find('.coffeeinfo').html();
+  //           postusernameshow = $(this).find('.post-user-name').html();
+  //           myid = $(this).find('.myid').text();
+  //           userid = $(this).find('.userid').text();
+  //           postsavemoffer = $(this).find('.offer_save_amount').text();
+  //           $('#postmessageshow').text(postmessageshow);
+  //           $('#getshow').text(getshow);
+  //           $('#giveshow').text(giveshow);
+  //           $('#saveshow').text(saveshow);
+  //           $('#coffeeshow').html(coffeeshow);
+  //           $('#post-user-name-show').html(postusernameshow);
+  //           $('#post-userid').text(userid);
+  //           $('#post_offer_savemoffer').text(postsavemoffer);
+  //           $('#post-myid').text(myid);
+  //   });
 
-
-        $('#offfersubmit').click(function(){
-            $.ajax({
-                url: "/posts/offer",
-                type: "post",
-                // dataType: "html",
-                data: {id: postid},
-                success: function(responce) {
-                  var postmessageshow = null
-                      getshow = null
-                      giveshow = null
-                      saveshow = null
-                      coffeeshow = null
-                      postusernameshow = null
-                      postid = null
-            },
-            error: function(xhr) {
-                alert("errror");
-            }
-            });
-          });
-        });
-
+        // $('#offfersubmit').click(function(){
+        //     $.ajax({
+        //         url: "/posts/offer",
+        //         type: "post",
+        //         // dataType: "html",
+        //         data: {id: postid},
+        //         success: function(responce) {
+        //           var postmessageshow = null
+        //               getshow = null
+        //               giveshow = null
+        //               saveshow = null
+        //               coffeeshow = null
+        //               postusernameshow = null
+        //               postid = null
+        //     },
+        //     error: function(xhr) {
+        //         alert("errror");
+        //     }
+        //     });
+        //   });
+        // });
+        //
 
 // 現在地取得======gps.jsに移動済み=============================================================
 //   $('.form-control').click(

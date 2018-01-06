@@ -23,7 +23,7 @@
             <div class="invisible" id="save2test"><%=offer['save2']%></div>
             <!-- <div class = "post-distance"> <p><%=@distance.to_i%>m</p></div> -->
         <!-- <div><span class = " submit-btn open-map"><%=link_to("Accept", "/posts/acceptoffer",{method:"post"})%></span><span class = "submit-btn"><%=link_to("Decline", "/posts/destroyoffer",{method:"post"})%></span></div> -->
-        <div><span class = " submit-btn open-map offer-decline">Accept</span><span class = "submit-btn offer-decline">Decline</span></div>
+        <div><span class = " submit-btn offer-accept">Accept</span><span class = "submit-btn offer-decline">Decline</span></div>
 
       </div>
     </div>
@@ -32,8 +32,22 @@
 </div>
 
 <script type="text/javascript">
-$('.open-map').click(function(){
+$('.offer-accept').click(function(){
+  $('.offer-modal-wrapper-test').fadeOut();
   $('#map-modal').fadeIn();
+  // $(".post-index-container").append('\
+  // <div class="map-modal-wrapper" id="map-modal">\
+  //   <div class="modal">\
+  //     <div id="login-form">\
+  //         <h2>Map to Cafe</h2>\
+  //         <div class="map-container">\
+  //             <div id="map"></div>\
+  //         </div>\
+  //         <div class ="submit-btn close-modal">Arrived</div>\
+  //     </div>\
+  //   </div>\
+  // </div>\
+  // ')
 });
 
 

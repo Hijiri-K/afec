@@ -244,44 +244,71 @@
 						)%>
 
           <%#if @distance < 200 %>　<!--200メートル以内の投稿のみを表示-->
-              <td class="posts-index-item">
-                  <div class="post-user-name">
+              <td class="posts-index-item" id="td<%=post.id%>">
+                  <div class="post-user-name" id="post-user-name<%=post.id%>">
                     <%user = User.find_by(id: post.user_id)%>
                     <img class = "user-image"  src="<%="/user_images/#{user.image_name}"%>" alt="">
                   <%=link_to("#{user.name}","/users/#{user.id}/show")%>
                   </div>
 
                   <div class="info"><!--投稿内の内容を表示-->
-                      <p class = "postmessage"><a>"<%=post.content%>"</a></p>
-                      <p class = "postid"><%=post.id%></p>
+                      <p class = "postmessage<%=post.id%>"><a>"<%=post.content%>"</a></p>
                       <div class= "post-subtitle"><p>we can trade </p></div>
                       <div class="myposts-post">
-                        <div class = "mypost-post"><a class = "getinfo"><%=@get%></a></div>
+                        <div class = "mypost-post"><a class = "getinfo<%=post.id%>"><%=@get%></a></div>
                         <a class="fa fa-exchange"></a>
-                        <div class = "mypost-post"><a class = "giveinfo"><%=@give%></a></div>
+                        <div class = "mypost-post"><a class = "giveinfo<%=post.id%>"><%=@give%></a></div>
                       </div>
 
                       <div class = "post-subtitle"><p>save committion</p></div>
-                      <div class = "post-money"><p><a class = "saveinfo"><%=@save%></a>&emsp;
+                      <div class = "post-money"><p><a class = "saveinfo<%=post.id%>"><%=@save%></a>&emsp;
                         <%if @coffee < 2%>
-                        <a class = "coffeeinfo"><i class='fa fa-coffee'></i></a>
+                        <a class = "coffeeinfo<%=post.id%>"><i class='fa fa-coffee'></i></a>
                         <%elsif @coffee < 3%>
-                          <a class = "coffeeinfo"><i class='fa fa-coffee'></i><i class='fa fa-coffee'></i></a>
+                          <a class = "coffeeinfo<%=post.id%>"><i class='fa fa-coffee'></i><i class='fa fa-coffee'></i></a>
                         <%elsif @coffee >= 3%>
-                          <a class = "coffeeinfo"><i class='fa fa-coffee'></i><i class='fa fa-coffee'></i><i class='fa fa-coffee'></i></a>
+                          <a class = "coffeeinfo<%=post.id%>"><i class='fa fa-coffee'></i><i class='fa fa-coffee'></i><i class='fa fa-coffee'></i></a>
                         <%end%>
                       </p></div>
 
                       <span data-livestamp="<%=post.updated_at%>"></span>
 
                       <div class="invisible">
-                        <div class="userid"><%=user.id%></div>
-                        <div class="offer_save_amount"><%=@savemoffer%></div>
-                        <div class="myid"><%=@mypost.user_id%></div>
+                        <div class="userid<%=post.id%>"><%=user.id%></div>
+                        <div class="offer_save_amount<%=post.id%>"><%=@savemoffer%></div>
+                        <div class="myid<%=post.id%>"><%=@mypost.user_id%></div>
                       </div>
 
                   </div>
               </td>
+              <script type="text/javascript">
+              $('#td<%=post.id%>').on('click',function(){
+                $('#show-modal').fadeIn();
+                  var postmessageshow = $('.postmessage<%=post.id%>').text();
+                      getshow = $('.getinfo<%=post.id%>').text();
+                      giveshow = $('.giveinfo<%=post.id%>').text();
+                      saveshow = $('.saveinfo<%=post.id%>').text();
+                      coffeeshow = $('.coffeeinfo<%=post.id%>').html();
+                      postusernameshow = $('#post-user-name<%=post.id%>').html();
+                      myid = $('.myid<%=post.id%>').text();
+                      userid = $('.userid<%=post.id%>').text();
+                      postsavemoffer = $('.offer_save_amount<%=post.id%>').text();
+                      $('#postmessageshow').text(postmessageshow);
+                      $('#getshow').text(getshow);
+                      $('#giveshow').text(giveshow);
+                      $('#saveshow').text(saveshow);
+                      $('#coffeeshow').html(coffeeshow);
+                      $('#post-user-name-show').html(postusernameshow);
+                      $('#post-userid').text(userid);
+                      $('#post_offer_savemoffer').text(postsavemoffer);
+                      $('#post-myid').text(myid);
+            });
+              </script>
+
+
+
+
+
           <%#end%>
         <%end%>
        </tr>
@@ -301,7 +328,7 @@
       <div id="login-form">
         <h2>Detail</h2>
         <div class="post-user-name" id="post-user-name-show">
-          </div>
+        </div>
             <div class="info">
                 <!-- <p id = "postid-show"></p> -->
                 <div class = "post-message"><p id="postmessageshow"></p></div>
@@ -313,9 +340,9 @@
                 <div class = "mypost-detail"><a id="giveshow"></a></div>
                 <div class = "post-subtitle"><p>You can save</p></div>
                 <div class = "post-money"><p><a id="saveshow"></a>&emsp;<a id="coffeeshow"></a></p></div>
-
+<!-- <div id="post-userid"></div> -->
                 <div class="invisible">
-                  <div id=post-userid></div>
+                  <div id="post-userid"></div>
                   <div id="post_offer_savemoffer"></div>
                   <div id="post-myid"></div>
                 </div>
@@ -339,17 +366,20 @@
         <div class="map-container">
             <div id="map"></div>
         </div>
-        <div class ="submit-btn close-modal"><%=link_to("Arrived", "/posts/destroymap",{method:"post"})%></div>
+        <div class ="submit-btn close-modal">Arrived</div>
     </div>
   </div>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&callback=initMap">
+  </script>
 </div>
 <%#end%>
 
 <!-- </div> -->
 
-<script async defer
+<!-- <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&callback=initMap">
-</script>
+</script> -->
 
 <!-- =====================mapモーダルおわり================================================================================================================= -->
 
@@ -366,6 +396,4 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHg
   </div>
 </div>
 </div>
-  </div>
-<script type="text/javascript">
-</script>
+</div>
