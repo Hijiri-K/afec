@@ -18,7 +18,7 @@
 //エラー防止のためjquery.turbolinksとturbolinksと require_treeのgemを無効化中
 
 $(document).ready(function(){
-  
+
 
   $.ajaxSetup({
         headers: {

@@ -85,7 +85,7 @@
 
 
 /*モーダルテスト*/
-.login-modal-wrapper, .signup-modal-wrapper, .show-modal-wrapper, .location-modal-wrapper, #exchange-modal2  {
+.login-modal-wrapper, .signup-modal-wrapper, .show-modal-wrapper, .location-modal-wrapper, #exchange-modal2, .map-modal-wrapper  {
   position: fixed;
   top: 0;
   right: 0;
@@ -108,7 +108,7 @@
   display: none;
 }*/
 
-.offer-modal-wrapper, .map-modal-wrapper  {
+.offer-modal-wrapper  {
   position: fixed;
   top: 0;
   right: 0;

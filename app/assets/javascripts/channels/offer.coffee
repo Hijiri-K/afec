@@ -13,13 +13,13 @@ App.offer = App.cable.subscriptions.create "OfferChannel",
     $('.offer-modal-wrapper-test').fadeIn();
 
 
-  offer: (userid, message, get, give, save, id) ->
-    @perform 'offer', user_id: userid, message: message, get: get, give: give, save: save, id: id
-    console.log("perform")
+  offer: (userid, message, get, give, save, id, save2) ->
+    @perform 'offer', user_id: userid, message: message, get: get, give: give, save: save, id: id, save2: save2
+    console.log(userid, message, get, give, save, id, save2)
 
   $(document).on 'click', '#offersubmit', (event) ->
     console.log("send");
-    App.offer.offer $('#post-userid').text(), $('#postmessageshow').text(), $('#getshow').text(), $('#giveshow').text(), $('#post_offer_savemoffer').text(), $('#post-myid').text()
+    App.offer.offer $('#post-userid').text(), $('#postmessageshow').text(), $('#getshow').text(), $('#giveshow').text(), $('#post_offer_savemoffer').text(), $('#post-myid').text(), $('#saveshow').text()
     console.log("send");
     $('.modal').animate({"top": "-200px"},500);
     $('.show-modal-wrapper').fadeOut(500);

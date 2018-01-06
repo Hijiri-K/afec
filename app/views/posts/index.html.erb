@@ -252,7 +252,7 @@
                   </div>
 
                   <div class="info"><!--投稿内の内容を表示-->
-                      <p class = "mypostMessage-post"><a>"<%=post.content%>"</a></p>
+                      <p class = "postmessage"><a>"<%=post.content%>"</a></p>
                       <p class = "postid"><%=post.id%></p>
                       <div class= "post-subtitle"><p>we can trade </p></div>
                       <div class="myposts-post">
@@ -323,58 +323,15 @@
             </div>
           </div>
           <!-- <input class = "submit-btn" id="offersubmit" type="submit" name="" value="Offer"> -->
-          <div><span class = " submit-btn open-map" id="offersubmit">Send Offer</span></div>
+          <div><span class = " submit-btn" id="offersubmit">Send Offer</span></div>
     </div>
   </div>
 <!-- 詳細モーダルおわり==================================================================================================================== -->
 
 <!-- acceptモーダル ================================================================================================================================-->
-    <!-- acceptが来てる場合の処理＝＝オファーモーダルの表示＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝  -->
-      <%if @acceptcheckoffer%>
-        <%offerpost = Post.find_by(id: @acceptcheckoffer)%>
-        <%offeruser = User.find_by(id: offerpost.user_id)%>
 
-      <!-- 計算 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-    				<%cal(@mypost.lat, @mypost.lng,
-    							@mypost.currency_want, @mypost.currency_have,
-    							@mypost.currency_want_amount, @mypost.currency_have_amount,
-    							offerpost.lat, offerpost.lng,
-    							offerpost.currency_want, offerpost.currency_have,
-    							offerpost.currency_want_amount, offerpost.currency_have_amount
-    							)%>
-
-
-      <!--モーダルの内容  ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-          <div class="offer-modal-wrapper">
-            <div class="modal">
-              <div id="login-form">
-                  <h2>Your offer accepted</h2>
-                  <div class="post-user-name">
-                    <%offeruser = User.find_by(id: offerpost.user_id)%>
-                    <img src="<%="/user_images/#{offeruser.image_name}"%>" alt="">
-                  <%=link_to("#{offeruser.name}","/users/#{offeruser.id}/show")%>
-                  </div>
-                  <div class="info">
-                      <p class = "post-message"><%=link_to(simple_format(offerpost.content), "/offerposts/#{post.id}")%></p>
-                      <div class= "post-subtitle"><p>You will give</p></div>
-                      <div class = "post-money"><p id = "gettest"><%=@get%></p></div>
-                      <div class= "post-subtitle"><p>You will recieve</p></div>
-                      <div class = "post-money"><p id = "givetest"><%=@give%></p></div>
-                      <div class = "post-subtitle"><p>You can save</p></div>
-                      <div class = "post-money"><p><%=@save%>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=@coffee%></p></div>
-                      <!-- location<br>
-                      緯度<%=post.lat%><br>
-                      経度<%=post.lng%><br> -->
-                      <div class = "post-distance"> <p><%=@distance.to_i%>m</p></div>
-                  <div class ="submit-btn"><span class = "open-map"><%=link_to("Go to Cafe", "/posts/destroyaccept",{method:"post"})%></span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        <%end%>
-<!-- =============================-acceptモーダルおわり ==================================================================================================-->
 <!-- mapモーダル========================================================================================================================================== -->
-<%if @mapshow%>
+<%#if @mapshow%>
 <div class="map-modal-wrapper" id="map-modal">
   <div class="modal">
     <div id="login-form">
@@ -386,7 +343,7 @@
     </div>
   </div>
 </div>
-<%end%>
+<%#end%>
 
 <!-- </div> -->
 
