@@ -42,6 +42,6 @@ Rails.application.routes.draw do
   get "updates" => "home#updates"
   get 'test' => "home#test"
   get 'test2' => "home#test2"
-
+  get 'test3' => "home#test3"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

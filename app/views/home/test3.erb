@@ -1,0 +1,130 @@
+<style type="text/css">
+
+.slider .slide {
+  width: 198px;
+  height: 198px;
+  border: 1px solid #f00;
+  float: left;
+}
+
+.slider .slideSet {
+  position: absolute;
+}
+
+.slider {
+  width: 200px;
+  height: 200px;
+  overflow:hidden;
+  position: relative;
+  margin: auto;
+}
+
+.buttons{
+  text-align: center;
+}
+</style>
+
+<div class="container">
+
+  <div class="slider"  id="touch">
+    <div class="slideSet">
+      <div class="slide">slide1</div>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="slider-prev">前へ</button>
+    <button class="slider-next">次へ</button>
+    <button class="slider-add">スライド追加</button>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+var slideWidth = $('.slide').outerWidth(); // .slideの幅を取得して代入
+var slideNum = $('.slide').length;  // .slideの数を取得して代入
+
+var slideSetWidth = slideWidth * slideNum; // .slideの幅×数で求めた値を代入
+$('.slideSet').css('width', slideSetWidth); // .slideSetのスタイルシートにwidth: slideSetWidthを指定
+
+var slideWidth = $('.slide').outerWidth(); // .slideの幅を取得して代入
+var slideNum = $('.slide').length ;  // .slideの数を取得して代入
+var slideSetWidth = slideWidth * slideNum;  // .slideの幅×数で求めた値を代入
+$('.slideSet').css('width', slideSetWidth); // .slideSetのスタイルシートにwidth: slideSetWidthを指定
+
+var slideCurrent = 0; // 現在地を示す変数
+
+// アニメーションを実行する独自関数
+var sliding = function(){
+
+  // slideCurrentが0以下だったら
+  if( slideCurrent < 0 ){
+    slideCurrent = slideNum - 1;
+
+  // slideCurrentがslideNumを超えたら
+}else if( slideCurrent > slideNum - 1){ // slideCUrrent >= slideNumでも可
+    slideCurrent = 0;
+  }
+
+  $('.slideSet').animate({
+    left: slideCurrent * -slideWidth
+  });
+}
+
+// 次へボタンが押されたとき
+$('.slider-next').click(function(){
+  slideCurrent++;
+  sliding();
+});
+
+$('.slider-prev').click(function(){
+  slideCurrent--;
+  sliding();
+});
+
+$('.slider-add').click(function(){
+  $('.slideSet').append('<div class="slide">addedSlide</div>');
+  slideNum++;
+  slideSetWidth = slideWidth * slideNum;
+  $('.slideSet').css('width', slideSetWidth);
+});
+
+
+// タッチイベント
+$(function() {
+  $('#touch').on('touchstart', onTouchStart); //指が触れたか検知
+  $('#touch').on('touchmove', onTouchMove); //指が動いたか検知
+  $('#touch').on('touchend', onTouchEnd); //指が離れたか検知
+  var direction, position;
+
+  //スワイプ開始時の横方向の座標を格納
+  function onTouchStart(event) {
+    position = getPosition(event);
+    direction = ''; //一度リセットする
+  }
+
+  //スワイプの方向（left／right）を取得
+  function onTouchMove(event) {
+    if (position - getPosition(event) > 70) { // 70px以上移動しなければスワイプと判断しない
+      direction = 'left'; //左と検知
+    } else if (position - getPosition(event) < -70){  // 70px以上移動しなければスワイプと判断しない
+      direction = 'right'; //右と検知
+    }
+  }
+
+  function onTouchEnd(event) {
+    if (direction == 'right'){
+      slideCurrent--;
+      sliding();
+    } else if (direction == 'left'){
+      slideCurrent++;
+      sliding();
+    }
+  }
+
+  //横方向の座標を取得
+  function getPosition(event) {
+    return event.originalEvent.touches[0].pageX;
+  }
+});
+</script>

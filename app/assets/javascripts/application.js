@@ -18,12 +18,24 @@
 //エラー防止のためjquery.turbolinksとturbolinksと require_treeのgemを無効化中
 
 $(document).ready(function(){
+  
 
   $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
 });
+
+// 未投稿時にモーダル表示
+  if($('.mypost-status').text() == ""){
+    $('#location-modal').fadeIn();
+  };
+
+  $('.offer-decline').on("click", function(){
+    console.log("test")
+    $(this).parents('.slide').hide()
+  });
+
 
   $('.login-show').click(function(){
     $('#login-modal').fadeIn();
@@ -74,10 +86,9 @@ $(document).ready(function(){
             saveshow = $(this).find('.saveinfo').text();
             coffeeshow = $(this).find('.coffeeinfo').html();
             postusernameshow = $(this).find('.post-user-name').html();
-            postid = $(this).find('.postid').text();
+            myid = $(this).find('.myid').text();
             userid = $(this).find('.userid').text();
             postsavemoffer = $(this).find('.offer_save_amount').text();
-
             $('#postmessageshow').text(postmessageshow);
             $('#getshow').text(getshow);
             $('#giveshow').text(giveshow);
@@ -86,6 +97,7 @@ $(document).ready(function(){
             $('#post-user-name-show').html(postusernameshow);
             $('#post-userid').text(userid);
             $('#post_offer_savemoffer').text(postsavemoffer);
+            $('#post-myid').text(myid);
 
 
         $('#offfersubmit').click(function(){
@@ -308,4 +320,52 @@ $.ajax({
   //       });
   //     },5000);
   // });
+
+
+  $(function() {
+    $(".offer-modal-wrapper-test").on('touchstart', onTouchStart); //指が触れたか検知
+    $(".offer-modal-wrapper-test").on('touchmove', onTouchMove); //指が動いたか検知
+    $(".offer-modal-wrapper-test").on('touchend', onTouchEnd); //指が離れたか検知
+    console.log();
+    var direction, position;
+
+    //スワイプ開始時の横方向の座標を格納
+    function onTouchStart(event) {
+      position = getPosition(event);
+      direction = ''; //一度リセットする
+    }
+
+    //スワイプの方向（left／right）を取得
+    function onTouchMove(event) {
+      console.log(direction)
+      if (position - getPosition(event) > 30) { // 70px以上移動しなければスワイプと判断しない
+        direction = 'left'; //左と検知
+      } else if (position - getPosition(event) < -30){  // 70px以上移動しなければスワイプと判断しない
+        direction = 'right'; //右と検知
+      }
+    }
+
+    function onTouchEnd(event) {
+      console.log("end")
+      moveNum = slideNum - 1
+      if (direction == 'right'){
+        slideCurrent--;
+        sliding();
+      } else if (direction == 'left'){
+        slideCurrent++;
+        sliding();
+      }
+    }
+
+    //横方向の座標を取得
+    function getPosition(event) {
+      return event.originalEvent.touches[0].pageX;
+    }
+  });
+
+
+
+
+
+
 });
