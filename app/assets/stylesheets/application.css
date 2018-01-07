@@ -182,6 +182,8 @@
 .submit-btn a, input[type="submit"] {
   color:white;
   font-size: 18px;
+  padding: 6px 0;
+
 }
 
 #signup-form h2, #login-form h2, #exchange-form h2 {

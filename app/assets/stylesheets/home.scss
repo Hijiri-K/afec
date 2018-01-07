@@ -135,6 +135,114 @@ body {
   border: 0.3px solid white;
 }
 
+
+
+
+
+
+
+
+
+
+.top-main-test {
+  padding: 120px 0 100px;
+  text-align: center;
+  width: 100%;
+  height: 500px;
+  color: white;
+  background-color: #7b5544;
+  background-image: linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),url("/background-images/test.jpg");
+  background-size: cover;
+  background-position: bottom;
+}
+
+.submit-btn-test {
+    display: inline-block;
+    padding: 8px 50px;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    margin: 50px auto;
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+}
+
+.submit-btn-test :hover {
+
+    background-color: #4CAF50;
+}
+.top-message-test {
+  position: relative;
+}
+
+.top-main-test h2 {
+  font-size: 60px;
+  font-weight: 500;
+  line-height: 1.3;
+  -webkit-font-smoothing: antialiased;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.top-main-test h3 {
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.3;
+  -webkit-font-smoothing: antialiased;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.top-main-test p {
+  padding-top: 10px;
+  font-size: 24px;
+  opacity: 0.8;
+}
+
+
+.howitworks{
+  height:600px;
+}
+
+.howitworks h2{
+  color:	#555555;
+  text-align: center;
+  padding: 30px 0 20px 0;
+}
+
+.howitworks h3{
+  color:	#555555;
+  text-align: left;
+  // padding: 30px 0 20px 0;
+  padding-top:15px;
+}
+
+.discriptions {
+  padding-left: 25px;
+}
+
+.howitworks img{
+  float:right;
+  height:500px;
+}
+
+.footer-test{
+   background-color: #795548;
+   height:40px;
+   color:white;
+   text-align: right;
+   line-height: 40px;
+   font-size: 14px;
+   padding-right: 10px;
+}
+
+
+
+
+
+
 /* about ================================ */
 .about-main {
   padding: 180px 8% 0;
@@ -217,7 +325,7 @@ body {
   color: white;
   // font-weight: 300;
   border-radius: 50px;
-  padding:12px 0;
+  // padding:12px 0;
   margin-top: 10px;
   // font-size: 18px;
   cursor: pointer;

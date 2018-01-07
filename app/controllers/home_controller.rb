@@ -49,6 +49,9 @@ class HomeController < ApplicationController
  def test3
  end
 
+ def test4
+ end
+
 end
 
 
