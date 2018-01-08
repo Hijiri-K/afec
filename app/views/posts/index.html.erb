@@ -359,20 +359,7 @@
 
 <!-- mapモーダル========================================================================================================================================== -->
 <%#if @mapshow%>
-<div class="map-modal-wrapper" id="map-modal">
-  <div class="modal">
-    <div id="login-form">
-        <h2>Map to Cafe</h2>
-        <div class="map-container">
-            <div id="map"></div>
-        </div>
-        <div class ="submit-btn close-modal">Arrived</div>
-    </div>
-  </div>
-  <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&callback=initMap">
-  </script>
-</div>
+
 <%#end%>
 
 <!-- </div> -->
@@ -390,10 +377,29 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHg
     <div class="slider">
       <div class="slideSet">
         <div class="initial"></div>
-
       </div>
     </div>
   </div>
+<button type="button" name="button" id="mapmapmap"></button>
+<script type="text/javascript">
+  $('#mapmapmap').on('click', function(){
+    $('.map-modal-wrapper').css('z-index', '10');
+  })
+</script>
 </div>
 </div>
 </div>
+
+<div class="map-modal-wrapper" id="map-modal">
+  <div class="modal">
+    <div id="login-form">
+        <h2>Map to Cafe</h2>
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+        <div class ="submit-btn close-modal">Arrived</div>
+    </div>
+  </div>
+</div>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&callback=initMap">
+</script>

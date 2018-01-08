@@ -85,7 +85,7 @@
 
 
 /*モーダルテスト*/
-.login-modal-wrapper, .signup-modal-wrapper, .show-modal-wrapper, .location-modal-wrapper, #exchange-modal2, .map-modal-wrapper  {
+.login-modal-wrapper, .signup-modal-wrapper, .show-modal-wrapper, .location-modal-wrapper, #exchange-modal2  {
   position: fixed;
   top: 0;
   right: 0;
@@ -119,16 +119,17 @@
   display: block;
 }
 
-/* .map-modal-wrapper {
+.map-modal-wrapper {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
-  z-index: 100;
+  /* // mapがfadeInなどでは読み込めないため、事前にz-indexをー1で読み込んで、その後に下記のscriptでz-indexを200に変更して表示する作戦 */
+  z-index: -1;
   display: block;
-} */
+}
 
 .modal {
   /*position: absolute;

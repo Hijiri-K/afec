@@ -34,7 +34,9 @@
 <script type="text/javascript">
 $('.offer-accept').click(function(){
   $('.offer-modal-wrapper-test').fadeOut();
-  $('#map-modal').fadeIn();
+  // mapがfadeInなどでは読み込めないため、事前にz-indexをー1で読み込んで、その後に下記のscriptでz-indexを200に変更して表示する作戦
+  $('.map-modal-wrapper').css('z-index', '200');
+  });
   // $(".post-index-container").append('\
   // <div class="map-modal-wrapper" id="map-modal">\
   //   <div class="modal">\
@@ -48,7 +50,6 @@ $('.offer-accept').click(function(){
   //   </div>\
   // </div>\
   // ')
-});
 
 
 $('.slide').width($('.container-i').width() * 0.85)

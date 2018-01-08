@@ -23,6 +23,8 @@
 <script type="text/javascript">
 $('.meet-up').click(function(){
   $('.offer-modal-wrapper').fadeOut();
-  $('#map-modal').fadeIn();
+  // $('#map-modal').fadeIn();
+  // mapがfadeInなどでは読み込めないため、事前にz-indexをー1で読み込んで、その後に下記のscriptでz-indexを200に変更して表示する作戦
+  $('.map-modal-wrapper').css('z-index', '200');
 });
 </script>
