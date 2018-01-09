@@ -36,6 +36,10 @@ $(document).ready(function(){
     $(this).parents('.slide').hide()
   });
 
+  $('.close-map').on('click', function(){
+    $('.map-modal-wrapper').css('z-index', '-1');
+  })
+
 
   $('.login-show').click(function(){
     $('#login-modal').fadeIn();

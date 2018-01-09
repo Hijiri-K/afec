@@ -301,7 +301,7 @@
                       $('#post-user-name-show').html(postusernameshow);
                       $('#post-userid').text(userid);
                       $('#post_offer_savemoffer').text(postsavemoffer);
-                      $('#post-myid').text(myid);
+                      // $('#post-myid').text(myid);
             });
               </script>
 
@@ -344,9 +344,8 @@
                 <div class="invisible">
                   <div id="post-userid"></div>
                   <div id="post_offer_savemoffer"></div>
-                  <div id="post-myid"></div>
+                  <div id="post-myid"><%=@current_user.id%></div>
                 </div>
-                  <div id="post-myid"></div>
             </div>
           </div>
           <!-- <input class = "submit-btn" id="offersubmit" type="submit" name="" value="Offer"> -->
@@ -380,12 +379,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHg
       </div>
     </div>
   </div>
-<button type="button" name="button" id="mapmapmap"></button>
-<script type="text/javascript">
-  $('#mapmapmap').on('click', function(){
-    $('.map-modal-wrapper').css('z-index', '10');
-  })
-</script>
+
 </div>
 </div>
 </div>
@@ -397,7 +391,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHg
         <div class="map-container">
             <div id="map"></div>
         </div>
-        <div class ="submit-btn close-modal">Arrived</div>
+        <div class ="submit-btn close-map">Arrived</div>
     </div>
   </div>
 </div>

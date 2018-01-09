@@ -36,7 +36,6 @@
                      <div class="offer_save_amount<%=message.id%>"></div>
                    </div>
 
-
               </div>
           </td>
       <%#end%>
@@ -88,6 +87,8 @@
            coffeeshow = $(this).find('.coffeeinfo<%=message.id%>').html();
            postusernameshow = $(this).find('#post-user-name<%=message.id%>').html();
            postid = $(this).find('.postid<%=message.id%>').text();
+           userid = $(this).find('.userid<%=message.id%>').text();
+           console.log(userid);
 
            $('#postmessageshow').text(postmessageshow);
            $('#getshow').text(getshow);
@@ -96,6 +97,7 @@
            $('#coffeeshow').html(coffeeshow);
            $('#post-user-name-show').html(postusernameshow);
            $('#postid-show').text(postid);
+           $('#post-userid').text(userid);
 
        // $('#offfersubmit').click(function(){
        //     $.ajax({
