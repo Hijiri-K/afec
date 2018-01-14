@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   post "posts/showshow" => "posts#showshow"
 
 # トップ画面をtest4に変更中
-  get '/' => "home#test4"
+  get '/' => "home#top"
   get "about" => "home#about"
   get "updates" => "home#updates"
   get 'test' => "home#test"

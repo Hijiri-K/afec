@@ -1,5 +1,5 @@
 <!-- <div class="offer-modal-wrapper"> -->
-<div class="slide" id="touch<%=offer['id']%>">
+<div class="slide <%=offer['id']%> offered" id="touch<%=offer['id']%>">
 
 
   <div class="modal-test">
@@ -23,7 +23,9 @@
             <div class="invisible" id="save2test"><%=offer['save2']%></div>
             <!-- <div class = "post-distance"> <p><%=@distance.to_i%>m</p></div> -->
         <!-- <div><span class = " submit-btn open-map"><%=link_to("Accept", "/posts/acceptoffer",{method:"post"})%></span><span class = "submit-btn"><%=link_to("Decline", "/posts/destroyoffer",{method:"post"})%></span></div> -->
-        <div><span class = " submit-btn offer-accept">Accept</span><span class = "submit-btn offer-decline">Decline</span></div>
+        <div><span class = " submit-btn offer-accept">Accept</span>
+          <!-- <span class = "submit-btn offer-decline">Decline</span> -->
+        </div>
 
       </div>
     </div>
@@ -143,14 +145,14 @@ var sliding = function(){
 // });
 
 
-$('.offer-decline').on("click", function(){
-  $(this).parents('.slide').fadeOut().remove();
-  slideNum = $('.slide').length + 1
-  // console.log(slideNum);
-  if (slideNum < 2){
-      $('.offer-modal-wrapper-test').fadeOut();
-  }
-
-});
+// $('.offer-decline').on("click", function(){
+//   $(this).parents('.slide').fadeOut().remove();
+//   slideNum = $('.slide').length + 1
+//   // console.log(slideNum);
+//   if (slideNum < 2){
+//       $('.offer-modal-wrapper-test').fadeOut();
+//   }
+//
+// });
 
 </script>

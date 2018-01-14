@@ -1,53 +1,28 @@
-<html>
-  <head>
-    <title>Geolocation</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-        width:100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
+<style media="screen">
+.myHistory{
+  margin-top: 60px;
+}
+</style>
 
-
-    .map-container {
-      width:280px;
-      height:330px;
-      margin: auto;
-      margin-bottom: 20px;
-    }
-    </style>
-  </head>
-  <body>
-
-    <div class="map-modal-wrapper" id="map-modal">
-      <div class="modal">
-        <div class = "close-modal">
-          <i class="fa fa-2x fa-times"></i>
-        </div>
-        <div id="login-form">
-            <h2>Map to Cafe</h2>
-            <div class="map-container">
-                <div id="map"></div>
-            </div>
-            <div class ="exchange-btn-show close-modal"><%=link_to("Arrived")%></div>
-        </div>
-      </div>
+<div class="main">
+  <div class="myHistory">
+    <div class="mypost-user-name">
+      <img src="<%="/user_images/#{@current_user.image_name}"%>" alt="">
+      <%=link_to("#{@current_user.name}","/users/#{@current_user.id}/show")%>
     </div>
+    <div class="mySavedStatus">
+      You saved
+      <%@result.each do |key, value|%>
+        <%=key%>::::<%=value%><br>
+      <%end%>
 
-    <script>
-      // Note: This example requires that you consent to location sharing when
-      // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to
-      // locate you.
 
 
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&callback=initMap">
-    </script>
-  </body>
-</html>
+
+
+
+
+
+    </div>
+  </div>
+</div>

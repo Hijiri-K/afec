@@ -8,7 +8,7 @@ App.accept = App.cable.subscriptions.create "AcceptChannel",
   received: (data) ->
     # Called when there's incoming data on the websocket for this channel
       $('.post-index-container').append data['accept']
-
+      
   accept: (userid, message, get, give, save, id)->
     @perform 'accept', user_id: userid, message: message, get: get, give: give, save: save, id: id
     console.log(userid, message, get, give, save, id)

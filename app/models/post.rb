@@ -16,6 +16,6 @@ class Post < ApplicationRecord
                    :lng_column_name => :lng)
 
 
-  # after_create_commit { MessageBroadcastJob.perform_later self }
+  after_create_commit { MessageBroadcastJob.perform_later self }
   after_update_commit { MessageBroadcastJob.perform_later self }
 end

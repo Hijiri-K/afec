@@ -10,6 +10,30 @@ class HomeController < ApplicationController
   end
 
   def test
+    ENV["SSL_CERT_FILE"] = "app/controllers/cacert.pem"
+      require 'open-uri'
+
+      res = open('https://apilayer.net/api/live?access_key=356b689f4db8b2616a786c31a7023829&currencies=EUR,GBP,CAD,PLN,JPY,CNY,VND&source=USD&format=1')
+      code, message = res.status # res.status => ["200", "OK"]
+
+      if code == '200'
+        result = ActiveSupport::JSON.decode res.read
+        # resultを使ってなんやかんや処理をする
+      else
+        puts "OMG!! #{code} #{message}"
+      end
+
+      @result = result['quotes'] #返ってきたjsonデータをrubyの配列に変換
+
+      @result.each do |key, value|
+          if Exchange.find_by(currency: key)
+            rate = Exchange.find_by(currency: key)
+            rate.update(rate: value)
+          else
+            Exchange.create(currency: key, rate: value)
+          end
+      end
+
   end
 
 

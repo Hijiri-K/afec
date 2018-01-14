@@ -32,8 +32,15 @@ $(document).ready(function(){
   };
 
   $('.offer-decline').on("click", function(){
-    console.log("test")
+    console.log("test");
     $(this).parents('.slide').hide()
+    $('.offered').remove();
+    $('.slideSet').css('width', $('.initial').width());
+    $('.slideSet').animate({
+      left: slideCurrent * slideNum
+    });
+    $('.offer-modal-wrapper-test').fadeOut();
+
   });
 
   $('.close-map').on('click', function(){
