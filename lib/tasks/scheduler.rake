@@ -1,8 +1,33 @@
-# desc "This task is called by the Heroku scheduler add-on"
-# task :update_feed => :environment do
-#   puts "Updating feed..."
-#   puts "done."
-# end
-#
-# task :send_reminders => :environment do
-# end
+desc "This task is called by the Heroku scheduler add-on"
+task :test_scheduler => :environment do
+  puts "scheduler test"
+  puts "it works."
+end
+
+task :update_rates => :environment do
+  ENV["SSL_CERT_FILE"] = "app/controllers/cacert.pem"
+    require 'open-uri'
+
+    sources = ["USD","JPY","EUR","CNY", "KRW","THB"]
+    currencies = sources.join(',')
+    sources.each do |source|
+        res = open('https://apilayer.net/api/live?access_key=356b689f4db8b2616a786c31a7023829&currencies=' + currencies + '&source=' + source + '&format=1')
+        code, message = res.status # res.status => ["200", "OK"]
+        if code == '200'
+          result = ActiveSupport::JSON.decode res.read
+          # resultを使ってなんやかんや処理をする
+          @result = result['quotes'] #返ってきたjsonデータをrubyの配列に変換
+          @result.each do |key, value|
+              if Exchange.find_by(currency: key)
+                rate = Exchange.find_by(currency: key)
+                rate.update(rate: value)
+              else
+                Exchange.create(currency: key, rate: value)
+              end
+          end
+        else
+          puts "Error!! #{code} #{message}"
+        end
+          puts @result
+      end
+end

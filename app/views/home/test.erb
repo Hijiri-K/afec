@@ -11,9 +11,12 @@
       <%=link_to("#{@current_user.name}","/users/#{@current_user.id}/show")%>
     </div>
     <div class="mySavedStatus">
-      You saved
-      <%@result.each do |key, value|%>
-        <%=key%>::::<%=value%><br>
+      You saved<br>
+
+
+      <%rates=Exchange.all%>
+      <%rates.each do |rate|%>
+        <%=rate.currency%>=<%=rate.rate%><br>
       <%end%>
 
 

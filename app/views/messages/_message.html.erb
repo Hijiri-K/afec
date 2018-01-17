@@ -29,7 +29,7 @@
                   <div class = "post-subtitle"><p>save committion</p></div>
                   <div class = "post-money"><p><a class = "saveinfo<%=message.id%>"></a>&emsp;<a class = "coffeeinfo<%=message.id%>"></a></p></div>
 
-                   <span data-livestamp="<%=message.updated_at%>"></span>
+                   <span data-livestamp="<%=message.updated_at.strftime("%Y/%m/%d %H:%M %Z")%>"></span>
 
                    <div class="invisible">
                      <div class="userid<%=message.id%>"><%=message.user_id%></div>
@@ -48,16 +48,17 @@
     var　saveinfoid = ".saveinfo" + <%=message.id%>
     var coffeeinfoid = ".coffeeinfo" + <%=message.id%>
     var saveamount = 0
+
    if ($('#mypost-currency-want-amount').val() <= <%=message.currency_have_amount%>){
-      $(getinfoid).text($('#mypost-currency-have').val() + " " + Math.floor($('#mypost-currency-have-amount').val()))
-      $(giveinfoid).text($('#mypost-currency-want').val() + " " + Math.floor($('#mypost-currency-want-amount').val()))
-      $(saveinfoid).text($('#mypost-currency-have').val() + " " +($('#mypost-currency-have-amount').val() * 0.05))
-      saveamount = ($('#mypost-currency-have-amount').val() * 0.05)
+        $(getinfoid).text($('#mypost-currency-have').val() + " " + Math.floor($('#mypost-currency-have-amount').val()))
+        $(giveinfoid).text($('#mypost-currency-want').val() + " " + Math.floor($('#mypost-currency-want-amount').val()))
+        $(saveinfoid).text($('#mypost-currency-have').val() + " " +($('#mypost-currency-have-amount').val() * 0.05))
+        saveamount = ($('#mypost-currency-have-amount').val() * 0.05)
    }else if(($('#mypost-currency-want-amount').val() > <%=message.currency_have_amount%>)){
-      $(getinfoid).text("<%=message.currency_want%>" + " " +"<%=message.currency_want_amount.to_i%>")
-      $(giveinfoid).text("<%=message.currency_have%>" + " " +"<%=message.currency_have_amount.to_i%>")
-      $(saveinfoid).text("<%=message.currency_want%>" + " " +"<%=(message.currency_want_amount*0.05).round(1)%>")
-      saveamount = <%=(message.currency_want_amount*0.05).round(1)%>
+        $(getinfoid).text("<%=message.currency_want%>" + " " +"<%=message.currency_want_amount.to_i%>")
+        $(giveinfoid).text("<%=message.currency_have%>" + " " +"<%=message.currency_have_amount.to_i%>")
+        $(saveinfoid).text("<%=message.currency_want%>" + " " +"<%=(message.currency_want_amount*0.05).round(1)%>")
+        saveamount = <%=(message.currency_want_amount*0.05).round(1)%>
    }
 
    var coffee = 0
