@@ -190,27 +190,27 @@ $(document).ready(function(){
 
 // 通貨換算==================================================================================================
 
-    $(function() {
-        $('.form-control').change( function(e) {
-
-            // 表示の初期化
-            $('#code').empty();
-            $("#code_base").empty();
-            $('#code2').empty();
-            $('#update').empty();
-            $('#rate').empty();
-            $('#example1').empty();
-            $('#exampleYen1').empty();
-
-
-            e.preventDefault();     // hrefが無効になり、画面遷移が行わない
-
-            selectedCode = $('#Currency').val();  // 選択した通貨(value)
-            selectedCode_base = $('#Currency_base').val()      //===========================================================================================================-自分でアレンジ
-            selectedCodeText = $('#Currency option:selected').text();// 選択した通貨(key)
-            selectedCode_baseText = $('#Currency_base option:selected').text();  //================================
-            // var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&to=jpy&code=' + selectedCode; //元のこーど
-
+    // $(function() {
+    //     $('.form-control').change( function(e) {
+    //
+    //         // 表示の初期化
+    //         $('#code').empty();
+    //         $("#code_base").empty();
+    //         $('#code2').empty();
+    //         $('#update').empty();
+    //         $('#rate').empty();
+    //         $('#example1').empty();
+    //         $('#exampleYen1').empty();
+    //
+    //
+    //         e.preventDefault();     // hrefが無効になり、画面遷移が行わない
+    //
+    //         selectedCode = $('#Currency').val();  // 選択した通貨(value)
+    //         selectedCode_base = $('#Currency_base').val()      //===========================================================================================================-自分でアレンジ
+    //         selectedCodeText = $('#Currency option:selected').text();// 選択した通貨(key)
+    //         selectedCode_baseText = $('#Currency_base option:selected').text();  //================================
+    //         // var url = 'http://api.aoikujira.com/kawase/get.php?format=jsonp2&callback=json&to=jpy&code=' + selectedCode; //元のこーど
+    //
 
 //レートテスト
 //======無料API==========================================================================================================================================================================================
@@ -248,64 +248,64 @@ $(document).ready(function(){
 
 //==有料のAPI======================================================================================================================================================================================================
 // set endpoint and your access key
-endpoint = 'convert';
-access_key = '356b689f4db8b2616a786c31a7023829';
-inputCurrency = $('#currency').val();
-// define from currency, to currency, and amount
-from = selectedCode;
-to = selectedCode_base;
-amount = inputCurrency;
-
-// execute the conversion using the "convert" endpoint:
-$.ajax({
-    url: 'https://apilayer.net/api/' + endpoint + '?access_key=' + access_key +'&from=' + from + '&to=' + to + '&amount=' + amount,
-    // "http://apilayer.net/api/convert?access_key=356b689f4db8b2616a786c31a7023829&from=jpy&to=usd&amount=5000"
-    dataType: 'jsonp',
-    success: function(json) {
-
-        // access the conversion result in json.result
-        ansJpy = json.result
-        ansJpy = Math.floor(ansJpy);
-
-        // $('#returnYen').val(ansJpy + selectedCode_baseText);
-          $('#returnYen').val(ansJpy);
-    }
+// endpoint = 'convert';
+// access_key = '356b689f4db8b2616a786c31a7023829';
+// inputCurrency = $('#currency').val();
+// // define from currency, to currency, and amount
+// from = selectedCode;
+// to = selectedCode_base;
+// amount = inputCurrency;
+//
+// // execute the conversion using the "convert" endpoint:
+// $.ajax({
+//     url: 'https://apilayer.net/api/' + endpoint + '?access_key=' + access_key +'&from=' + from + '&to=' + to + '&amount=' + amount,
+//     // "http://apilayer.net/api/convert?access_key=356b689f4db8b2616a786c31a7023829&from=jpy&to=usd&amount=5000"
+//     dataType: 'jsonp',
+//     success: function(json) {
+//
+//         // access the conversion result in json.result
+//         ansJpy = json.result
+//         ansJpy = Math.floor(ansJpy);
+//
+//         // $('#returnYen').val(ansJpy + selectedCode_baseText);
+//           $('#returnYen').val(ansJpy);
+//     }
 
 
 //============================================================================================================================================================================================================
 
 
-            })
-      })
-
-            function calc() {
-          // $('#message').click( function(e) {
-          //
-          //   e.preventDefault();     // hrefが無効になり、画面遷移が行わない
-
-            var inputCurrency = $('#currency').val();   // input通貨
-
-            // 計算
-            if (inputCurrency !== '') {
-                var ansJpy = rate * inputCurrency;      // 計算
-                ansJpy = Math.floor(ansJpy);            // 小数点切り捨て
-                // ansJpy = insertComma(ansJpy);           // 3桁カンマ追加
-                // $('#returnYen').text(ansJpy + selectedCode_baseText);   // 結果の表示
-                $('#returnYen').val(ansJpy + selectedCode_baseText);
-            }
-      }
-
-        // リセットボタン押下処理
-        $('#resetButton').click(function(){
-            $('#returnYen').text("Result");
-        });
-    });
-
-
-    //  3桁のカンマ区切りの値をセット
-    function insertComma(num) {
-        return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-    }
+            // })
+    //   })
+    //
+    //         function calc() {
+    //       // $('#message').click( function(e) {
+    //       //
+    //       //   e.preventDefault();     // hrefが無効になり、画面遷移が行わない
+    //
+    //         var inputCurrency = $('#currency').val();   // input通貨
+    //
+    //         // 計算
+    //         if (inputCurrency !== '') {
+    //             var ansJpy = rate * inputCurrency;      // 計算
+    //             ansJpy = Math.floor(ansJpy);            // 小数点切り捨て
+    //             // ansJpy = insertComma(ansJpy);           // 3桁カンマ追加
+    //             // $('#returnYen').text(ansJpy + selectedCode_baseText);   // 結果の表示
+    //             $('#returnYen').val(ansJpy + selectedCode_baseText);
+    //         }
+    //   }
+    //
+    //     // リセットボタン押下処理
+    //     $('#resetButton').click(function(){
+    //         $('#returnYen').text("Result");
+    //     });
+    // });
+    //
+    //
+    // //  3桁のカンマ区切りの値をセット
+    // function insertComma(num) {
+    //     return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    // }
 
 
     // $('.show-show').click(function showshow() {

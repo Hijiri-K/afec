@@ -15,7 +15,9 @@ class RoomChannel < ApplicationCable::Channel
     user = User.find_by(id: current_user.id)
     user.group = data['group']
     user.save
-
+    exchange = Exchange.find_by(currency: data['currency'])
+    rate = exchange.rate
+    puts rate
     if Post.find_by(user_id: current_user.id)
       @post=  Post.find_by(user_id: current_user.id)
       @post.update(
@@ -23,7 +25,8 @@ class RoomChannel < ApplicationCable::Channel
         currency_have: data['currency_have'],
         currency_have_amount: data['currency_have_amount'],
         currency_want: data['currency_want'],
-        currency_want_amount: data['currency_want_amount'],
+        # currency_want_amount: data['currency_want_amount'], レート登録方式に移行のため以下のコードに変更！！！　TODO:必要なくなったら削除
+        currency_want_amount: data['currency_have_amount'].to_i * rate,
         lat: data['lat'],
         lng: data['lng'],
         location: data['airport'],
@@ -47,13 +50,7 @@ class RoomChannel < ApplicationCable::Channel
           group: data['group'],
           stream: data['stream']
         )
+    end
   end
- # # @post.save
- #    if @post.save
- #      # flash[:notice] = "Your status updated"
- #      # redirect_to("/posts/index")
- #    else
- #      # render("posts/index")
- #    end
-  end
+  
 end

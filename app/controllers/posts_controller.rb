@@ -38,7 +38,7 @@ class PostsController < ApplicationController
   end
 
 
-  # def show
+  # def show　不要の為削除　TODO：削除
   #   if Post.find_by(user_id: @current_user.id)
   #       @mypost = Post.find_by(user_id: @current_user.id)
   #       @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
@@ -56,7 +56,7 @@ class PostsController < ApplicationController
     @post = Post.find_by(id: params[:id])
     # @post.offer = @mypost.id
 
-    # File.open("public/#{@post.id}.json", 'w') do |f|
+    # File.open("public/#{@post.id}.json", 'w') do |f|　オファーのActionCable化のため削除　TODO：削除
     #   hash = {"offer_from"=> @mypost.id, "offer_to"=> @post.id}
     #   str = JSON.dump(hash, f)
     # end
@@ -143,54 +143,58 @@ class PostsController < ApplicationController
   #   @post = Post.new
   # end
 
-  def create
-    if Post.find_by(user_id: @current_user.id)
-      @post=  Post.find_by(user_id: @current_user.id)
-      @post.update(
-        content: params[:content],
-        currency_have: params[:currency_have],
-        currency_have_amount: params[:input_currency],
-        currency_want: params[:currency_want],
-        currency_want_amount: params[:currency_want_amount],
-        lat: params[:lat],
-        lng: params[:lng],
-        location: params[:location],
-        terminal: params[:terminal],
-        user_id: @current_user.id,
-        group: params[:location] + params[:terminal]+ params[:currency_have]+ params[:currency_want]
-      )
-        # @post = Post.find_by(user_id: @current_user.id)
-        # @post.content = params[:content]
-        # @post.currency_have = params[:currency_have]
-        # @post.currency_have_amount = params[:input_currency]
-        # @post.currency_want = params[:currency_want]
-        # @post.currency_want_amount = params[:currency_want_amount]
-        # @post.lat = params[:lat]
-        # @post.lng = params[:lng]
-        # @post.location = params[:location]
-        # @post.user_id = @current_user.id
-    else
-        @post = Post.new(
-          content: params[:content],
-          currency_have: params[:currency_have],
-          currency_have_amount: params[:input_currency],
-          currency_want: params[:currency_want],
-          currency_want_amount: params[:currency_want_amount],
-          lat: params[:lat],
-          lng: params[:lng],
-          location: params[:location],
-          terminal: params[:terminal],
-          user_id: @current_user.id,
-          group: params[:location] + params[:terminal]+ params[:currency_have]+ params[:currency_want]
-        )
-  end
-
-    if @post.save
-      flash[:notice] = "Your status updated"
-      redirect_to("/posts/index")
-    else
-      render("posts/index")
-    end
+  def create　#処理をroom_channelに移行のため削除を予定　TODO:削除
+  #   exchange = Exchange.find_by(currency: params[:currency_have] + params[:currency_want])
+  #   rate = exchange.rate
+  #   puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  #   if Post.find_by(user_id: @current_user.id)
+  #     @post=  Post.find_by(user_id: @current_user.id)
+  #     @post.update(
+  #       content: params[:content],
+  #       currency_have: params[:currency_have],
+  #       currency_have_amount: params[:input_currency],
+  #       currency_want: params[:currency_want],
+  #       # currency_want_amount: params[:currency_want_amount],
+  #       currency_want_amount: params[:input_currency] * rate,
+  #       lat: params[:lat],
+  #       lng: params[:lng],
+  #       location: params[:location],
+  #       terminal: params[:terminal],
+  #       user_id: @current_user.id,
+  #       group: params[:location] + params[:terminal]+ params[:currency_have]+ params[:currency_want]
+  #     )
+  #       # @post = Post.find_by(user_id: @current_user.id)
+  #       # @post.content = params[:content]
+  #       # @post.currency_have = params[:currency_have]
+  #       # @post.currency_have_amount = params[:input_currency]
+  #       # @post.currency_want = params[:currency_want]
+  #       # @post.currency_want_amount = params[:currency_want_amount]
+  #       # @post.lat = params[:lat]
+  #       # @post.lng = params[:lng]
+  #       # @post.location = params[:location]
+  #       # @post.user_id = @current_user.id
+  #   else
+  #       @post = Post.new(
+  #         content: params[:content],
+  #         currency_have: params[:currency_have],
+  #         currency_have_amount: params[:input_currency],
+  #         currency_want: params[:currency_want],
+  #         currency_want_amount: params[:currency_want_amount],
+  #         lat: params[:lat],
+  #         lng: params[:lng],
+  #         location: params[:location],
+  #         terminal: params[:terminal],
+  #         user_id: @current_user.id,
+  #         group: params[:location] + params[:terminal]+ params[:currency_have]+ params[:currency_want]
+  #       )
+  # end
+  #
+  #   if @post.save
+  #     flash[:notice] = "Your status updated"
+  #     redirect_to("/posts/index")
+  #   else
+  #     render("posts/index")
+  #   end
   end
 
   # def edit
