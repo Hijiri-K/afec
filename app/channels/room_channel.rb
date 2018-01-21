@@ -41,7 +41,7 @@ class RoomChannel < ApplicationCable::Channel
           currency_have: data['currency_have'],
           currency_have_amount: data['currency_have_amount'],
           currency_want: data['currency_want'],
-          currency_want_amount: data['currency_want_amount'],
+          currency_want_amount: data['currency_have_amount'].to_i * rate,
           lat: data['lat'],
           lng: data['lng'],
           location: data['airport'],
@@ -52,5 +52,5 @@ class RoomChannel < ApplicationCable::Channel
         )
     end
   end
-  
+
 end
