@@ -5,6 +5,9 @@ class HomeController < ApplicationController
   def about
   end
 
+  def rates
+  end
+
   def updates
     @updates = Update.all.order(created_at: :desc)
   end

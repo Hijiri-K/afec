@@ -1,0 +1,17 @@
+<h1>Rates</h1>
+<table class = "ratesTable">
+  <caption>Rates</caption>
+  <tr>
+    <th>currency</th>
+    <th>rates</th>
+    <th>updated_at</th>
+  </tr>
+  <%rates=Exchange.all%>
+  <%rates.each do |rate|%>
+  <tr>
+    <td><%=rate.currency%></td>
+    <td><%=rate.rate%></td>
+    <td><%=rate.updated_at%></td>
+  </tr>
+  <%end%>
+</table>

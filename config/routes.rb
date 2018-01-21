@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   get '/' => "home#top"
   get "about" => "home#about"
   get "updates" => "home#updates"
+  get "rates" => "home#rates"
   get 'test' => "home#test"
   get 'test2' => "home#test2"
   get 'test3' => "home#test3"
