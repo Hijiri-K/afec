@@ -33,3 +33,14 @@ task :update_rates => :environment do
           puts @result
       end
 end
+
+task :delete_posts => :environment do
+  require 'time'
+  n = Time.now
+  delete = n - 1800
+  puts n
+  puts delete
+  post = Post.find_by(user_id: 2)
+  deletePosts = Post.where(["updated_at < ?", delete])
+  p deletePosts
+end
