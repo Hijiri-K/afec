@@ -1,31 +1,124 @@
 <style media="screen">
 .myHistory{
-  margin-top: 60px;
+  margin-top: 80px;
+  text-align: center;
+}
+
+
+.myHistory h1{
+  color: #555555;
+}
+
+.myExchangedStatus{
+  padding: 10px;
+  color: #555555;
+}
+
+.myExchangedStatus h3,h2{
+  text-align: center;
+}
+
+.myExchangedStatus h3{
+  padding-top: 10px;
+}
+
+.container-i{
+  padding-top:10px;
+}
+.posts-index-item{
+  /* line-height: 0; */
+}
+.exchangedDatePlace{
+  /* text-align: right; */
+  /* display: inline-block; */
+  float: right;
+  font-size: 15px;
+}
+.post-user-name{
 }
 </style>
 
 <div class="main">
+
   <div class="myHistory">
+    <h1>History(demo)</h1>
     <div class="mypost-user-name">
       <img src="<%="/user_images/#{@current_user.image_name}"%>" alt="">
       <%=link_to("#{@current_user.name}","/users/#{@current_user.id}/show")%>
     </div>
-    <div class="mySavedStatus">
-      You saved<br>
+  </div>
 
+  <div class="myExchangedStatus">
+    <h3>You have exchanged with</h3>
+    <h2>8 people</h2>
+    <h3>You have saved</h3>
+    <h2>USD 25</h2>
+    <h3>You have had</h3>
+    <h2>10 couples of coffee</h2>
+    <h3>Your friends</h3>
+    <div class="container-i">
+      <table align="center" class = "posts-container" >
+        <tr>
+          <td class="posts-index-item">
+              <div class="post-user-name">
+                <img class = "user-image"  src="<%="/user_images/user_image_default.jpg"%>" alt="">
+              <%=link_to("Grace Titus","/users/1/show")%>
+              </div>
+              <div class="exchangedDatePlace">
+                <p>1st Sep 2017</p>
+                <p>at Narita</p>
 
-      <%rates=Exchange.all%>
-      <%rates.each do |rate|%>
-        <%=rate.currency%>=<%=rate.rate%><br>
-      <%end%>
-
-
-
-
-
-
-
-
-    </div>
+              </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="posts-index-item">
+              <div class="post-user-name">
+                <img class = "user-image"  src="<%="/user_images/user_image_default.jpg"%>" alt="">
+              <%=link_to("Grace Titus","/users/1/show")%>
+              </div>
+              <div class="exchangedDatePlace">
+                <p>1st Sep 2017</p>
+                <p>at Narita</p>
+              </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="posts-index-item">
+              <div class="post-user-name">
+                <img class = "user-image"  src="<%="/user_images/user_image_default.jpg"%>" alt="">
+              <%=link_to("Grace Titus","/users/1/show")%>
+              </div>
+              <div class="exchangedDatePlace">
+                <p>1st Sep 2017</p>
+                <p>at Narita</p>
+              </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="posts-index-item">
+              <div class="post-user-name">
+                <img class = "user-image"  src="<%="/user_images/user_image_default.jpg"%>" alt="">
+              <%=link_to("Grace Titus","/users/1/show")%>
+              </div>
+              <div class="exchangedDatePlace">
+                <p>1st Sep 2017</p>
+                <p>at Narita</p>
+              </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="posts-index-item">
+              <div class="post-user-name">
+                <img class = "user-image"  src="<%="/user_images/user_image_default.jpg"%>" alt="">
+              <%=link_to("Grace Titus","/users/1/show")%>
+              </div>
+              <div class="exchangedDatePlace">
+                <p>1st Sep 2017</p>
+                <p>at Narita</p>
+              </div>
+          </td>
+        </tr>
+      </table>
   </div>
 </div>

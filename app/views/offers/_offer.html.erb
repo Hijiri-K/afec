@@ -36,8 +36,11 @@
 <script type="text/javascript">
 $('.offer-accept').click(function(){
   $('.offer-modal-wrapper-test').fadeOut();
+  $('.map-modal-wrapper').show();
+  routing();
+  // TODO：OSMにより問題解決のため不要。要削除。
   // mapがfadeInなどでは読み込めないため、事前にz-indexをー1で読み込んで、その後に下記のscriptでz-indexを200に変更して表示する作戦
-  $('.map-modal-wrapper').css('z-index', '200');
+  // $('.map-modal-wrapper').css('z-index', '200');
   });
   // $(".post-index-container").append('\
   // <div class="map-modal-wrapper" id="map-modal">\

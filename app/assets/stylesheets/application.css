@@ -127,8 +127,12 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
   /* // mapがfadeInなどでは読み込めないため、事前にz-indexをー1で読み込んで、その後に下記のscriptでz-indexを200に変更して表示する作戦 */
-  z-index: -1;
-  display: block;
+  z-index: 200;
+  display: none;
+}
+
+.leaflet-routing-container{
+  display: none;
 }
 
 .modal {
@@ -180,7 +184,6 @@
     font-size: 18px;
 }
 
- 
 
 .submit-btn a, input[type="submit"] {
   color:white;

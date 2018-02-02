@@ -1,130 +1,67 @@
+<html>
+<head>
+<title>Leaflet</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 <style type="text/css">
-
-.slider .slide {
-  width: 198px;
-  height: 198px;
-  border: 1px solid #f00;
-  float: left;
-}
-
-.slider .slideSet {
-  position: absolute;
-}
-
-.slider {
-  width: 200px;
-  height: 200px;
-  overflow:hidden;
-  position: relative;
-  margin: auto;
-}
-
-.buttons{
-  text-align: center;
-}
+    #map { height: 500px; width: 500px}
+    #map{
+      /* display: none; */
+    }
+    #testest{
+      margin-top:500px;
+      font-size: 30px;
+    }
 </style>
 
-<div class="container">
+</head>
 
-  <div class="slider"  id="touch">
-    <div class="slideSet">
-      <div class="slide">slide1</div>
-    </div>
-  </div>
+<body>
+<div id="map" style="width: 600px; height: 400px"></div>
+<button id="testest" type="button" name="button">test</button>
+<script>
 
-  <div class="buttons">
-    <button class="slider-prev">前へ</button>
-    <button class="slider-next">次へ</button>
-    <button class="slider-add">スライド追加</button>
-  </div>
-</div>
+navigator.geolocation.watchPosition(successCallback, errorCallback);
 
+function successCallback(position) {
 
-<script type="text/javascript">
-var slideWidth = $('.slide').outerWidth(); // .slideの幅を取得して代入
-var slideNum = $('.slide').length;  // .slideの数を取得して代入
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
 
-var slideSetWidth = slideWidth * slideNum; // .slideの幅×数で求めた値を代入
-$('.slideSet').css('width', slideSetWidth); // .slideSetのスタイルシートにwidth: slideSetWidthを指定
+var o_std = new L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&amp;copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+});
 
-var slideWidth = $('.slide').outerWidth(); // .slideの幅を取得して代入
-var slideNum = $('.slide').length ;  // .slideの数を取得して代入
-var slideSetWidth = slideWidth * slideNum;  // .slideの幅×数で求めた値を代入
-$('.slideSet').css('width', slideSetWidth); // .slideSetのスタイルシートにwidth: slideSetWidthを指定
+var map = L.map('map', {
+    center: [lat,lng],
+    zoom: 17,
+    zoomControl: false,
+    layers: [o_std]
+});
 
-var slideCurrent = 0; // 現在地を示す変数
+  var mapMarker = L.marker([lat, lng], { title: '現在地' }).addTo(map);
 
-// アニメーションを実行する独自関数
-var sliding = function(){
-
-  // slideCurrentが0以下だったら
-  if( slideCurrent < 0 ){
-    slideCurrent = slideNum - 1;
-
-  // slideCurrentがslideNumを超えたら
-}else if( slideCurrent > slideNum - 1){ // slideCUrrent >= slideNumでも可
-    slideCurrent = 0;
-  }
-
-  $('.slideSet').animate({
-    left: slideCurrent * -slideWidth
-  });
+L.Routing.control({
+    waypoints: [
+        L.latLng(lat,lng),
+        L.latLng(35.6852696,139.7630878)
+    ],
+}).addTo(map)
 }
 
-// 次へボタンが押されたとき
-$('.slider-next').click(function(){
-  slideCurrent++;
-  sliding();
-});
-
-$('.slider-prev').click(function(){
-  slideCurrent--;
-  sliding();
-});
-
-$('.slider-add').click(function(){
-  $('.slideSet').append('<div class="slide">addedSlide</div>');
-  slideNum++;
-  slideSetWidth = slideWidth * slideNum;
-  $('.slideSet').css('width', slideSetWidth);
-});
+function errorCallback(error) {
+    alert("位置情報取得に失敗しました。");
+}
 
 
-// タッチイベント
-$(function() {
-  $('#touch').on('touchstart', onTouchStart); //指が触れたか検知
-  $('#touch').on('touchmove', onTouchMove); //指が動いたか検知
-  $('#touch').on('touchend', onTouchEnd); //指が離れたか検知
-  var direction, position;
 
-  //スワイプ開始時の横方向の座標を格納
-  function onTouchStart(event) {
-    position = getPosition(event);
-    direction = ''; //一度リセットする
-  }
 
-  //スワイプの方向（left／right）を取得
-  function onTouchMove(event) {
-    if (position - getPosition(event) > 70) { // 70px以上移動しなければスワイプと判断しない
-      direction = 'left'; //左と検知
-    } else if (position - getPosition(event) < -70){  // 70px以上移動しなければスワイプと判断しない
-      direction = 'right'; //右と検知
-    }
-  }
 
-  function onTouchEnd(event) {
-    if (direction == 'right'){
-      slideCurrent--;
-      sliding();
-    } else if (direction == 'left'){
-      slideCurrent++;
-      sliding();
-    }
-  }
 
-  //横方向の座標を取得
-  function getPosition(event) {
-    return event.originalEvent.touches[0].pageX;
-  }
-});
+
 </script>
+
+</body>
+</html>
