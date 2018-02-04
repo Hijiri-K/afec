@@ -19,7 +19,7 @@ App.offer = App.cable.subscriptions.create "OfferChannel",
 
   $(document).on 'click', '#offersubmit', (event) ->
     console.log("send");
-    App.offer.offer $('#post-userid').text(), $('#postmessageshow').text(), $('#getshow').text(), $('#giveshow').text(), $('#post_offer_savemoffer').text(), $('#post-myid').text(), $('#saveshow').text()
+    App.offer.offer $('#post-userid').text(), $('#mypost-message').val(), $('#getshow').text(), $('#giveshow').text(), $('#post_offer_savemoffer').text(), $('#post-myid').text(), $('#saveshow').text()
     console.log("send");
     $('.modal').animate({"top": "-200px"},500);
     $('.show-modal-wrapper').fadeOut(500);
