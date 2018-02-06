@@ -47,6 +47,7 @@
     var　giveinfoid = ".giveinfo" + <%=message.id%>
     var　saveinfoid = ".saveinfo" + <%=message.id%>
     var coffeeinfoid = ".coffeeinfo" + <%=message.id%>
+    var offerSaveAmountId = ".offer_save_amount" + <%=message.id%>
     var saveamount = 0
 
    if ($('#mypost-currency-want-amount').val() <= <%=message.currency_have_amount%>){
@@ -54,11 +55,13 @@
         $(giveinfoid).text($('#mypost-currency-want').val() + " " + Math.floor($('#mypost-currency-want-amount').val()))
         $(saveinfoid).text($('#mypost-currency-have').val() + " " +($('#mypost-currency-have-amount').val() * 0.05))
         saveamount = ($('#mypost-currency-have-amount').val() * 0.05)
+        $(offerSaveAmountId).text(($('#mypost-currency-want').val() + " " + Math.floor($('#mypost-currency-want-amount').val() * 0.05)))
    }else if(($('#mypost-currency-want-amount').val() > <%=message.currency_have_amount%>)){
         $(getinfoid).text("<%=message.currency_want%>" + " " +"<%=message.currency_want_amount.to_i%>")
         $(giveinfoid).text("<%=message.currency_have%>" + " " +"<%=message.currency_have_amount.to_i%>")
         $(saveinfoid).text("<%=message.currency_want%>" + " " +"<%=(message.currency_want_amount*0.05).round(1)%>")
         saveamount = <%=(message.currency_want_amount*0.05).round(1)%>
+        $(offerSaveAmountId).text("<%=message.currency_have%>" + " " +"<%=(message.currency_have_amount*0.05).round(1)%>")
    }
 
    var coffee = 0
@@ -90,6 +93,7 @@
            postid = $(this).find('.postid<%=message.id%>').text();
            userid = $(this).find('.userid<%=message.id%>').text();
            console.log(userid);
+           postsavemoffer = $('.offer_save_amount<%=message.id%>').text();
 
            $('#postmessageshow').text(postmessageshow);
            $('#getshow').text(getshow);
@@ -99,6 +103,7 @@
            $('#post-user-name-show').html(postusernameshow);
            $('#postid-show').text(postid);
            $('#post-userid').text(userid);
+           $('#post_offer_savemoffer').text(postsavemoffer);
 });
        // $('#offfersubmit').click(function(){ ActionaCable化のため不要　TODO：削除
        //     $.ajax({
