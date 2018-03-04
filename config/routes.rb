@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   post "posts/:id/destroy" => "posts#destroy"
   post "posts/showshow" => "posts#showshow"
 
-# トップ画面をtest4に変更中
+
   get '/' => "home#top"
   get "about" => "home#about"
   get "updates" => "home#updates"
@@ -45,5 +45,6 @@ Rails.application.routes.draw do
   get 'test2' => "home#test2"
   get 'test3' => "home#test3"
   get 'test4' => "home#test4"
+  get 'test5' => "home#test5"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

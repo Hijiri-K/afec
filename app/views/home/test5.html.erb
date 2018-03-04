@@ -1,0 +1,170 @@
+<html>
+  <head>
+    <title>Geolocation</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.4/css/ol.css" type="text/css">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.6.4/build/ol.js"></script>
+  </head>
+  <body>
+    <div id="map" class="map" style="height:500px"><h1 class = "floor">F4</h1> </div>
+    <div id="info" style="display: none;"></div>
+    <!-- <label for="track">
+      track position
+      <input id="track" type="checkbox"/>
+    </label> -->
+    <p>
+      lat : <code id="lat"></code>&nbsp;&nbsp;<br>
+      lng : <code id="lng"></code>&nbsp;&nbsp;<br>
+      pixLat : <code id="pixLat"></code>&nbsp;&nbsp;<br>
+      PixLng : <code id="pixLng"></code>&nbsp;&nbsp;<br>
+    </p>
+
+    <style media="screen">
+      .map{
+        padding-top: 100px;
+      }
+      .floor{
+        position:absolute;
+        z-index: 100;
+        padding:20px;
+        color:#636363;
+      }
+      .ol-zoom{
+        display: none;
+      }
+
+    </style>
+    <script>
+    // myPanZoomBar.div.style.display = 'none';
+    var extent = [0, 0, 5000, 5000];
+         var projection = new ol.proj.Projection({
+           code: 'xkcd-image',
+           units: 'pixels',
+           extent: extent
+         });
+
+         var map = new ol.Map({
+           layers: [
+             new ol.layer.Image({
+               source: new ol.source.ImageStatic({
+                 // attributions: '© <a href="http://xkcd.com/license.html">xkcd</a>',
+                 url: 'narita_map_f4_ver3.png',
+                 projection: projection,
+                 imageExtent: extent
+               })
+             })
+           ],
+           target: 'map',
+           view: new ol.View({
+             projection: projection,
+             center: ol.extent.getCenter(extent),
+             zoom: 1.2,
+             maxZoom: 8,
+             rotation: 2.092
+           })
+         });
+
+      var view = new ol.View({
+        center: [0, 0],
+        zoom: 2
+      });
+
+      var geolocation = new ol.Geolocation({
+        projection: view.getProjection()
+      });
+
+      function el(id) {
+        return document.getElementById(id);
+      }
+
+        geolocation.setTracking(true);
+      // el('track').addEventListener('change', function() {
+      //   geolocation.setTracking(this.checked);
+      // });
+
+      // update the HTML page when the position changes.
+      geolocation.on('change', function() {
+        el('lat').innerText =  ol.proj.transform(geolocation.getPosition(), 'EPSG:3857', 'EPSG:4326')[0]
+        el('lng').innerText =  ol.proj.transform(geolocation.getPosition(), 'EPSG:3857', 'EPSG:4326')[1]
+        el('pixLat').innerText = pixCoordinates[0]
+        el('pixLng').innerText = pixCoordinates[1]
+      });
+
+      // handle geolocation error.
+      geolocation.on('error', function(error) {
+        var info = document.getElementById('info');
+        info.innerHTML = error.message;
+        info.style.display = '';
+      });
+
+      var accuracyFeature = new ol.Feature();
+      geolocation.on('change:accuracyGeometry', function() {
+        accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+        console.log(geolocation.getAccuracyGeometry())
+      });
+
+      var positionFeature = new ol.Feature();
+      positionFeature.setStyle(new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: 8,
+          fill: new ol.style.Fill({
+            color: '#3399CC'
+          }),
+          stroke: new ol.style.Stroke({
+            color: '#fff',
+            width: 2
+          })
+        })
+      }));
+
+      var iconFeature = new ol.Feature();
+      iconFeature.setStyle(new ol.style.Style({
+        image: new ol.style.Icon({
+          anchor: [0.5,0.95],
+          src: 'meet_up_here3.png'
+        })
+      }));
+
+      geolocation.on('change:position', function() {
+        var coordinates = geolocation.getPosition();
+        coordinates = ol.proj.transform(coordinates, 'EPSG:3857', 'EPSG:4326')
+
+        // var centerLat = 34.693591
+        // var centerLng = 135.504256
+
+        var centerLat = 35.837105
+        var centerLng = 139.797005
+
+
+        // var currentLat = (1/0.0090133729745762*1000)*coordinates[1] - (1/0.0090133729745762*1000)*centerLat + 500
+        // var currentLng = (1/0.010966404715491394*1000)*coordinates[0]- (1/0.010966404715491394*1000)*centerLng + 500
+
+        pixByLat = (1/0.0090133729745762*1000);
+        pixByLng = (1/0.010966404715491394*1000);
+
+        var currentLat = (pixByLat*coordinates[1] - pixByLat*centerLat)*10 + 2500;
+        var currentLng = (pixByLng*coordinates[0] - pixByLng*centerLng)*10 + 2500;
+//
+        pixCoordinates = [currentLat, currentLng];
+        positionFeature.setGeometry(pixCoordinates ?
+          new ol.geom.Point(pixCoordinates) : null);
+          console.log(pixCoordinates)
+      });
+
+
+
+      var iconPosition = [1755,2273]
+      iconFeature.setGeometry(iconPosition ?
+        new ol.geom.Point(iconPosition) : null);
+        console.log(iconPosition)
+
+      new ol.layer.Vector({
+        map: map,
+        source: new ol.source.Vector({
+          features: [positionFeature, iconFeature]
+        })
+      });
+    </script>
+  </body>
+</html>
