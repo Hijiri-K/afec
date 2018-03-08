@@ -128,7 +128,8 @@ var extent = [0, 0, 5000, 5000];
          new ol.layer.Image({
            source: new ol.source.ImageStatic({
              // attributions: '© <a href="http://xkcd.com/license.html">xkcd</a>',
-             url: '../narita_map_f4_ver3.png',
+             url: $('#floor_maps').val(),
+             // url:'../map_narita_terminal2_f4.png',
              projection: projection,
              imageExtent: extent
            })
@@ -140,7 +141,7 @@ var extent = [0, 0, 5000, 5000];
          center: ol.extent.getCenter(extent),
          zoom: 1.2,
          maxZoom: 8,
-         rotation: 2.092
+         rotation: $('#rotations').val()
        })
      });
 
@@ -209,11 +210,12 @@ var extent = [0, 0, 5000, 5000];
     var coordinates = geolocation.getPosition();
     coordinates = ol.proj.transform(coordinates, 'EPSG:3857', 'EPSG:4326')
 
-    // var centerLat = 34.693591
-    // var centerLng = 135.504256
 
     var centerLat = 35.837105
     var centerLng = 139.797005
+
+    var centerLat = $('#center_lat').val()
+    var centerLng = $('#center_lng').val()
 
 
     // var currentLat = (1/0.0090133729745762*1000)*coordinates[1] - (1/0.0090133729745762*1000)*centerLat + 500
@@ -233,10 +235,11 @@ var extent = [0, 0, 5000, 5000];
 
 
 
-  var iconPosition = [1755,2273]
+  // var iconPosition = [1755,2273]
+  var iconPosition = [$('#cafe_lat').val(),$('#cafe_lng').val()]
   iconFeature.setGeometry(iconPosition ?
     new ol.geom.Point(iconPosition) : null);
-    console.log(iconPosition)
+    console.info(iconPosition)
 
   new ol.layer.Vector({
     map: map,

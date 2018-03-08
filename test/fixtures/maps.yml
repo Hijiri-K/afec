@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  airports: MyString
+  terminals: MyString
+  floor_maps: MyString
+  cafe_lat_lng: 1.5
+  center_lat_lng: 1.5
+
+two:
+  airports: MyString
+  terminals: MyString
+  floor_maps: MyString
+  cafe_lat_lng: 1.5
+  center_lat_lng: 1.5

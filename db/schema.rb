@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180114075628) do
+ActiveRecord::Schema.define(version: 20180306071023) do
 
   create_table "exchanges", force: :cascade do |t|
     t.string "currency"
@@ -24,6 +24,19 @@ ActiveRecord::Schema.define(version: 20180114075628) do
     t.integer "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "maps", force: :cascade do |t|
+    t.string "airports"
+    t.string "terminals"
+    t.string "floor_maps"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "cafe_lat"
+    t.float "cafe_lng"
+    t.float "center_lat"
+    t.float "center_lng"
+    t.float "rotations"
   end
 
   create_table "posts", force: :cascade do |t|

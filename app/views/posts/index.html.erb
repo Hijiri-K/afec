@@ -21,6 +21,9 @@
 
 
   <div class="invisible">
+
+    <%map = Map.find_by(airports:@mypost.location, terminals:@mypost.terminal)%>
+
     <input id="mypost-message" type="text" name="" value="<%=@mypost.content%>">
     <input id="mypost-currency-have" type="text" name="" value="<%=@mypost.currency_have%>">
     <input id="mypost-currency-have-amount" type="text" name="" value="<%=@mypost.currency_have_amount%>">
@@ -28,6 +31,12 @@
     <input id="mypost-currency-want-amount" type="text" name="" value="<%=@mypost.currency_want_amount%>">
     <input id="mypost-lat" type="text" name="" value="<%=@mypost.lat%>">
     <input id="mypost-lng" type="text" name="" value="<%=@mypost.lng%>">
+    <input id="cafe_lat" type="text" name="" value="<%=map.cafe_lat%>">
+    <input id="cafe_lng" type="text" name="" value="<%=map.cafe_lng%>">
+    <input id="center_lat" type="text" name="" value="<%=map.center_lat%>">
+    <input id="center_lng" type="text" name="" value="<%=map.center_lng%>">
+    <input id="floor_maps" type="text" name="" value="<%=map.floor_maps%>">
+    <input id="rotations" type="text" name="" value="<%=map.rotations%>">
   </div>
 
 
