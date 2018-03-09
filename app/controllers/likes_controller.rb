@@ -2,7 +2,7 @@ class LikesController < ApplicationController
 
   def create
     @like = Like.new(
-      user_id: @current_user.id,
+      user_id: current_user.id,
       post_id: params[:id]
     )
     @like.save
@@ -11,7 +11,7 @@ class LikesController < ApplicationController
 
   def destroy
     @like = Like.find_by(
-      user_id: @current_user.id,
+      user_id: current_user.id,
       post_id: params[:id]
     )
     @like.destroy
@@ -20,7 +20,7 @@ class LikesController < ApplicationController
 
   def create_index
     @like = Like.new(
-      user_id: @current_user.id,
+      user_id: current_user.id,
       post_id: params[:id]
     )
     @like.save
@@ -29,7 +29,7 @@ class LikesController < ApplicationController
 
   def destroy_index
     @like = Like.find_by(
-      user_id: @current_user.id,
+      user_id: current_user.id,
       post_id: params[:id]
     )
     @like.destroy

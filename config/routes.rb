@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  devise_for :users
+  root to: "posts#index"
+
   post "likes/:id/create" => "likes#create"
   post "likes/:id/destroy" => "likes#destroy"
   post "likes/:id/create_index" => "likes#create_index"
@@ -37,7 +40,7 @@ Rails.application.routes.draw do
   post "posts/showshow" => "posts#showshow"
 
 
-  get '/' => "home#top"
+  get "home/top" => "home#top"
   get "about" => "home#about"
   get "updates" => "home#updates"
   get "rates" => "home#rates"
