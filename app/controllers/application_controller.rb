@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery :except => [:offer]#with: :exception
   before_action :authenticate_user!, except: :top
 
-  before_action :set_current_user, except: :top
+  before_action :set_current_user, only: :index
   before_action :set_mypost
   before_action :configure_permitted_parameters, if: :devise_controller?
 
