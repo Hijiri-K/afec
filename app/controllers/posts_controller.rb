@@ -1,10 +1,10 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user
+  # before_action :authenticate_user
   before_action :set_mypost
 
   def index
-    if Post.find_by(user_id: @current_user.id)
-        @mypost = Post.find_by(user_id: @current_user.id)
+    if Post.find_by(user_id: current_user.id)
+        @mypost = Post.find_by(user_id: current_user.id)
         # @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
         @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have, location: @mypost.location, terminal: @mypost.terminal)
         # @posts = Post.where(group: @mypost.stream)
@@ -12,9 +12,9 @@ class PostsController < ApplicationController
       @posts = Post.all.order(created_at: :desc)
     end
 
-    if Post.find_by(user_id: @current_user.id)
+    if Post.find_by(user_id: current_user.id)
     require 'json'
-    @mypost = Post.find_by(user_id: @current_user.id)
+    @mypost = Post.find_by(user_id: current_user.id)
         if File.exist?("tmp/#{@mypost.id}.json")
           File.open("tmp/#{@mypost.id}.json", 'r') do |f|
           offers = JSON.load(f)
@@ -39,8 +39,8 @@ class PostsController < ApplicationController
 
 
   # def show　不要の為削除　TODO：削除
-  #   if Post.find_by(user_id: @current_user.id)
-  #       @mypost = Post.find_by(user_id: @current_user.id)
+  #   if Post.find_by(user_id: current_user.id)
+  #       @mypost = Post.find_by(user_id: current_user.id)
   #       @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
   #   else
   #     @posts = Post.all.order(created_at: :desc)
@@ -52,7 +52,7 @@ class PostsController < ApplicationController
 
 
   def offer
-    @mypost = Post.find_by(user_id: @current_user.id)
+    @mypost = Post.find_by(user_id: current_user.id)
     @post = Post.find_by(id: params[:id])
     # @post.offer = @mypost.id
 
@@ -74,7 +74,7 @@ class PostsController < ApplicationController
 
 
   def destroyoffer
-    @mypost = Post.find_by(user_id: @current_user.id)
+    @mypost = Post.find_by(user_id: current_user.id)
     @mypost.offer = nil
     File.delete("tmp/#{@mypost.id}.json")
         # if @mypost.save
@@ -87,7 +87,7 @@ class PostsController < ApplicationController
 
 
   def destroyaccept
-    @mypost = Post.find_by(user_id: @current_user.id)
+    @mypost = Post.find_by(user_id: current_user.id)
     @mypost.offer = nil
     File.delete("tmp/accept#{@mypost.id}.json")
     File.write("tmp/map#{@mypost.id}.json", "map")
@@ -102,7 +102,7 @@ class PostsController < ApplicationController
 
   def acceptoffer
     require 'json'
-    @mypost = Post.find_by(user_id: @current_user.id)
+    @mypost = Post.find_by(user_id: current_user.id)
       File.open("tmp/#{@mypost.id}.json", 'r') do |f|
       offers = JSON.load(f)
       @checkoffer = offers.fetch("offer_from")
@@ -121,14 +121,14 @@ class PostsController < ApplicationController
 
 
   def destroymap
-    @mypost = Post.find_by(user_id: @current_user.id)
+    @mypost = Post.find_by(user_id: current_user.id)
     File.delete("tmp/map#{@mypost.id}.json")
     redirect_to("/posts/index")
   end
 
 
   def checkoffer
-      @mypost = Post.find_by(user_id: @current_user.id)
+      @mypost = Post.find_by(user_id: current_user.id)
       if File.exist?("tmp/#{@mypost.id}.json")
         redirect_to("/posts/index")
       end
@@ -147,8 +147,8 @@ class PostsController < ApplicationController
   #   exchange = Exchange.find_by(currency: params[:currency_have] + params[:currency_want])
   #   rate = exchange.rate
   #   puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-  #   if Post.find_by(user_id: @current_user.id)
-  #     @post=  Post.find_by(user_id: @current_user.id)
+  #   if Post.find_by(user_id: current_user.id)
+  #     @post=  Post.find_by(user_id: current_user.id)
   #     @post.update(
   #       content: params[:content],
   #       currency_have: params[:currency_have],
@@ -160,10 +160,10 @@ class PostsController < ApplicationController
   #       lng: params[:lng],
   #       location: params[:location],
   #       terminal: params[:terminal],
-  #       user_id: @current_user.id,
+  #       user_id: current_user.id,
   #       group: params[:location] + params[:terminal]+ params[:currency_have]+ params[:currency_want]
   #     )
-  #       # @post = Post.find_by(user_id: @current_user.id)
+  #       # @post = Post.find_by(user_id: current_user.id)
   #       # @post.content = params[:content]
   #       # @post.currency_have = params[:currency_have]
   #       # @post.currency_have_amount = params[:input_currency]
@@ -172,7 +172,7 @@ class PostsController < ApplicationController
   #       # @post.lat = params[:lat]
   #       # @post.lng = params[:lng]
   #       # @post.location = params[:location]
-  #       # @post.user_id = @current_user.id
+  #       # @post.user_id = current_user.id
   #   else
   #       @post = Post.new(
   #         content: params[:content],
@@ -184,7 +184,7 @@ class PostsController < ApplicationController
   #         lng: params[:lng],
   #         location: params[:location],
   #         terminal: params[:terminal],
-  #         user_id: @current_user.id,
+  #         user_id: current_user.id,
   #         group: params[:location] + params[:terminal]+ params[:currency_have]+ params[:currency_want]
   #       )
   # end

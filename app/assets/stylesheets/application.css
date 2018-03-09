@@ -160,7 +160,7 @@
   color: #5f5d60;
 }
 
-#login-form input[type="text"],  #login-form input[type="password"], #signup-form input[type="text"],  #signup-form input[type="password"]  {
+#login-form input[type="text"],  #login-form input[type="password"], #login-form input[type="email"], #signup-form input[type="text"],  #signup-form input[type="password"], #signup-form input[type="email"]  {
     max-width: 320px;
     width:80%;
     margin-bottom: 20px;

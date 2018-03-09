@@ -3,18 +3,18 @@
 
 <div class="main posts-index">
 <!-- 自分のステータスを表示================================================================================ -->
-<%if Post.find_by(user_id: @current_user.id)%>
+<%if Post.find_by(user_id: current_user.id)%>
   <div class="mypost-status">
     <div class="mypost-user-name">
-      <img src="<%="/user_images/#{@current_user.image_name}"%>" alt="">
-      <%=link_to("#{@current_user.name}","/users/#{@current_user.id}/show")%>
+      <img src="<%="/user_images/#{current_user.image_name}"%>" alt="">
+      <%=link_to("#{current_user.name}","/users/#{current_user.id}/show")%>
     </div>
     <div class="myposts">
-      <%if Post.find_by(user_id: @current_user.id)%>
+      <%if Post.find_by(user_id: current_user.id)%>
       <div class = "mypost"><a>I have <%=@mypost.currency_have%> <%=@mypost.currency_have_amount.to_i%></a></div>
       <%end%>
     </div>
-      <%if Post.find_by(user_id: @current_user.id)%>
+      <%if Post.find_by(user_id: current_user.id)%>
         <p class = "mypostMessage">"<%=@mypost.content%>"</p>
       <%end%>
     </div>
@@ -233,7 +233,7 @@
     <table align="center" cellspacing = "10" class = "posts-container" >
     <%for post in @posts do%>
     <tr class = "<%=post.user_id%>">
-      <%if Post.find_by(user_id: @current_user.id)%><!--自分が投稿している場合。（以下の処理は自分の投稿情報（@mypost）を使うので自分の投稿がない場合に実行するとエラーになる）-->
+      <%if Post.find_by(user_id: current_user.id)%><!--自分が投稿している場合。（以下の処理は自分の投稿情報（@mypost）を使うので自分の投稿がない場合に実行するとエラーになる）-->
 
 <!-- 個別投稿 ========================================================-->
     <!--計算 =====================================================================================================================-->
@@ -349,7 +349,7 @@
                 <div class="invisible">
                   <div id="post-userid"></div>
                   <div id="post_offer_savemoffer"></div>
-                  <div id="post-myid"><%=@current_user.id%></div>
+                  <div id="post-myid"><%=current_user.id%></div>
                 </div>
             </div>
           </div>
