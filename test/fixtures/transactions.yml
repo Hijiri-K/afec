@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  trade_with_id: 1
+  give_currency: MyString
+  receive_currency: MyString
+  usd_amount: 1.5
+  airports: MyString
+
+two:
+  user_id: 1
+  trade_with_id: 1
+  give_currency: MyString
+  receive_currency: MyString
+  usd_amount: 1.5
+  airports: MyString

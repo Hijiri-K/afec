@@ -34,6 +34,11 @@
                    <div class="invisible">
                      <div class="userid<%=message.id%>"><%=message.user_id%></div>
                      <div class="offer_save_amount<%=message.id%>"></div>
+
+                     <div class="give_currency<%=message.id%>"><%=message.currency_want%></div>
+                     <div class="receive_currency<%=message.id%>"><%=message.currency_have%></div>
+                     <div class="give_currency_amount<%=message.id%>"></div>
+                     <div class="receive_currency_amount<%=message.id%>"></div>
                    </div>
 
               </div>
@@ -41,6 +46,7 @@
       <%#end%>
     <%#end%>
    </tr>
+
 
    <script type="text/javascript">
     var　getinfoid = ".getinfo" + <%=message.id%>
@@ -50,18 +56,28 @@
     var offerSaveAmountId = ".offer_save_amount" + <%=message.id%>
     var saveamount = 0
 
-   if ($('#mypost-currency-want-amount').val() <= <%=message.currency_have_amount%>){
+    var giveCurrencyAmount = ".give_currency_amount" + <%=message.id%>
+    var receiveCurrencyAmount = ".receive_currency_amount" + <%=message.id%>
+
+
+   if ($('#mypost-currency-want-amount').val() <= <%=message.currency_have_amount%>){ //相手の金額の方が多い場合
         $(getinfoid).text($('#mypost-currency-have').val() + " " + Math.floor($('#mypost-currency-have-amount').val()))
         $(giveinfoid).text($('#mypost-currency-want').val() + " " + Math.floor($('#mypost-currency-want-amount').val()))
         $(saveinfoid).text($('#mypost-currency-have').val() + " " +($('#mypost-currency-have-amount').val() * 0.05))
         saveamount = ($('#mypost-currency-have-amount').val() * 0.05)
         $(offerSaveAmountId).text(($('#mypost-currency-want').val() + " " + Math.floor($('#mypost-currency-want-amount').val() * 0.05)))
-   }else if(($('#mypost-currency-want-amount').val() > <%=message.currency_have_amount%>)){
+        $(giveCurrencyAmount).text(Math.floor($('#mypost-currency-have-amount').val()))
+        $(receiveCurrencyAmount).text(Math.floor($('#mypost-currency-want-amount').val()))
+
+
+   }else if(($('#mypost-currency-want-amount').val() > <%=message.currency_have_amount%>)){　//自分の金額の方が多い場合
         $(getinfoid).text("<%=message.currency_want%>" + " " +"<%=message.currency_want_amount.to_i%>")
         $(giveinfoid).text("<%=message.currency_have%>" + " " +"<%=message.currency_have_amount.to_i%>")
         $(saveinfoid).text("<%=message.currency_want%>" + " " +"<%=(message.currency_want_amount*0.05).round(1)%>")
         saveamount = <%=(message.currency_want_amount*0.05).round(1)%>
         $(offerSaveAmountId).text("<%=message.currency_have%>" + " " +"<%=(message.currency_have_amount*0.05).round(1)%>")
+        $(giveCurrencyAmount).text("<%=message.currency_want_amount.to_i%>")
+        $(receiveCurrencyAmount).text("<%=message.currency_have_amount.to_i%>")
    }
 
    var coffee = 0

@@ -31,12 +31,18 @@ module ApplicationHelper
             @savem = (mypost_currency_have_amount * 0.05).round(1)
             @save ="#{mypost_currency_have}" + " " + "#{(mypost_currency_have_amount * 0.05).round(1)}"
             @savemoffer = "#{mypost_currency_want}" + " " + "#{(mypost_currency_want_amount * 0.05).round(1)}"
+            @give_amount = "#{mypost_currency_want_amount.to_i}"
+            @get_amount = "#{mypost_currency_have_amount.to_i}"
+
           elsif mypost_currency_want_amount > post_currency_have_amount
             @give = "#{post_currency_have}" + " " + "#{post_currency_have_amount.to_i}"
             @get = "#{post_currency_want}" + " " + "#{post_currency_want_amount.to_i}"
             @savem = (post_currency_want_amount * 0.05).round(1)
             @save ="#{post_currency_want}" + " " + "#{(post_currency_want_amount * 0.05).round(1)}"
             @savemoffer =  "#{post_currency_have}" + " " + "#{(post_currency_have_amount * 0.05).round(1)}"
+            @give_amount = "#{post_currency_have_amount.to_i}"
+            @get_amount = "#{post_currency_want_amount.to_i}"
+
           end
         #
         #  if mypost_currency_want_amount <= post_currency_have_amount

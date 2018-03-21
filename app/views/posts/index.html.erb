@@ -282,10 +282,16 @@
                         <div class="userid<%=post.id%>"><%=user.id%></div>
                         <div class="offer_save_amount<%=post.id%>"><%=@savemoffer%></div>
                         <div class="myid<%=post.id%>"><%=@mypost.user_id%></div>
-                      </div>
 
+                        <div class="give_currency<%=post.id%>"><%=@mypost.currency_have%></div>
+                        <div class="receive_currency<%=post.id%>"><%=@mypost.currency_want%></div>
+                        <div class="give_currency_amount<%=post.id%>"><%=@get_amount%></div>
+                        <div class="receive_currency_amount<%=post.id%>"><%=@give_amount%></div>
+                      </div>
                   </div>
               </td>
+
+
               <script type="text/javascript">
               $('#td<%=post.id%>').on('click',function(){
                 $('#show-modal').fadeIn();
@@ -298,6 +304,13 @@
                       myid = $('.myid<%=post.id%>').text();
                       userid = $('.userid<%=post.id%>').text();
                       postsavemoffer = $('.offer_save_amount<%=post.id%>').text();
+
+                      give_currency_show = $('.give_currency<%=post.id%>').text();
+                      receive_currency_show = $('.receive_currency<%=post.id%>').text();
+                      give_currency_amount_show = $('.give_currency_amount<%=post.id%>').text();
+                      receive_currency_amount_show = $('.receive_currency_amount<%=post.id%>').text();
+
+
                       $('#postmessageshow').text(postmessageshow);
                       $('#getshow').text(getshow);
                       $('#giveshow').text(giveshow);
@@ -307,12 +320,13 @@
                       $('#post-userid').text(userid);
                       $('#post_offer_savemoffer').text(postsavemoffer);
                       // $('#post-myid').text(myid);
+
+                      $('#give_currency_show').text(give_currency_show)
+                      $('#receive_currency_show').text(receive_currency_show)
+                      $('#give_currency_amount_show ').text(give_currency_amount_show)
+                      $('#receive_currency_amount_show').text(receive_currency_amount_show)
             });
               </script>
-
-
-
-
 
           <%#end%>
         <%end%>
@@ -350,6 +364,11 @@
                   <div id="post-userid"></div>
                   <div id="post_offer_savemoffer"></div>
                   <div id="post-myid"><%=current_user.id%></div>
+
+                  <div id="give_currency_show"></div>
+                  <div id="receive_currency_show"></div>
+                  <div id="give_currency_amount_show"></div>
+                  <div id="receive_currency_amount_show"></div>
                 </div>
             </div>
           </div>
@@ -382,7 +401,8 @@
         <div class="map-container">
             <div id="map"></div>
         </div>
-        <div class ="submit-btn close-map">Arrived</div>
+        <div class ="submit-btn close-map found-btn">Found</div>
+        <div class ="submit-btn close-map not-found-btn">Not found</div>
     </div>
   </div>
 </div>

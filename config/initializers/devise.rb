@@ -4,7 +4,7 @@ class CustomFailure < Devise::FailureApp
     # 未ログインでアクセスしてきたときはサインアップページへリダイレクト
     home_top_path
   end
-  
+
   def respond
     if http_auth?
       http_auth

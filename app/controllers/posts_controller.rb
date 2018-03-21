@@ -6,220 +6,42 @@ class PostsController < ApplicationController
     if Post.find_by(user_id: current_user.id)
         @mypost = Post.find_by(user_id: current_user.id)
         # @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
-        @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have, location: @mypost.location, terminal: @mypost.terminal)
+        @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have, location: @mypost.location, terminal: @mypost.terminal).order(created_at: :desc)
         # @posts = Post.where(group: @mypost.stream)
     else
       @posts = Post.all.order(created_at: :desc)
     end
-
-    if Post.find_by(user_id: current_user.id)
-    require 'json'
-    @mypost = Post.find_by(user_id: current_user.id)
-        if File.exist?("tmp/#{@mypost.id}.json")
-          File.open("tmp/#{@mypost.id}.json", 'r') do |f|
-          offers = JSON.load(f)
-          @checkoffer = offers.fetch("offer_from")
-          # @offer_to = offers.fetch("offer_to")
-          end
-        end
-
-        if File.exist?("tmp/accept#{@mypost.id}.json")
-          File.open("tmp/accept#{@mypost.id}.json", 'r') do |f|
-          offers = JSON.load(f)
-          @acceptcheckoffer = offers.fetch("offer_from")
-          # @acceptoffer_to = offers.fetch("offer_to")
-          end
-        end
-
-        if File.exist?("tmp/map#{@mypost.id}.json")
-          @mapshow = true
-        end
-    end
   end
 
-
-  # def show　不要の為削除　TODO：削除
-  #   if Post.find_by(user_id: current_user.id)
-  #       @mypost = Post.find_by(user_id: current_user.id)
-  #       @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
-  #   else
-  #     @posts = Post.all.order(created_at: :desc)
-  #   end
-  #   @id = params[:id]
-  #   @post = Post.find_by(id: params[:id])
-  #   @user = User.find_by(id: @post.user_id)
-  # end
-
-
-  def offer
-    @mypost = Post.find_by(user_id: current_user.id)
-    @post = Post.find_by(id: params[:id])
-    # @post.offer = @mypost.id
-
-    # File.open("public/#{@post.id}.json", 'w') do |f|　オファーのActionCable化のため削除　TODO：削除
-    #   hash = {"offer_from"=> @mypost.id, "offer_to"=> @post.id}
-    #   str = JSON.dump(hash, f)
-    # end
-
-    hash = {"offer_from"=> @mypost.id, "offer_to"=> @post.id}
-    json = JSON.generate(hash)
-    File.write("tmp/#{@post.id}.json", json)
-    # if @post.save
-      flash[:notice] = "Success to send offer"
-      redirect_to("/posts/index")
-    # else
-    #   render("posts/show")
-    # end
+  def create_transaction
+    currency = "#{params[:give_currency]}USD"
+    p currency
+    exchange = Exchange.find_by(currency: currency)
+    rate = exchange.rate
+    p rate
+    p params[:give_currency_amount]
+    Transaction.create!(
+      user_id:params[:user_id],
+      trade_with_id:params[:trade_with],
+      give_currency:params[:give_currency],
+      receive_currency:params[:receive_currency],
+      # give_currency_amount:params[:give_currency_amount],
+      # receive_currency_amount:params[:receive_currency_amount]
+      usd_amount:params[:give_currency_amount].to_f*rate
+    )
   end
 
-
-  def destroyoffer
-    @mypost = Post.find_by(user_id: current_user.id)
-    @mypost.offer = nil
-    File.delete("tmp/#{@mypost.id}.json")
-        # if @mypost.save
-        #   flash[:notice] = "You decline the offer"
-          redirect_to("/posts/index")
-        # else
-        #   # render("posts/index")
-        # end
+  def successed_transaction
+    transaction = Transaction.where(user_id:current_user.id).last
+    transaction.update(
+      status:"successed"
+    )
   end
 
-
-  def destroyaccept
-    @mypost = Post.find_by(user_id: current_user.id)
-    @mypost.offer = nil
-    File.delete("tmp/accept#{@mypost.id}.json")
-    File.write("tmp/map#{@mypost.id}.json", "map")
-        # if @mypost.save
-        #   flash[:notice] = "You decline the offer"
-          redirect_to("/posts/index")
-        # else
-        #   # render("posts/index")
-        # end
+  def failed_transaction
+    transaction = Transaction.where(user_id:current_user.id).last
+    transaction.update(
+      status:"failed"
+    )
   end
-
-
-  def acceptoffer
-    require 'json'
-    @mypost = Post.find_by(user_id: current_user.id)
-      File.open("tmp/#{@mypost.id}.json", 'r') do |f|
-      offers = JSON.load(f)
-      @checkoffer = offers.fetch("offer_from")
-      # @offer_to = offers.fetch("offer_to")
-    end
-
-    hash = {"offer_from"=> @checkoffer, "offer_to"=> @mypost.id}
-    json = JSON.generate(hash)
-    File.write("tmp/accept#{@checkoffer}.json", json)
-    File.write("tmp/map#{@mypost.id}.json", json)
-    # if @post.save
-      flash[:notice] = "You accepted offer"
-      File.delete("tmp/#{@mypost.id}.json")
-      redirect_to("/posts/index")
-  end
-
-
-  def destroymap
-    @mypost = Post.find_by(user_id: current_user.id)
-    File.delete("tmp/map#{@mypost.id}.json")
-    redirect_to("/posts/index")
-  end
-
-
-  def checkoffer
-      @mypost = Post.find_by(user_id: current_user.id)
-      if File.exist?("tmp/#{@mypost.id}.json")
-        redirect_to("/posts/index")
-      end
-
-      if File.exist?("tmp/accept#{@mypost.id}.json")
-        redirect_to("/posts/index")
-      end
-  end
-
-
-  # def new
-  #   @post = Post.new
-  # end
-
-  def create　#処理をroom_channelに移行のため削除を予定　TODO:削除
-  #   exchange = Exchange.find_by(currency: params[:currency_have] + params[:currency_want])
-  #   rate = exchange.rate
-  #   puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-  #   if Post.find_by(user_id: current_user.id)
-  #     @post=  Post.find_by(user_id: current_user.id)
-  #     @post.update(
-  #       content: params[:content],
-  #       currency_have: params[:currency_have],
-  #       currency_have_amount: params[:input_currency],
-  #       currency_want: params[:currency_want],
-  #       # currency_want_amount: params[:currency_want_amount],
-  #       currency_want_amount: params[:input_currency] * rate,
-  #       lat: params[:lat],
-  #       lng: params[:lng],
-  #       location: params[:location],
-  #       terminal: params[:terminal],
-  #       user_id: current_user.id,
-  #       group: params[:location] + params[:terminal]+ params[:currency_have]+ params[:currency_want]
-  #     )
-  #       # @post = Post.find_by(user_id: current_user.id)
-  #       # @post.content = params[:content]
-  #       # @post.currency_have = params[:currency_have]
-  #       # @post.currency_have_amount = params[:input_currency]
-  #       # @post.currency_want = params[:currency_want]
-  #       # @post.currency_want_amount = params[:currency_want_amount]
-  #       # @post.lat = params[:lat]
-  #       # @post.lng = params[:lng]
-  #       # @post.location = params[:location]
-  #       # @post.user_id = current_user.id
-  #   else
-  #       @post = Post.new(
-  #         content: params[:content],
-  #         currency_have: params[:currency_have],
-  #         currency_have_amount: params[:input_currency],
-  #         currency_want: params[:currency_want],
-  #         currency_want_amount: params[:currency_want_amount],
-  #         lat: params[:lat],
-  #         lng: params[:lng],
-  #         location: params[:location],
-  #         terminal: params[:terminal],
-  #         user_id: current_user.id,
-  #         group: params[:location] + params[:terminal]+ params[:currency_have]+ params[:currency_want]
-  #       )
-  # end
-  #
-  #   if @post.save
-  #     flash[:notice] = "Your status updated"
-  #     redirect_to("/posts/index")
-  #   else
-  #     render("posts/index")
-  #   end
-  end
-
-  # def edit
-  #   @post = Post.find_by(id: params[:id])
-  # end
-
-
-  # def update
-  #   @post = Post.find_by(id: params[:id])
-  #   @post.content = params[:content]
-  #   if @post.save
-  #     flash[:notice] = "編集に成功しました～～～～"
-  #     redirect_to("/posts/index")
-  #   else
-  #     render("posts/edit")
-  #   end
-  # end
-
-
-  def destroy
-    @post = Post.find_by(id: params[:id])
-    @post.destroy
-    flash[:notice] = "投稿を削除しました～～～～"
-    redirect_to("/posts/index")
-  end
-
-
 end

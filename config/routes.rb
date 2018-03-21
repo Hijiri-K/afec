@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   post "users/:id/update" => "users#update"
   get "users/:id/edit" => "users#edit"
   get "users/:id/show" => "users#show"
+
+  get "users/history" => "users#history" 
+
   post "users/:id/destroy" => "users#destroy"
 
   post "users/create" => "users#create"
@@ -31,6 +34,9 @@ Rails.application.routes.draw do
   get 'posts/index' => "posts#index"
   get "posts/new" => "posts#new"
   post "posts/create" => "posts#create"
+  post "posts/create_transaction" => "posts#create_transaction"
+  post "posts/successed_transaction" => "posts#successed_transaction"
+  post "posts/failed_transaction" => "posts#failed_transaction"
 
 
   get "posts/:id" => "posts#show"

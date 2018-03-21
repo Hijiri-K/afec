@@ -11,12 +11,11 @@
     <h3>You have exchanged with</h3>
     <h2><%=@transactions.count%> people</h2>
     <h3>You have saved</h3>
-    <h2>USD <%=saved = @transactions.sum(:usd_amount)*0.05%></h2>
+    <h2>USD <%=saved = (@transactions.sum(:usd_amount)*0.05).to_i%></h2>
     <h3>You have had</h3>
-    <h2><%=saved/3%> couples of coffee</h2>
+    <h2><%=(saved/3).to_i%> couples of coffee</h2>
     <h3>Your friends</h3>
 
-    <div class="container-i">
       <table align="center" class = "posts-container" >
         <%@transactions.each do |transaction|%>
         <%user = User.find_by(id:transaction.trade_with_id)%>
@@ -34,5 +33,4 @@
         </tr>
         <%end%>
       </table>
-  </div>
 </div>
