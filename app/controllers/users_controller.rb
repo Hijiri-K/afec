@@ -86,6 +86,6 @@ class UsersController < ApplicationController
   # end
 
   def history
-    @transactions = Transaction.where(user_id:current_user.id, status:"successed")
+    @transactions = Transaction.where(user_id:current_user.id, status:"successed").order(updated_at: :desc)
   end
 end

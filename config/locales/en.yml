@@ -31,3 +31,8 @@
 
 en:
   hello: "Hello world"
+  time:
+    formats:
+      default: ! '%d %B, %Y'
+      long: ! '%Y/%m/%d(%a) %H:%M:%S %z'
+      short: ! '%Y/%m/%d %H:%M'
