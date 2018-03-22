@@ -141,7 +141,6 @@ $(document).ready(function(){
         url: '/posts/successed_transaction',
         type: 'POST',
         data: {
-          hoge:1
         },
       })
       .done(function(response){
@@ -157,7 +156,6 @@ $(document).ready(function(){
         url: '/posts/failed_transaction',
         type: 'POST',
         data: {
-          hoge:1
         },
       })
     })

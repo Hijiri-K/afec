@@ -111,6 +111,12 @@
            console.log(userid);
            postsavemoffer = $('.offer_save_amount<%=message.id%>').text();
 
+           give_currency_show = $(this).find('.give_currency<%=message.id%>').text();
+           receive_currency_show = $(this).find('.receive_currency<%=message.id%>').text();
+           give_currency_amount_show = $(this).find('.give_currency_amount<%=message.id%>').text();
+           receive_currency_amount_show = $(this).find('.receive_currency_amount<%=message.id%>').text();
+
+
            $('#postmessageshow').text(postmessageshow);
            $('#getshow').text(getshow);
            $('#giveshow').text(giveshow);
@@ -120,36 +126,10 @@
            $('#postid-show').text(postid);
            $('#post-userid').text(userid);
            $('#post_offer_savemoffer').text(postsavemoffer);
+
+           $('#give_currency_show').text(give_currency_show)
+           $('#receive_currency_show').text(receive_currency_show)
+           $('#give_currency_amount_show ').text(give_currency_amount_show)
+           $('#receive_currency_amount_show').text(receive_currency_amount_show)
 });
-       // $('#offfersubmit').click(function(){ ActionaCable化のため不要　TODO：削除
-       //     $.ajax({
-       //         url: "/posts/offer",
-       //         type: "post",
-       //         // dataType: "html",
-       //         data: {id: postid},
-       //         success: function(responce) {
-       //           var postmessageshow = null
-       //               getshow = null
-       //               giveshow = null
-       //               saveshow = null
-       //               coffeeshow = null
-       //               postusernameshow = null
-       //               postid = null
-       //     },
-       //     error: function(xhr) {
-       //         alert("errror");
-       //     }
-       //     });
-       //   });
-
-
-
-  // $('#offersubmit').on('click', function(event){
-  //   console.log("send");
-  //   App.offer.offer($('#post-userid').text(), $('#postmessageshow').text(), $('#getshow').text(), $('#giveshow').text(), $('#post_offer_savemoffer').text(), $('#post-myid').text(), $('#saveshow').text())
-  //   console.log("send");
-  //   $('.modal').animate({"top": "-200px"},500);
-  //   $('.show-modal-wrapper').fadeOut(500);
-  //   $('.modal').animate({"top": "270px"},0);
-  // });
    </script>
