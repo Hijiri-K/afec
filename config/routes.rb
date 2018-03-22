@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  # devise_for :users
+  devise_for :users, :controllers => {:registrations => "registrations"}
   root to: "posts#index"
 
   # post "likes/:id/create" => "likes#create"
