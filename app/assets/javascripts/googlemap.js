@@ -1,5 +1,5 @@
-$(document).ready(function(){
-
+// $(document).ready(function(){
+function routing(){
 // Open layer用
 
 var extent = [0, 0, 5000, 5000];
@@ -133,4 +133,5 @@ var extent = [0, 0, 5000, 5000];
       features: [positionFeature, iconFeature]
     })
   });
-});
+// });
+}

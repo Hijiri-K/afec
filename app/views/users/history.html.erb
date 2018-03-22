@@ -26,7 +26,7 @@
               <%=link_to("#{user.name}","/users/#{user.id}/show")%>
               </div>
               <div class="exchangedDatePlace">
-                <p><%=transaction.created_at%></p>
+                <p><%=l transaction.created_at, format: :default%></p>
                 <p>at Narita</p>
               </div>
           </td>

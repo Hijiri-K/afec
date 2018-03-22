@@ -47,6 +47,7 @@
 $('.offer-accept').click(function(){
   $('.offer-modal-wrapper-test').fadeOut();
   $('.map-modal-wrapper').show();
+  routing();
   $.ajax({
     url: '/posts/create_transaction',
     type: 'POST',

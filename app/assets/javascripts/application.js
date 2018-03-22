@@ -44,7 +44,7 @@ $(document).ready(function(){
   });
 
   $('.close-map').on('click', function(){
-    $('.map-modal-wrapper').css('z-index', '-1');
+    // $('.map-modal-wrapper').css('z-index', '-1');
     location.href="/users/history"
   })
 
