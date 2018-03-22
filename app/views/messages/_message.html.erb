@@ -1,11 +1,4 @@
 <tr class = "<%=message.user_id%>">
-  <%#if Post.find_by(user_id: message.user_id)%><!--自分が投稿している場合。（以下の処理は自分の投稿情報（@mypost）を使うので自分の投稿がない場合に実行するとエラーになる）-->
- <%#@mypost = Post.find_by(user_id: message.user_id)%>
-<!-- 個別投稿の表示 ========================================================-->
-<!--計算 =====================================================================================================================-->
-
-
-      <%#if @distance < 200 %>　<!--200メートル以内の投稿のみを表示-->
           <td class="posts-index-item" id="td<%=message.id%>">
               <div class="post-user-name" id="post-user-name<%=message.id%>">
                 <%user = User.find_by(id: message.user_id)%>
@@ -15,10 +8,6 @@
 
               <div class="info"><!--投稿内の内容を表示-->
                   <p class = "postmessage<%=message.id%>"><a>"<%=message.content%>"</a></p>
-                  <!-- <p>i have <%=message.currency_have%>
-                  <%=message.currency_have_amount%></p>
-                  <p>i want <%=message.currency_want%>
-                  <%=message.currency_want_amount%></p> -->
                   <div class= "post-subtitle"><p>we can trade </p></div>
                   <div class="myposts-post">
                     <div class = "mypost-post"><a class = "getinfo<%=message.id%>"></a></div>
@@ -43,8 +32,6 @@
 
               </div>
           </td>
-      <%#end%>
-    <%#end%>
    </tr>
 
 
