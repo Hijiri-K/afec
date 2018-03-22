@@ -22,5 +22,5 @@ App.room = App.cable.subscriptions.create "RoomChannel",
   $(document).on 'click', '#exchange-submit', (event) ->
     App.room.speak $('#Currency').val(), $('#currency').val(), $('#Currency_base').val(), $('#returnYen').val(), $('#message').val(), $('.lat').val(), $('.lng').val(), $('.airport2').val(), $('.terminal2').val(), $('.airport2').val() + $('.terminal2').val() +  $('#Currency').val() + $('#Currency_base').val(), $('.airport2').val() + $('.terminal2').val() + $('#Currency_base').val() + $('#Currency').val(), $('#Currency').val() + $('#Currency_base').val()
     setTimeout ->
-      location.href="/posts/index"
+      location.href="/"
     , 1500

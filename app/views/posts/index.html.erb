@@ -288,7 +288,6 @@
                   </div>
               </td>
 
-
               <script type="text/javascript">
               $('#td<%=post.id%>').on('click',function(){
                 $('#show-modal').fadeIn();
@@ -373,7 +372,16 @@
           <div><a class = " submit-btn" id="offersubmit">Send Offer</a></div>
     </div>
   </div>
-
+<script type="text/javascript">
+  $('#offersubmit').on('click', function(){
+    remove_post_class = '.'+ $('#post-userid').text()
+    $(remove_post_class).css({'opacity':'0.5', "pointer-events":"none"});
+    setTimeout(function(){
+        $(remove_post_class).css({'opacity':'1', "pointer-events":"auto"});
+    },50000
+        )
+  })
+</script>
 
 <!-- ActionCableのoffer用モーダル======================================================================================================= -->
 
