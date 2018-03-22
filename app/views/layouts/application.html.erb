@@ -56,11 +56,19 @@
 
         <%if session[:user_id]%>
           <!-- <li><a class = "location-show">Update</a></li> -->
-          <li><%=link_to("Exchange","/")%></li>
+          <%if request.path == "/"%>
             <li><%=link_to("History","/users/history")%></li>
-          <li class= "login-btn"><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+            <li class= "login-btn"><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+          <%elsif request.path == "/users/history"%>
+            <li><%=link_to("Exchange","/")%></li>
+            <li class= "login-btn"><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+          <%else%>
+            <li><%=link_to("History","/users/history")%></li>
+            <li><%=link_to("Exchange","/")%></li>
+            <li class= "login-btn"><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+          <%end%>
         <%else%>
-          <li><%=link_to("About Afec","/about")%></li>
+          <!-- <li><%=link_to("About Afec","/about")%></li> -->
           <li class= "login-btn"><a class = "login-show">Login</a></li>
         <%end%>
       </lu>
