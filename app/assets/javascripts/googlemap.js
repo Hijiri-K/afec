@@ -2,6 +2,9 @@
 function routing(){
 // Open layer用
 
+var cafeLat = Math.round($('#cafe_lat').val());
+var cafeLng = Math.round($('#cafe_lng').val());
+
 var extent = [0, 0, 5000, 5000];
      var projection = new ol.proj.Projection({
        code: 'xkcd-image',
@@ -97,8 +100,10 @@ var extent = [0, 0, 5000, 5000];
     coordinates = ol.proj.transform(coordinates, 'EPSG:3857', 'EPSG:4326')
 
 
-    var centerLat = 35.837105
-    var centerLng = 139.797005
+    // var centerLat = 35.764116
+    // var centerLng = 140.384421
+
+    // 35.764116, 140.384421
 
     var centerLat = $('#center_lat').val()
     var centerLng = $('#center_lng').val()
@@ -110,10 +115,12 @@ var extent = [0, 0, 5000, 5000];
     pixByLat = (1/0.0090133729745762*1000);
     pixByLng = (1/0.010966404715491394*1000);
 
-    var currentLat = (pixByLat*coordinates[1] - pixByLat*centerLat)*10 + 2500;
-    var currentLng = (pixByLng*coordinates[0] - pixByLng*centerLng)*10 + 2500;
-//
-    pixCoordinates = [currentLat, currentLng];
+
+
+    var currentLat = (pixByLat*coordinates[1] - pixByLat*centerLat)*10 + cafeLng;
+    var currentLng = (pixByLng*coordinates[0] - pixByLng*centerLng)*10 + cafeLat;
+
+    pixCoordinates = [currentLng, currentLat];
     positionFeature.setGeometry(pixCoordinates ?
       new ol.geom.Point(pixCoordinates) : null);
       console.log(pixCoordinates)
@@ -122,7 +129,7 @@ var extent = [0, 0, 5000, 5000];
 
 
   // var iconPosition = [1755,2273]
-  var iconPosition = [$('#cafe_lat').val(),$('#cafe_lng').val()]
+  var iconPosition = [cafeLat,cafeLng]
   iconFeature.setGeometry(iconPosition ?
     new ol.geom.Point(iconPosition) : null);
     console.info(iconPosition)

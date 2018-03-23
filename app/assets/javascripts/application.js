@@ -9,10 +9,9 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
-//
-//= require rails-ujs
+//= require jquery
 //= require jquery.turbolinks
-//= require turbolinks
+//= require rails-ujs
 //= require_tree
 
 //エラー防止のためjquery.turbolinksとturbolinksと require_treeのgemを無効化中
@@ -27,8 +26,14 @@ $(document).ready(function(){
 });
 
 // 未投稿時にモーダル表示
+var current_path = location.pathname
+console.log(current_path)
+if(current_path == "/"){
   if($('.mypost-status').text() == ""){
     $('#location-modal').fadeIn();
+    getPosition();
+
+  }
   };
 
   $('.offer-decline').on("click", function(){
@@ -67,6 +72,7 @@ $(document).ready(function(){
 
   $('.location-show').click(function(){
     $('.location-modal-wrapper').fadeIn();
+    getPosition()
   });
 
   // $('.open-map').click(function(){
@@ -89,52 +95,6 @@ $(document).ready(function(){
             $('#exchange-modal').fadeOut();
   });
 
-// actioncable投稿のモーダル表示（_messageに移行済み）
-
-  // $('td').on('click',function(){
-  //     $('#show-modal').fadeIn();
-  //       var postmessageshow = $(this).find('.postmessage').text();
-  //           getshow = $(this).find('.getinfo').text();
-  //           giveshow = $(this).find('.giveinfo').text();
-  //           saveshow = $(this).find('.saveinfo').text();
-  //           coffeeshow = $(this).find('.coffeeinfo').html();
-  //           postusernameshow = $(this).find('.post-user-name').html();
-  //           myid = $(this).find('.myid').text();
-  //           userid = $(this).find('.userid').text();
-  //           postsavemoffer = $(this).find('.offer_save_amount').text();
-  //           $('#postmessageshow').text(postmessageshow);
-  //           $('#getshow').text(getshow);
-  //           $('#giveshow').text(giveshow);
-  //           $('#saveshow').text(saveshow);
-  //           $('#coffeeshow').html(coffeeshow);
-  //           $('#post-user-name-show').html(postusernameshow);
-  //           $('#post-userid').text(userid);
-  //           $('#post_offer_savemoffer').text(postsavemoffer);
-  //           $('#post-myid').text(myid);
-  //   });
-
-        // $('#offfersubmit').click(function(){
-        //     $.ajax({
-        //         url: "/posts/offer",
-        //         type: "post",
-        //         // dataType: "html",
-        //         data: {id: postid},
-        //         success: function(responce) {
-        //           var postmessageshow = null
-        //               getshow = null
-        //               giveshow = null
-        //               saveshow = null
-        //               coffeeshow = null
-        //               postusernameshow = null
-        //               postid = null
-        //     },
-        //     error: function(xhr) {
-        //         alert("errror");
-        //     }
-        //     });
-        //   });
-        // });
-        //
 
     $('.found-btn').on('click', function(){
       $.ajax({

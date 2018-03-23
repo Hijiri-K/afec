@@ -1,12 +1,5 @@
-// $(document).ready(
-  // Geolocation APIに対応している
-  // if (navigator.geolocation) {
-  //   alert("この端末では位置情報が取得できます");
-  // // Geolocation APIに対応していない
-  // } else {
-  //   alert("この端末では位置情報が取得できません");
-  // }
-  $(function getPosition() {
+  function getPosition() {
+    console.log('gps')
     // 現在地を取得
     navigator.geolocation.getCurrentPosition(
       // 取得成功した場合
@@ -17,15 +10,16 @@
           // alert("緯度:"+lat+",経度"+lng);
         $('.lat').val(lat);
         $('.lng').val(lng);
-        $('.gps').addClass("fa fa-location-arrow").text(" Ready");
+        // $('.gps').addClass("fa fa-location-arrow").text(" Ready");
 
-        if (30 <= lat && lat <= 40 && 120 <= lng && lng <= 150) {
+        if (35.757776 <= lat && lat <= 35.781182 && 140.380987 <= lng && lng <= 140.393842) {
+        // if (30 <= lat && lat <= 40 && 120 <= lng && lng <= 150) {
           airport = "Narita";
         }else{
-          airport = "Out of Airport";
-        }
-
-    ;
+          airport = "Out of Service";
+          alert("afec is not available in your place.\nRedirect to mypage.");
+          location.href = '/users/history';
+        };
 
         $('.airport').val(airport);
           $(function() {
@@ -42,20 +36,20 @@
             });
           });
       },
-      // 取得失敗した場合
+      // if failed
       function(error) {
         switch(error.code) {
           case 1: //PERMISSION_DENIED
-            alert("位置情報の利用が許可されていません");
+            alert("Request for location information was denieded");
             break;
           case 2: //POSITION_UNAVAILABLE
-            alert("現在位置が取得できませんでした");
+            alert("Location information is unavailable.");
             break;
           case 3: //TIMEOUT
-            alert("タイムアウトになりました");
+            alert("The request to get user location timed out.");
             break;
           default:
-            alert("その他のエラー(エラーコード:"+error.code+")");
+            alert("An unknown error occurred.(error code:"+error.code+")");
             break;
         }
       }
@@ -65,4 +59,3 @@
 // setInterval(getPosition, 5000); //5秒おきに現在地を取得
 
 }
-);
