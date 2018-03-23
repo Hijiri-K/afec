@@ -20,11 +20,39 @@
     </div>
   </div>
 </div>
+
+<div class="invisible">
+  <div class="" id="accept_give_currency"><%=accept['give_currency']%></div>
+  <div class="" id="accept_receive_currency"><%=accept['receive_currency']%></div>
+  <div class="" id="accept_give_currency_amount"><%=accept['give_currency_amount']%></div>
+  <div class="" id="accept_receive_currency_amount"><%=accept['receive_currency_amount']%></div>
+</div>
+
 <script type="text/javascript">
 $('.meet-up').click(function(){
   $('.offer-modal-wrapper').fadeOut();
-  // $('#map-modal').fadeIn();
+  $('#map-modal').show();
+  $.ajax({
+    url: '/posts/create_transaction',
+    type: 'POST',
+    data: {
+      user_id:"<%=accept['id']%>",// JSの変数の中のデータをRailsに渡します。
+      trade_with:"<%=accept['user_id']%>",
+      give_currency:"<%=accept['receive_currency']%>",
+      receive_currency:"<%=accept['give_currency']%>",
+      give_currency_amount:"<%=accept['receive_currency_amount']%>",
+      receive_currency_amount:"<%=accept['give_currency_amount']%>"
+    },
+  })
+  .done(function(response){
+    // Railsのアクションが正しく実行された時の処理
+  })
+  .fail(function(xhr){
+    // Railsのアクションなどでエラーが発生した時の処理
+  });
+  routing();
+  // TODO:OSMにより問題解決のため不要
   // mapがfadeInなどでは読み込めないため、事前にz-indexをー1で読み込んで、その後に下記のscriptでz-indexを200に変更して表示する作戦
-  $('.map-modal-wrapper').css('z-index', '200');
+  // $('.map-modal-wrapper').css('z-index', '200');
 });
 </script>

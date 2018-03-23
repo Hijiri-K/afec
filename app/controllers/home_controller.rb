@@ -41,16 +41,16 @@ class HomeController < ApplicationController
 
 
   def test2
-    if Post.find_by(user_id: @current_user.id)
-        @mypost = Post.find_by(user_id: @current_user.id)
+    if Post.find_by(user_id: current_user.id)
+        @mypost = Post.find_by(user_id: current_user.id)
         @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
     else
       @posts = Post.all.order(created_at: :desc)
     end
 
-    if Post.find_by(user_id: @current_user.id)
+    if Post.find_by(user_id: current_user.id)
       require 'json'
-      @mypost = Post.find_by(user_id: @current_user.id)
+      @mypost = Post.find_by(user_id: current_user.id)
       if File.exist?("tmp/#{@mypost.id}.json")
         File.open("tmp/#{@mypost.id}.json", 'r') do |f|
         offers = JSON.load(f)
@@ -77,6 +77,9 @@ class HomeController < ApplicationController
  end
 
  def test4
+ end
+
+ def test5
  end
 
 end

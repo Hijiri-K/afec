@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Geolocation</title>
+    <!-- <link rel="stylesheet" href="https://openlayers.org/en/v4.6.4/css/ol.css" type="text/css"> -->
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <!-- <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script> -->
+    <!-- <script src="https://openlayers.org/en/v4.6.4/build/ol.js"></script> -->
+  </head>
+  <body>
+    <div id="map" class="map"><h1 class = "floor">F4</h1> </div>
+    <div id="info" style="display: none;"></div>
+    <!-- <label for="track">
+      track position
+      <input id="track" type="checkbox"/>
+    </label> -->
+    <p>
+      lat : <code id="lat"></code>&nbsp;&nbsp;<br>
+      lng : <code id="lng"></code>&nbsp;&nbsp;<br>
+      pixLat : <code id="pixLat"></code>&nbsp;&nbsp;<br>
+      PixLng : <code id="pixLng"></code>&nbsp;&nbsp;<br>
+    </p>
+
+    <style media="screen">
+      .floor{
+        position:absolute;
+        z-index: 2;
+        padding:20px;
+        color:#636363;
+      }
+      .ol-zoom{
+        display: none;
+      }
+
+    </style>
+  </body>
+</html>

@@ -54,6 +54,8 @@ Rails.application.configure do
 
   #test hk eeable asset pipeline for development
 
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
 
 
 

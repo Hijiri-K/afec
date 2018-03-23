@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user,{only: [:index, :show, :edit, :update, :destroy, :logout]}
+  # before_action :authenticate_user,{only: [:index, :show, :edit, :update, :destroy, :logout]}
 
   def index
     @users = User.all
@@ -9,25 +9,6 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
   end
 
-  def new
-    @user = User.new
-  end
-
-  def create
-    @user = User.new(
-      name: params[:name],
-      email: params[:email],
-      image_name: "user_image_default.jpg",
-      password: params[:password]
-    )
-    if @user.save
-      # flash[:notice] = "Success to Signup"
-      session[:user_id] = @user.id
-      redirect_to("/posts/index")
-    else
-      render("home/top")
-    end
-  end
 
   def edit
     @user = User.find_by(id: params[:id])
@@ -60,29 +41,7 @@ class UsersController < ApplicationController
     redirect_to("/")
   end
 
-  def login_form
-    @user = User.new
+  def history
+    @transactions = Transaction.where(user_id:current_user.id, status:"successed").order(updated_at: :desc)
   end
-
-  def login
-    @user = User.find_by(
-      email: params[:email],
-      password: params[:password]
-    )
-    if @user
-      # flash[:notice] = "Success to Login"
-      session[:user_id] = @user.id
-      redirect_to("/posts/index")
-    else
-      @error_message = "E-mail or Password is worng"
-      render("home/top")
-    end
-  end
-
-  def logout
-    session[:user_id] = nil
-    # flash[:notice] = "logouted"
-    redirect_to("/")
-  end
-
 end

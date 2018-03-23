@@ -1,31 +1,38 @@
-<style media="screen">
-.myHistory{
-  margin-top: 60px;
-}
-</style>
-
 <div class="main">
   <div class="myHistory">
+    <h1>History</h1>
     <div class="mypost-user-name">
-      <img src="<%="/user_images/#{@current_user.image_name}"%>" alt="">
-      <%=link_to("#{@current_user.name}","/users/#{@current_user.id}/show")%>
+      <img src="<%="/user_images/#{current_user.image_name}"%>" alt="">
+      <%=link_to("#{current_user.name}","/users/#{current_user.id}/show")%>
     </div>
-    <div class="mySavedStatus">
-      You saved<br>
+  </div>
 
+  <div class="myExchangedStatus">
+    <h3>You have exchanged with</h3>
+    <h2><%=@transactions.count%> people</h2>
+    <h3>You have saved</h3>
+    <h2>USD <%=saved = @transactions.sum(:usd_amount)*0.05%></h2>
+    <h3>You have had</h3>
+    <h2><%=saved/3%> couples of coffee</h2>
+    <h3>Your friends</h3>
 
-      <%rates=Exchange.all%>
-      <%rates.each do |rate|%>
-        <%=rate.currency%>=<%=rate.rate%><br>
-      <%end%>
-
-
-
-
-
-
-
-
-    </div>
+    <div class="container-i">
+      <table align="center" class = "posts-container" >
+        <%@transactions.each do |transaction|%>
+        <%user = User.find_by(id:transaction.trade_with_id)%>
+        <tr>
+          <td class="posts-index-item">
+              <div class="post-user-name">
+                <img class = "user-image"  src="/user_images/<%=user.image_name%>" alt="">
+              <%=link_to("#{user.name}","/users/#{user.id}/show")%>
+              </div>
+              <div class="exchangedDatePlace">
+                <p><%=transaction.created_at%></p>
+                <p>at Narita</p>
+              </div>
+          </td>
+        </tr>
+        <%end%>
+      </table>
   </div>
 </div>

@@ -4,6 +4,16 @@
   <head>
     <title>afec</title>
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.4/css/ol.css" type="text/css">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.6.4/build/ol.js"></script>
+
     <!-- レスポンシブ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -45,17 +55,20 @@
       <lu class="header-menus">
 
         <%if session[:user_id]%>
-          <!-- <li><%=link_to("投稿一覧","/posts/index")%></li> -->
-          <!-- <li><%=link_to("Exhange","/posts/new")%></li> -->
-          <!-- <li><a class = "exchange-show">Exhange</a></li> -->
-          <li><a class = "location-show">Update</a></li>
-          <!-- <li><%=link_to("ユーザー一覧","/users/index")%></li> -->
-          <!-- <li><%=link_to("アップデート情報","/updates")%></li> -->
-          <li class= "login-btn"><%=link_to("Logout","/logout",{method:"post"})%></li>
+          <!-- <li><a class = "location-show">Update</a></li> -->
+          <%if request.path == "/"%>
+            <li><%=link_to("History","/users/history")%></li>
+            <li class= "login-btn"><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+          <%elsif request.path == "/users/history"%>
+            <li><%=link_to("Exchange","/")%></li>
+            <li class= "login-btn"><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+          <%else%>
+            <li><%=link_to("History","/users/history")%></li>
+            <li><%=link_to("Exchange","/")%></li>
+            <li class= "login-btn"><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+          <%end%>
         <%else%>
-          <li><%=link_to("About Afec","/about")%></li>
-          <!-- <li><%=link_to("ユーザー登録","/signup")%></li> -->
-          <!-- <li><%=link_to("アップデート情報","/updates")%></li> -->
+          <!-- <li><%=link_to("About Afec","/about")%></li> -->
           <li class= "login-btn"><a class = "login-show">Login</a></li>
         <%end%>
       </lu>
@@ -74,12 +87,39 @@
               <%if @error_message%>
               <%=@error_message%>
               <%end%>
+              <!-- <p class="notice"><%= notice %></p>
+              <p class="alert"><%= alert %></p> -->
             </div>
-              <%=form_tag("/login") do%>
+              <!-- <%=form_tag("/login") do%>
                 <input name = "email" class="form-control" type="text" placeholder="E-mail">
                 <input name = "password" class="form-control" type="password" placeholder="Password">
                 <input class="submit-btn" type="submit" value="Login">
-              <%end%>
+              <%end%> -->
+
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                <div class="field">
+                  <%= f.label :email %><br />
+                  <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+                </div>
+
+                <div class="field">
+                  <%= f.label :password %><br />
+                  <%= f.password_field :password, autocomplete: "off" %>
+                </div>
+
+                <% if devise_mapping.rememberable? -%>
+                  <div class="field">
+                    <%= f.check_box :remember_me %>
+                    <%= f.label :remember_me %>
+                  </div>
+                <% end -%>
+
+                <div class="actions submit-btn">
+                  <%= f.submit "Log in" %>
+                </div>
+              <% end %>
+
+              <%= render "devise/shared/links" %>
         </div>
       </div>
     </div>
@@ -96,13 +136,45 @@
                   <%if @error_message%>
                   <%=@error_message%>
                   <%end%>
+                  <!-- <p class="notice"><%= notice %></p>
+                  <p class="alert"><%= alert %></p> -->
                 </div>
-                <%=form_tag("/users/create") do%>
+                <!-- <%=form_tag("/users/create") do%>
                   <input name = "name" class="form-control" type="text" placeholder="Username">
                   <input name = "email" class="form-control" type="text" placeholder="E-mail">
                   <input name = "password" class="form-control" type="password" placeholder="Password">
                   <input class= "submit-btn" type="submit" value="Signup">
-                <%end%>
+                <%end%> -->
+
+                <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+                  <%= devise_error_messages! %>
+                  <div><%= f.label :name %><br />
+                    <%= f.text_field :name, autofocus: true, autocomplete: "off" %></div>
+
+                  <div class="field">
+                    <%= f.label :email %><br />
+                    <%= f.email_field :email, autocomplete: "email" %>
+                  </div>
+
+                  <div class="field">
+                    <%= f.label :password %>
+                    <% if @minimum_password_length %>
+                    <em>(<%= @minimum_password_length %> characters minimum)</em>
+                    <% end %><br />
+                    <%= f.password_field :password, autocomplete: "off" %>
+                  </div>
+
+                  <div class="field">
+                    <%= f.label :password_confirmation %><br />
+                    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+                  </div>
+
+                  <div class="actions submit-btn">
+                    <%= f.submit "Sign up" %>
+                  </div>
+                <% end %>
+
+                <%= render "devise/shared/links" %>
           </div>
         </div>
       </div>
@@ -115,13 +187,6 @@
         <%=flash[:notice]%>
       </div>
     <%end%>
-
-    <%if flash[:notice]%>
-      <div class="flash">
-        <%=flash[:notice]%>
-      </div>
-    <%end%>
-
     <%= yield %>
 
     <footer>

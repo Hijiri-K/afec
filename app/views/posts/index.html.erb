@@ -3,30 +3,40 @@
 
 <div class="main posts-index">
 <!-- 自分のステータスを表示================================================================================ -->
-<%if Post.find_by(user_id: @current_user.id)%>
+<%if Post.find_by(user_id: current_user.id)%>
   <div class="mypost-status">
     <div class="mypost-user-name">
-      <img src="<%="/user_images/#{@current_user.image_name}"%>" alt="">
-      <%=link_to("#{@current_user.name}","/users/#{@current_user.id}/show")%>
+      <img src="<%="/user_images/#{current_user.image_name}"%>" alt="">
+      <%=link_to("#{current_user.name}","/users/#{current_user.id}/show")%>
     </div>
     <div class="myposts">
-      <%if Post.find_by(user_id: @current_user.id)%>
+      <%if Post.find_by(user_id: current_user.id)%>
       <div class = "mypost"><a>I have <%=@mypost.currency_have%> <%=@mypost.currency_have_amount.to_i%></a></div>
       <%end%>
     </div>
-      <%if Post.find_by(user_id: @current_user.id)%>
+      <%if Post.find_by(user_id: current_user.id)%>
         <p class = "mypostMessage">"<%=@mypost.content%>"</p>
       <%end%>
     </div>
 
 
   <div class="invisible">
+
+    <%map = Map.find_by(airports:@mypost.location, terminals:@mypost.terminal, security_area:@mypost.security_area)%>
+
+    <input id="mypost-message" type="text" name="" value="<%=@mypost.content%>">
     <input id="mypost-currency-have" type="text" name="" value="<%=@mypost.currency_have%>">
     <input id="mypost-currency-have-amount" type="text" name="" value="<%=@mypost.currency_have_amount%>">
     <input id="mypost-currency-want" type="text" name="" value="<%=@mypost.currency_want%>">
     <input id="mypost-currency-want-amount" type="text" name="" value="<%=@mypost.currency_want_amount%>">
     <input id="mypost-lat" type="text" name="" value="<%=@mypost.lat%>">
     <input id="mypost-lng" type="text" name="" value="<%=@mypost.lng%>">
+    <input id="cafe_lat" type="text" name="" value="<%=map.cafe_lat%>">
+    <input id="cafe_lng" type="text" name="" value="<%=map.cafe_lng%>">
+    <input id="center_lat" type="text" name="" value="<%=map.center_lat%>">
+    <input id="center_lng" type="text" name="" value="<%=map.center_lng%>">
+    <input id="floor_maps" type="text" name="" value="<%=map.floor_maps%>">
+    <input id="rotations" type="text" name="" value="<%=map.rotations%>">
   </div>
 
 
@@ -124,7 +134,7 @@
                   <%else%>
                     <input class = "editable" id = "message" name="content" placeholder="message" value = "">
                   <%end%>
-                  <p id = "test">GPS Location&emsp;<span class = "gps">Not Ready</span></p>
+                  <!-- <p id = "test">GPS Location&emsp;<span class = "gps">Not Ready</span></p> -->
 
                   <div class="invisible">
                     <%if @mypost%>
@@ -132,11 +142,13 @@
                       <p>lng</p><input name = "lng" class = "lng"  value="<%=@mypost.lng%>">
                       <p>airport</p><input name = "location" class = "airport2"  value="<%=@mypost.location%>">
                       <p>terminal</p><input name = "terminal" class = "terminal2"  value="<%=@mypost.terminal%>">
+                      <p>security area</p><input name = "security_area" class = "security_area"  value="<%=@mypost.security_area%>">
                     <%else%>
                       <p>lat</p><input name = "lat" class = "lat"  value="">
                       <p>lng</p><input name = "lng" class = "lng"  value="">
                       <p>airport</p><input name = "location" class = "airport2"  value="">
                       <p>terminal</p><input name = "terminal" class = "terminal2"  value="">
+                      <p>security area</p><input name = "security_area" class = "security_area"  value="">
                     <%end%>
                   </div>
 
@@ -168,25 +180,25 @@
                         <!--option value="">▼通貨</option-->
                         <option value="0">Select Terminal</option>
                         <%if @mypost%>
-                            <%if @mypost.terminal == 1%>
+                            <%if @mypost.terminal == "1"%>
                               <option value="1" selected>1</option>
                             <%else%>
                               <option value="1">1</option>
                             <%end%>
 
-                            <%if @mypost.terminal == 2%>
+                            <%if @mypost.terminal == "2"%>
                               <option value="2" selected>2</option>
                             <%else%>
                               <option value="2">2</option>
                             <%end%>
 
-                            <%if @mypost.terminal == 3%>
+                            <%if @mypost.terminal == "3"%>
                               <option value="3" selected>3</option>
                             <%else%>
                               <option value="3">3</option>
                             <%end%>
 
-                            <%if @mypost.terminal == 4%>
+                            <%if @mypost.terminal == "4"%>
                               <option value="4" selected>4</option>
                             <%else%>
                               <option value="4">4</option>
@@ -198,10 +210,16 @@
                             <option value="4">4</option>
                         <%end%>
                   </select>
-
+                  <p>Security area</p>
+                  <div class="sample1Area" id="makeImg">
+                    <input type="radio" name="sample1radio" id="sample1on" value="outside" checked="">
+                      <label for="sample1on">Outside</label>
+                    <input type="radio" name="sample1radio" id="sample1off" value="inside">
+                      <label for="sample1off">Inside</label>
+                  </div>
                   <!-- <input id="returnYen" class = "location" type="float" name="currency_want_amount"  placeholder="amount"> -->
 
-                  <p id = "test">GPS Location&emsp;<span class = "gps">Not Ready</span></p>
+                  <!-- <p id = "test">GPS&emsp;<span class = "gps">Not Ready</span></p> -->
 
                   <div class="invisible">
                     <p>lat</p><input name = "lat" class = "lat"  value="">
@@ -223,7 +241,7 @@
     <table align="center" cellspacing = "10" class = "posts-container" >
     <%for post in @posts do%>
     <tr class = "<%=post.user_id%>">
-      <%if Post.find_by(user_id: @current_user.id)%><!--自分が投稿している場合。（以下の処理は自分の投稿情報（@mypost）を使うので自分の投稿がない場合に実行するとエラーになる）-->
+      <%if Post.find_by(user_id: current_user.id)%><!--自分が投稿している場合。（以下の処理は自分の投稿情報（@mypost）を使うので自分の投稿がない場合に実行するとエラーになる）-->
 
 <!-- 個別投稿 ========================================================-->
     <!--計算 =====================================================================================================================-->
@@ -264,18 +282,20 @@
                       </p></div>
 
                       <span data-livestamp="<%=post.updated_at.strftime("%Y/%m/%d %H:%M %Z")%>" class = "test"></span>
-                      <!-- <span data-livestamp="<%=post.updated_at%>" class = "test"></span> -->
-                      <!-- <%=post.updated_at%> -->
-                      <!-- <span class="timeago" datetime="2008-07-17T09:24:17Z"></span> -->
 
                       <div class="invisible">
                         <div class="userid<%=post.id%>"><%=user.id%></div>
                         <div class="offer_save_amount<%=post.id%>"><%=@savemoffer%></div>
                         <div class="myid<%=post.id%>"><%=@mypost.user_id%></div>
-                      </div>
 
+                        <div class="give_currency<%=post.id%>"><%=@mypost.currency_have%></div>
+                        <div class="receive_currency<%=post.id%>"><%=@mypost.currency_want%></div>
+                        <div class="give_currency_amount<%=post.id%>"><%=@get_amount%></div>
+                        <div class="receive_currency_amount<%=post.id%>"><%=@give_amount%></div>
+                      </div>
                   </div>
               </td>
+
               <script type="text/javascript">
               $('#td<%=post.id%>').on('click',function(){
                 $('#show-modal').fadeIn();
@@ -288,6 +308,13 @@
                       myid = $('.myid<%=post.id%>').text();
                       userid = $('.userid<%=post.id%>').text();
                       postsavemoffer = $('.offer_save_amount<%=post.id%>').text();
+
+                      give_currency_show = $('.give_currency<%=post.id%>').text();
+                      receive_currency_show = $('.receive_currency<%=post.id%>').text();
+                      give_currency_amount_show = $('.give_currency_amount<%=post.id%>').text();
+                      receive_currency_amount_show = $('.receive_currency_amount<%=post.id%>').text();
+
+
                       $('#postmessageshow').text(postmessageshow);
                       $('#getshow').text(getshow);
                       $('#giveshow').text(giveshow);
@@ -297,12 +324,13 @@
                       $('#post-userid').text(userid);
                       $('#post_offer_savemoffer').text(postsavemoffer);
                       // $('#post-myid').text(myid);
+
+                      $('#give_currency_show').text(give_currency_show)
+                      $('#receive_currency_show').text(receive_currency_show)
+                      $('#give_currency_amount_show ').text(give_currency_amount_show)
+                      $('#receive_currency_amount_show').text(receive_currency_amount_show)
             });
               </script>
-
-
-
-
 
           <%#end%>
         <%end%>
@@ -339,7 +367,12 @@
                 <div class="invisible">
                   <div id="post-userid"></div>
                   <div id="post_offer_savemoffer"></div>
-                  <div id="post-myid"><%=@current_user.id%></div>
+                  <div id="post-myid"><%=current_user.id%></div>
+
+                  <div id="give_currency_show"></div>
+                  <div id="receive_currency_show"></div>
+                  <div id="give_currency_amount_show"></div>
+                  <div id="receive_currency_amount_show"></div>
                 </div>
             </div>
           </div>
@@ -347,7 +380,16 @@
           <div><a class = " submit-btn" id="offersubmit">Send Offer</a></div>
     </div>
   </div>
-
+<script type="text/javascript">
+  $('#offersubmit').on('click', function(){
+    remove_post_class = '.'+ $('#post-userid').text()
+    $(remove_post_class).css({'opacity':'0.5', "pointer-events":"none"});
+    setTimeout(function(){
+        $(remove_post_class).css({'opacity':'1', "pointer-events":"auto"});
+    },50000
+        )
+  })
+</script>
 
 <!-- ActionCableのoffer用モーダル======================================================================================================= -->
 
@@ -372,9 +414,8 @@
         <div class="map-container">
             <div id="map"></div>
         </div>
-        <div class ="submit-btn close-map">Arrived</div>
+        <div class ="submit-btn close-map found-btn">Found</div>
+        <div class ="submit-btn close-map not-found-btn">Not found</div>
     </div>
   </div>
 </div>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyhGYfqVCJlu4nw3oBC8BQgHgUdpKyoLs&callback=initMap">
-</script>

@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-  validates :content, {presence: true, length: {maximum: 140}}
+  validates :content, {length: {maximum: 140}}
   validates :currency_have, {presence: true}
   validates :currency_want, {presence: true}
   validates :currency_have_amount, {presence: true}

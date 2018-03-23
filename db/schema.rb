@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180114075628) do
+ActiveRecord::Schema.define(version: 20180323131315) do
 
   create_table "exchanges", force: :cascade do |t|
     t.string "currency"
@@ -26,6 +26,20 @@ ActiveRecord::Schema.define(version: 20180114075628) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "maps", force: :cascade do |t|
+    t.string "airports"
+    t.string "terminals"
+    t.string "floor_maps"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "cafe_lat"
+    t.float "cafe_lng"
+    t.float "center_lat"
+    t.float "center_lng"
+    t.float "rotations"
+    t.string "security_area"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
@@ -39,9 +53,22 @@ ActiveRecord::Schema.define(version: 20180114075628) do
     t.decimal "lng"
     t.float "currency_want_amount"
     t.integer "offer"
-    t.integer "terminal"
+    t.string "terminal"
     t.string "group"
     t.string "stream"
+    t.string "security_area"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "trade_with_id"
+    t.string "give_currency"
+    t.string "receive_currency"
+    t.float "usd_amount"
+    t.string "airports"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "status"
   end
 
   create_table "updates", force: :cascade do |t|
@@ -55,9 +82,20 @@ ActiveRecord::Schema.define(version: 20180114075628) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "image_name"
+    t.string "image_name", default: "user_image_default.jpg"
     t.string "password"
     t.string "group"
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end

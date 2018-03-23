@@ -3,10 +3,9 @@
     <div class="user">
       <img src="<%="/user_images/#{@user.image_name}"%>" alt="">
       <h2><%=@user.name%></h2>
-      <p><%=@user.email%></p>
       <%if @user.id == session[:user_id]%>
-        <%=link_to("編集","/users/#{@user.id}/edit")%>
-        <%=link_to("削除","/users/#{@user.id}/destroy",{method:"post"})%>
+        <%=link_to("Edit profile","/users/#{@user.id}/edit")%>
+        <%=link_to("Delete Acount","/users/#{@user.id}/destroy",{method:"post"})%>
       <%end%>
     </div>
 

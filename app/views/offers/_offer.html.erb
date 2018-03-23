@@ -18,6 +18,16 @@
             <div class = "post-money mypost-detail" ><p id="givetest"><%=offer['get']%></p></div>
             <div class = "post-subtitle"><p>You can save</p></div>
             <div class = "post-money"><p><span id="savetest"><%=offer['save']%></span>&emsp;&emsp;<i class="fa fa-coffee" aria-hidden="true"></i><%=@coffee%></p></div>
+
+            <div class="invisible">
+              <div class="" id="idtest"><%=offer['id']%></div>
+              <div class="" id="useridtest"><%=offer['user_id']%></div>
+              <div class="" id="save2test"><%=offer['save2']%></div>
+              <div class="" id="offer_give_currency"><%=offer['give_currency']%></div>
+              <div class="" id="offer_receive_currency"><%=offer['receive_currency']%></div>
+              <div class="" id="offer_give_currency_amount"><%=offer['give_currency_amount']%></div>
+              <div class="" id="offer_receive_currency_amount"><%=offer['receive_currency_amount']%></div>
+            </div>
             <div class="invisible" id="idtest"><%=offer['id']%></div>
             <div class="invisible" id="useridtest"><%=offer['user_id']%></div>
             <div class="invisible" id="save2test"><%=offer['save2']%></div>
@@ -36,23 +46,27 @@
 <script type="text/javascript">
 $('.offer-accept').click(function(){
   $('.offer-modal-wrapper-test').fadeOut();
-  // mapがfadeInなどでは読み込めないため、事前にz-indexをー1で読み込んで、その後に下記のscriptでz-indexを200に変更して表示する作戦
-  $('.map-modal-wrapper').css('z-index', '200');
+  $('.map-modal-wrapper').show();
+  routing();
+  $.ajax({
+    url: '/posts/create_transaction',
+    type: 'POST',
+    data: {
+      user_id:"<%=offer['user_id']%>",// JSの変数の中のデータをRailsに渡します。
+      trade_with:"<%=offer['id']%>",
+      give_currency:"<%=offer['give_currency']%>",
+      receive_currency:"<%=offer['receive_currency']%>",
+      give_currency_amount:"<%=offer['give_currency_amount']%>",
+      receive_currency_amount:"<%=offer['receive_currency_amount']%>"
+    },
+  })
+  .done(function(response){
+    // Railsのアクションが正しく実行された時の処理
+  })
+  .fail(function(xhr){
+    // Railsのアクションなどでエラーが発生した時の処理
   });
-  // $(".post-index-container").append('\
-  // <div class="map-modal-wrapper" id="map-modal">\
-  //   <div class="modal">\
-  //     <div id="login-form">\
-  //         <h2>Map to Cafe</h2>\
-  //         <div class="map-container">\
-  //             <div id="map"></div>\
-  //         </div>\
-  //         <div class ="submit-btn close-modal">Arrived</div>\
-  //     </div>\
-  //   </div>\
-  // </div>\
-  // ')
-
+  });
 
 $('.slide').width($('.container-i').width() * 0.85)
 $('.initial').width($('.container-i').width() * 0.06)
@@ -82,77 +96,10 @@ var sliding = function(){
   });
 }
 
-// 次へボタンが押されたとき
-// $('.slider-next').click(function(){
-//   slideCurrent++;
-//   sliding();
-// });
-//
-// $('.slider-prev').click(function(){
-//   slideCurrent--;
-//   sliding();
-// });
-//
-// $('.slider-add').click(function(){
-//
-//   slideNum++;
-//   slideSetWidth = slideWidth * slideNum;
-//   $('.slideSet').css('width', slideSetWidth);
-//   $('.slideSet').append();
-// });
 
-
-// タッチイベントテスト
-// $(function() {
-//   $(this).on('touchstart', onTouchStart); //指が触れたか検知
-//   $(this).on('touchmove', onTouchMove); //指が動いたか検知
-//   $(this).on('touchend', onTouchEnd); //指が離れたか検知
-//   console.log();
-//   var direction, position;
-//
-//   //スワイプ開始時の横方向の座標を格納
-//   function onTouchStart(event) {
-//     position = getPosition(event);
-//     direction = ''; //一度リセットする
-//   }
-//
-//   //スワイプの方向（left／right）を取得
-//   function onTouchMove(event) {
-//     console.log(direction)
-//     if (position - getPosition(event) > 30) { // 70px以上移動しなければスワイプと判断しない
-//       direction = 'left'; //左と検知
-//     } else if (position - getPosition(event) < -30){  // 70px以上移動しなければスワイプと判断しない
-//       direction = 'right'; //右と検知
-//     }
-//   }
-//
-//   function onTouchEnd(event) {
-//     console.log("end")
-//     moveNum = slideNum - 1
-//     if (direction == 'right'){
-//       slideCurrent--;
-//       sliding();
-//     } else if (direction == 'left'){
-//       slideCurrent++;
-//       sliding();
-//     }
-//   }
-//
-//   //横方向の座標を取得
-//   function getPosition(event) {
-//     return event.originalEvent.touches[0].pageX;
-//   }
-// });
-
-
-// $('.offer-decline').on("click", function(){
-//   $(this).parents('.slide').fadeOut().remove();
-//   slideNum = $('.slide').length + 1
-//   // console.log(slideNum);
-//   if (slideNum < 2){
-//       $('.offer-modal-wrapper-test').fadeOut();
-//   }
-//
-// });
+setTimeout(function(){
+  $('#touch<%=offer["id"]%>').remove();
+},50000
+    )
 
 </script>
