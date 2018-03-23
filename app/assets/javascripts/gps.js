@@ -29,8 +29,13 @@
 
         $('.airport').val(airport);
           $(function() {
-              $('#terminal').change( function() {
-               var terminal = $('#terminal').val();
+              $('.exchange-show').click( function() {
+                if ($('input[name=sample1radio]:checked').val() === 'outside'){
+                  var securityArea = 'OUT'
+                }else{
+                  var securityArea = 'IN'
+                }
+              var terminal = $('#terminal').val() + securityArea
               $('.airport2').val(airport);
               $('.terminal2').val(terminal);
               console.log(terminal)
