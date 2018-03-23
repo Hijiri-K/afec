@@ -33,7 +33,8 @@ class RoomChannel < ApplicationCable::Channel
         terminal: data['terminal'],
         user_id: current_user.id,
         group: data['group'],
-        stream: data['stream']
+        stream: data['stream'],
+        security_area: data['security_area']
       )
     else
         @post = Post.create!(

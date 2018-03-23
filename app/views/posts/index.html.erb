@@ -22,7 +22,7 @@
 
   <div class="invisible">
 
-    <%map = Map.find_by(airports:@mypost.location, terminals:@mypost.terminal)%>
+    <%map = Map.find_by(airports:@mypost.location, terminals:@mypost.terminal, security_area:@mypost.security_area)%>
 
     <input id="mypost-message" type="text" name="" value="<%=@mypost.content%>">
     <input id="mypost-currency-have" type="text" name="" value="<%=@mypost.currency_have%>">
@@ -142,11 +142,13 @@
                       <p>lng</p><input name = "lng" class = "lng"  value="<%=@mypost.lng%>">
                       <p>airport</p><input name = "location" class = "airport2"  value="<%=@mypost.location%>">
                       <p>terminal</p><input name = "terminal" class = "terminal2"  value="<%=@mypost.terminal%>">
+                      <p>security area</p><input name = "security_area" class = "security_area"  value="<%=@mypost.security_area%>">
                     <%else%>
                       <p>lat</p><input name = "lat" class = "lat"  value="">
                       <p>lng</p><input name = "lng" class = "lng"  value="">
                       <p>airport</p><input name = "location" class = "airport2"  value="">
                       <p>terminal</p><input name = "terminal" class = "terminal2"  value="">
+                      <p>security area</p><input name = "security_area" class = "security_area"  value="">
                     <%end%>
                   </div>
 
@@ -178,25 +180,25 @@
                         <!--option value="">▼通貨</option-->
                         <option value="0">Select Terminal</option>
                         <%if @mypost%>
-                            <%if @mypost.terminal == 1%>
+                            <%if @mypost.terminal == "1"%>
                               <option value="1" selected>1</option>
                             <%else%>
                               <option value="1">1</option>
                             <%end%>
 
-                            <%if @mypost.terminal == 2%>
+                            <%if @mypost.terminal == "2"%>
                               <option value="2" selected>2</option>
                             <%else%>
                               <option value="2">2</option>
                             <%end%>
 
-                            <%if @mypost.terminal == 3%>
+                            <%if @mypost.terminal == "3"%>
                               <option value="3" selected>3</option>
                             <%else%>
                               <option value="3">3</option>
                             <%end%>
 
-                            <%if @mypost.terminal == 4%>
+                            <%if @mypost.terminal == "4"%>
                               <option value="4" selected>4</option>
                             <%else%>
                               <option value="4">4</option>

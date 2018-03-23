@@ -6,7 +6,7 @@ class PostsController < ApplicationController
     if Post.find_by(user_id: current_user.id)
         @mypost = Post.find_by(user_id: current_user.id)
         # @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have)
-        @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have, location: @mypost.location, terminal: @mypost.terminal).order(created_at: :desc)
+        @posts = Post.where(currency_have: @mypost.currency_want, currency_want: @mypost.currency_have, location: @mypost.location, terminal: @mypost.terminal, security_area: @mypost.security_area).order(created_at: :desc)
         # @posts = Post.where(group: @mypost.stream)
     else
       @posts = Post.all.order(created_at: :desc)

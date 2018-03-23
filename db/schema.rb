@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180321083758) do
+ActiveRecord::Schema.define(version: 20180323131315) do
 
   create_table "exchanges", force: :cascade do |t|
     t.string "currency"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20180321083758) do
     t.float "center_lat"
     t.float "center_lng"
     t.float "rotations"
+    t.string "security_area"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -52,9 +53,10 @@ ActiveRecord::Schema.define(version: 20180321083758) do
     t.decimal "lng"
     t.float "currency_want_amount"
     t.integer "offer"
-    t.integer "terminal"
+    t.string "terminal"
     t.string "group"
     t.string "stream"
+    t.string "security_area"
   end
 
   create_table "transactions", force: :cascade do |t|

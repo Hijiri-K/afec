@@ -15,12 +15,12 @@ App.room = App.cable.subscriptions.create "RoomChannel",
 
 
 
-  speak: (currency_have, currency_have_amount, currency_want, currency_want_amount, message, lat, lng, airport, terminal, group, stream, currency)　->
-    @perform 'speak', currency_have: currency_have, currency_have_amount: currency_have_amount, currency_want: currency_want, currency_want_amount: currency_want_amount, message: message, lat: lat, lng: lng, airport: airport, terminal: terminal, group: group, stream: stream, currency: currency
+  speak: (currency_have, currency_have_amount, currency_want, currency_want_amount, message, lat, lng, airport, terminal, security_area, group, stream, currency)　->
+    @perform 'speak', currency_have: currency_have, currency_have_amount: currency_have_amount, currency_want: currency_want, currency_want_amount: currency_want_amount, message: message, lat: lat, lng: lng, airport: airport, terminal: terminal, security_area:security_area, group: group, stream: stream, currency: currency
 
 
   $(document).on 'click', '#exchange-submit', (event) ->
-    App.room.speak $('#Currency').val(), $('#currency').val(), $('#Currency_base').val(), $('#returnYen').val(), $('#message').val(), $('.lat').val(), $('.lng').val(), $('.airport2').val(), $('.terminal2').val(), $('.airport2').val() + $('.terminal2').val() +  $('#Currency').val() + $('#Currency_base').val(), $('.airport2').val() + $('.terminal2').val() + $('#Currency_base').val() + $('#Currency').val(), $('#Currency').val() + $('#Currency_base').val()
+    App.room.speak $('#Currency').val(), $('#currency').val(), $('#Currency_base').val(), $('#returnYen').val(), $('#message').val(), $('.lat').val(), $('.lng').val(), $('.airport2').val(), $('.terminal2').val(), $('.security_area').val(), $('.airport2').val() + $('.terminal2').val() + $('.security_area').val() +  $('#Currency').val() + $('#Currency_base').val(), $('.airport2').val() + $('.terminal2').val() + $('.security_area').val() + $('#Currency_base').val() + $('#Currency').val(), $('#Currency').val() + $('#Currency_base').val()
     setTimeout ->
       location.href="/"
     , 1500

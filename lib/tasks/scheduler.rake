@@ -37,7 +37,7 @@ end
 task :delete_old_posts => :environment do
   require 'time'
   n = Time.now
-  oldTime = n - 1800
+  oldTime = n - 900
   puts n
   puts oldTime
 

@@ -29,9 +29,10 @@
                 }else{
                   var securityArea = 'IN'
                 }
-              var terminal = $('#terminal').val() + securityArea
+              var terminal = $('#terminal').val()
               $('.airport2').val(airport);
               $('.terminal2').val(terminal);
+              $('.security_area').val(securityArea);
               console.log(terminal)
             });
           });
