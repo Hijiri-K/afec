@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323131315) do
+ActiveRecord::Schema.define(version: 20180324032822) do
 
   create_table "exchanges", force: :cascade do |t|
     t.string "currency"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20180323131315) do
     t.string "terminal"
     t.string "group"
     t.string "stream"
-    t.string "security_area"
+    t.string "security_area", default: "OUT"
   end
 
   create_table "transactions", force: :cascade do |t|
