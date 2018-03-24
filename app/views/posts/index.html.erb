@@ -212,10 +212,19 @@
                   </select>
                   <p>Security area</p>
                   <div class="sample1Area" id="makeImg">
-                    <input type="radio" name="sample1radio" id="sample1on" value="outside" checked="">
-                      <label for="sample1on">Outside</label>
-                    <input type="radio" name="sample1radio" id="sample1off" value="inside">
-                      <label for="sample1off">Inside</label>
+                    <%if @mypost%>
+                      <%if @mypost.security_area == "IN"%>
+                      <input type="radio" name="sample1radio" id="sample1on" value="outside">
+                        <label for="sample1on">Outside</label>
+                      <input type="radio" name="sample1radio" id="sample1off" value="inside" checked="checked">
+                        <label for="sample1off">Inside</label>
+                      <%else%>
+                      <input type="radio" name="sample1radio" id="sample1on" value="outside" checked="checked">
+                        <label for="sample1on">Outside</label>
+                      <input type="radio" name="sample1radio" id="sample1off" value="inside">
+                        <label for="sample1off">Inside</label>
+                      <%end%>
+                    <%end%>
                   </div>
                   <!-- <input id="returnYen" class = "location" type="float" name="currency_want_amount"  placeholder="amount"> -->
 
